@@ -5,6 +5,9 @@
 #include <string.h>
 #include "Constants.h"
 
+// i am fooey
+
+
 CAM::CAM() :
 
 m_rearRightDrive{MADConstants::rearRightDriveID, rev::CANSparkMax::MotorType::kBrushless},
