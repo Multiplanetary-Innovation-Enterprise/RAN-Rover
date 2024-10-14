@@ -1,0 +1,165 @@
+[
+  {
+    "name": "/Shuffleboard/Input Configuration/Left Stick Y",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Input Configuration/Right Stick Y",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Input Configuration/Left Trigger",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Input Configuration/Right Trigger",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Rover Configuration/Mobility/Max Drive Speed",
+    "type": "double",
+    "value": 0.6,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Rover Configuration/Mobility/Max Crawl Speed",
+    "type": "double",
+    "value": 0.1282902817297979,
+    "properties": {
+      "persistent": true,
+      "retained": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Rover Configuration/Excavation/Max Spin Speed",
+    "type": "double",
+    "value": 0.25,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Rover Configuration/Hopper/Max Spin Speed",
+    "type": "double",
+    "value": 0.15,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Rover Configuration/Deposition/Max Spin Speed",
+    "type": "double",
+    "value": -0.8208783524377783,
+    "properties": {
+      "persistent": true,
+      "retained": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Input Configuration/Primary Controller Deadzones/Left Trigger",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Input Configuration/Primary Controller Deadzones/Right Trigger",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Input Configuration/Primary Controller Deadzones/Left Stick",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Input Configuration/Primary Controller Deadzones/Right Stick",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Input Configuration/Secondary Controller Deadzones/Left Trigger",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Input Configuration/Secondary Controller Deadzones/Right Trigger",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Input Configuration/Secondary Controller Deadzones/Left Stick",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Input Configuration/Secondary Controller Deadzones/Right Stick",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Rover Configuration/Mobility/Slip Current Threshold",
+    "type": "double",
+    "value": 8.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Rover Configuration/Mobility/Slip Off Cycles",
+    "type": "int",
+    "value": 75,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Rover Configuration/Mobility/Slip Run Cycles",
+    "type": "int",
+    "value": 75,
+    "properties": {
+      "persistent": true,
+      "retained": true
+    }
+  }
+]

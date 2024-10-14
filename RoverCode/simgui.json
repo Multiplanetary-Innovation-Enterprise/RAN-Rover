@@ -1,0 +1,91 @@
+{
+  "HALProvider": {
+    "Other Devices": {
+      "window": {
+        "visible": false
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/General/Autonomy Mode": "String Chooser",
+      "/Shuffleboard/Rover Configuration/Auto Modes": "String Chooser",
+      "/SmartDashboard/Auto Modes": "String Chooser",
+      "/SmartDashboard/Autonomous Mode": "String Chooser",
+      "/SmartDashboard/Deposition": "Subsystem",
+      "/SmartDashboard/Excavation": "Subsystem",
+      "/SmartDashboard/Hopper": "Subsystem",
+      "/SmartDashboard/Mobility": "Subsystem"
+    },
+    "windows": {
+      "/SmartDashboard/Auto Modes": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
+    "Retained Values": {
+      "open": false
+    },
+    "Transitory Values": {
+      "open": false
+    },
+    "persistent": {
+      "Shuffleboard": {
+        "Rover Configuration": {
+          "Deposition": {
+            "open": true
+          },
+          "Mobility": {
+            "open": true
+          },
+          "open": true
+        },
+        "open": true
+      }
+    },
+    "retained": {
+      "Shuffleboard": {
+        "General": {
+          "Autonomy Mode": {
+            "open": true
+          },
+          "open": true
+        }
+      },
+      "SmartDashboard": {
+        "open": true
+      }
+    },
+    "transitory": {
+      "Shuffleboard": {
+        "Rover Configuration": {
+          "open": true
+        }
+      }
+    }
+  },
+  "NetworkTables Info": {
+    "Clients": {
+      "open": true
+    },
+    "Connections": {
+      "open": true
+    },
+    "Server": {
+      "Publishers": {
+        "open": true
+      }
+    },
+    "shuffleboard@1": {
+      "open": true
+    },
+    "visible": true
+  }
+}
