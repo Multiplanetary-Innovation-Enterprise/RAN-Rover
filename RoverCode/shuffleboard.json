@@ -1,0 +1,860 @@
+{
+  "tabPane": [
+    {
+      "title": "Rover Config",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 32.0,
+        "showGrid": false,
+        "hgap": 4.0,
+        "vgap": 4.0,
+        "titleType": 1,
+        "tiles": {
+          "0,0": {
+            "size": [
+              13,
+              16
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Mobility",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Number Slider",
+                  "_source0": "network_table:///SmartDashboard/Drive Max Speed",
+                  "_title": "Drive Max Speed",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Slider Settings/Min": 0.0,
+                  "Slider Settings/Max": 1.0,
+                  "Slider Settings/Block increment": 0.0625,
+                  "Visuals/Display value": true
+                },
+                {
+                  "_type": "Number Slider",
+                  "_source0": "network_table:///SmartDashboard/Crawl Max Speed",
+                  "_title": "Crawl Max Speed",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Slider Settings/Min": -0.0,
+                  "Slider Settings/Max": 1.0,
+                  "Slider Settings/Block increment": 0.0625,
+                  "Visuals/Display value": true
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Slip Current Threshold",
+                  "_title": "Slip Current Threshold",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Slip Off Cycles",
+                  "_title": "Slip Off Cycles",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Slip Try Cycles",
+                  "_title": "Slip Try Cycles",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                }
+              ]
+            }
+          },
+          "13,0": {
+            "size": [
+              12,
+              12
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Excavation",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Number Slider",
+                  "_source0": "network_table:///SmartDashboard/Excavation Max Speed",
+                  "_title": "Excavation Max Speed",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Slider Settings/Min": 0.0,
+                  "Slider Settings/Max": 1.0,
+                  "Slider Settings/Block increment": 0.0625,
+                  "Visuals/Display value": true
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Excavation Spin Threshold",
+                  "_title": "Excavation Actuation Spin Threshold",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Grid Layout",
+                  "_title": "Excavation Actuation",
+                  "_glyph": 149,
+                  "_showGlyph": false,
+                  "Layout/Number of columns": 2,
+                  "Layout/Number of rows": 1,
+                  "Layout/Label position": "BOTTOM",
+                  "_children": {
+                    "0,0": {
+                      "_type": "Text View",
+                      "_source0": "network_table:///SmartDashboard/Excavation Actuate Min",
+                      "_title": "Min",
+                      "_glyph": 148,
+                      "_showGlyph": false
+                    },
+                    "1,0": {
+                      "_type": "Text View",
+                      "_source0": "network_table:///SmartDashboard/Excavation Actuate Max",
+                      "_title": "Max",
+                      "_glyph": 148,
+                      "_showGlyph": false
+                    }
+                  }
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Excavation Actuate Speed",
+                  "_title": "Excavation Actuation Speed (WIP)",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                }
+              ]
+            }
+          },
+          "25,0": {
+            "size": [
+              12,
+              12
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Deposition",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Number Slider",
+                  "_source0": "network_table:///SmartDashboard/Deposition Max Speed",
+                  "_title": "Deposition Max Speed",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Slider Settings/Min": 0.0,
+                  "Slider Settings/Max": 1.0,
+                  "Slider Settings/Block increment": 0.0625,
+                  "Visuals/Display value": true
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Deposition Spin Threshold",
+                  "_title": "Deposition Actuation Spin Threshold",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Grid Layout",
+                  "_title": "Deposition Actuation",
+                  "_glyph": 149,
+                  "_showGlyph": false,
+                  "Layout/Number of columns": 2,
+                  "Layout/Number of rows": 1,
+                  "Layout/Label position": "BOTTOM",
+                  "_children": {
+                    "1,0": {
+                      "_type": "Text View",
+                      "_source0": "network_table:///SmartDashboard/Deposition Actuate Max",
+                      "_title": "Max",
+                      "_glyph": 148,
+                      "_showGlyph": false
+                    },
+                    "0,0": {
+                      "_type": "Text View",
+                      "_source0": "network_table:///SmartDashboard/Deposition Actuate Min",
+                      "_title": "Min",
+                      "_glyph": 148,
+                      "_showGlyph": false
+                    }
+                  }
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Deposition Actuate Speed",
+                  "_title": "Deposition Actuation Speed (WIP)",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                }
+              ]
+            }
+          },
+          "13,12": {
+            "size": [
+              12,
+              4
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Hopper",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Number Slider",
+                  "_source0": "network_table:///SmartDashboard/Hopper Max Speed",
+                  "_title": "Hopper Max Speed",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Slider Settings/Min": 0.0,
+                  "Slider Settings/Max": 1.0,
+                  "Slider Settings/Block increment": 0.0625,
+                  "Visuals/Display value": true
+                }
+              ]
+            }
+          },
+          "25,12": {
+            "size": [
+              12,
+              4
+            ],
+            "content": {
+              "_type": "Split Button Chooser",
+              "_source0": "network_table:///SmartDashboard/Auto Modes",
+              "_title": "Autonomous Modes",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Input Config",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 32.0,
+        "showGrid": false,
+        "hgap": 4.0,
+        "vgap": 4.0,
+        "titleType": 1,
+        "tiles": {
+          "0,0": {
+            "size": [
+              10,
+              3
+            ],
+            "content": {
+              "_type": "Split Button Chooser",
+              "_source0": "network_table:///SmartDashboard/Control Scheme",
+              "_title": "Control Scheme",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "0,4": {
+            "size": [
+              10,
+              3
+            ],
+            "content": {
+              "_type": "Grid Layout",
+              "_title": "Joystick Deadzones",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Number of columns": 2,
+              "Layout/Number of rows": 1,
+              "Layout/Label position": "BOTTOM",
+              "_children": {
+                "0,0": {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Left Stick Deadzone",
+                  "_title": "Left Stick Deadzone",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                "1,0": {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Right Stick Deadzone",
+                  "_title": "Right Stick Deadzone",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "MAD Telemetry",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 32.0,
+        "showGrid": false,
+        "hgap": 4.0,
+        "vgap": 4.0,
+        "titleType": 1,
+        "tiles": {
+          "1,0": {
+            "size": [
+              10,
+              18
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Front Left Wheel",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "HIDDEN",
+              "_children": [
+                {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/Front Left Motor/Current [Amps]",
+                  "_title": "Front Left Motor Current [Amps]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "Amps",
+                  "Visible data/SmartDashboard/Front Left Motor/Current [Amps]": true
+                },
+                {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/Front Left Motor/Encoder [RPM]",
+                  "_title": "Front Left Motor Encoder [RPM]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "RPM",
+                  "Visible data/SmartDashboard/Front Left Motor/Encoder [RPM]": true
+                }
+              ]
+            }
+          },
+          "31,0": {
+            "size": [
+              10,
+              18
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Front Right Wheel",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "HIDDEN",
+              "_children": [
+                {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/Front Right Motor/Current [Amps]",
+                  "_title": "Front Right Motor Current [Amps]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "Amps",
+                  "Visible data/SmartDashboard/Front Right Motor/Current [Amps]": true
+                },
+                {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/Front Right Motor/Encoder [RPM]",
+                  "_title": "Front Right Motor Encoder [RPM]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "RPM",
+                  "Visible data/SmartDashboard/Front Right Motor/Encoder [RPM]": true
+                }
+              ]
+            }
+          },
+          "11,0": {
+            "size": [
+              10,
+              18
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Back Left Wheel",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "HIDDEN",
+              "_children": [
+                {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/Back Left Motor/Current [Amps]",
+                  "_title": "Back Left Motor Current [Amps]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "ul",
+                  "Visible data/SmartDashboard/Back Left Motor/Current [Amps]": true
+                },
+                {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/Back Left Motor/Encoder [RPM]",
+                  "_title": "Back Left Motor Encoder [RPM]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "ul",
+                  "Visible data/SmartDashboard/Back Left Motor/Encoder [RPM]": true
+                }
+              ]
+            }
+          },
+          "21,0": {
+            "size": [
+              10,
+              18
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Back Right Wheel",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "HIDDEN",
+              "_children": [
+                {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/Back Right Motor/Current [Amps]",
+                  "_title": "Back Right Motor Current [Amps]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "Amps",
+                  "Visible data/SmartDashboard/Back Right Motor/Current [Amps]": true
+                },
+                {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/Back Right Motor/Encoder [RPM]",
+                  "_title": "Back Right Motor Encoder [RPM]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "RPM",
+                  "Visible data/SmartDashboard/Back Right Motor/Encoder [RPM]": true
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "EXC/HAD Telemetry",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 32.0,
+        "showGrid": false,
+        "hgap": 4.0,
+        "vgap": 4.0,
+        "titleType": 1,
+        "tiles": {
+          "0,0": {
+            "size": [
+              10,
+              18
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Excavation",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "HIDDEN",
+              "_children": [
+                {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/Excavation Motor/Current [Amps]",
+                  "_title": "Excavation Motor Current [Amps]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "Amps",
+                  "Visible data/SmartDashboard/Excavation Motor/Current [Amps]": true
+                },
+                {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/Excavation Motor/Encoder [RPM]",
+                  "_title": "Excavation Motor Encoder [RPM]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "RPM",
+                  "Visible data/SmartDashboard/Excavation Motor/Encoder [RPM]": true
+                }
+              ]
+            }
+          },
+          "10,0": {
+            "size": [
+              10,
+              18
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Deposition",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "HIDDEN",
+              "_children": [
+                {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/Deposition Motor/Current [Amps]",
+                  "_title": "Deposition Motor Current [Amps]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "Amps",
+                  "Visible data/SmartDashboard/Deposition Motor/Current [Amps]": true
+                },
+                {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/Deposition Motor/Encoder [RPM]",
+                  "_title": "Deposition Motor Encoder [RPM]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "RPM",
+                  "Visible data/SmartDashboard/Deposition Motor/Encoder [RPM]": true
+                }
+              ]
+            }
+          },
+          "20,0": {
+            "size": [
+              10,
+              18
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Hopper",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "HIDDEN",
+              "_children": [
+                {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/Hopper Motor/Current [Amps]",
+                  "_title": "Hopper Motor Current [Amps]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "Amps",
+                  "Visible data/SmartDashboard/Hopper Motor/Current [Amps]": true
+                },
+                {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/Hopper Motor/Encoder [RPM]",
+                  "_title": "Hopper Motor Encoder [RPM]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "RPM",
+                  "Visible data/SmartDashboard/Hopper Motor/Encoder [RPM]": true
+                }
+              ]
+            }
+          },
+          "31,9": {
+            "size": [
+              11,
+              6
+            ],
+            "content": {
+              "_type": "Grid Layout",
+              "_title": "Deposition Actuators",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Number of columns": 2,
+              "Layout/Number of rows": 1,
+              "Layout/Label position": "BOTTOM",
+              "_children": {
+                "1,0": {
+                  "_type": "Simple Dial",
+                  "_source0": "network_table:///SmartDashboard/Deposition Right Actuator Pot/Value",
+                  "_title": "Right Actuator Potentiometer",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Range/Min": 0.0,
+                  "Range/Max": 1.0,
+                  "Visuals/Show value": true
+                },
+                "0,0": {
+                  "_type": "Simple Dial",
+                  "_source0": "network_table:///SmartDashboard/Deposition Left Actuator Pot/Value",
+                  "_title": "Left Actuator Potentiometer",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Range/Min": 0.0,
+                  "Range/Max": 1.0,
+                  "Visuals/Show value": true
+                }
+              }
+            }
+          },
+          "31,3": {
+            "size": [
+              11,
+              6
+            ],
+            "content": {
+              "_type": "Grid Layout",
+              "_title": "Excavation Actuators",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Number of columns": 2,
+              "Layout/Number of rows": 1,
+              "Layout/Label position": "BOTTOM",
+              "_children": {
+                "0,0": {
+                  "_type": "Simple Dial",
+                  "_source0": "network_table:///SmartDashboard/Excavation Left Actuator Pot/Value",
+                  "_title": "Left Actuator Potentiometer",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Range/Min": 0.0,
+                  "Range/Max": 1.0,
+                  "Visuals/Show value": true
+                },
+                "1,0": {
+                  "_type": "Simple Dial",
+                  "_source0": "network_table:///SmartDashboard/Excavation Right Actuator Pot/Value",
+                  "_title": "Right Actuator Potentiometer",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Range/Min": 0.0,
+                  "Range/Max": 1.0,
+                  "Visuals/Show value": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "IMU Telemetry",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 32.0,
+        "showGrid": false,
+        "hgap": 4.0,
+        "vgap": 4.0,
+        "titleType": 1,
+        "tiles": {
+          "0,0": {
+            "size": [
+              27,
+              9
+            ],
+            "content": {
+              "_type": "Grid Layout",
+              "_title": "IMU Acceleration [G]",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Number of columns": 3,
+              "Layout/Number of rows": 1,
+              "Layout/Label position": "HIDDEN",
+              "_children": {
+                "0,0": {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/IMU/Acceleration X [G]",
+                  "_title": "Acceleration X [G]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "G",
+                  "Visible data/SmartDashboard/IMU/Acceleration X [G]": true
+                },
+                "1,0": {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/IMU/Acceleration Y [G]",
+                  "_title": "Acceleration Y [G]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "G",
+                  "Visible data/SmartDashboard/IMU/Acceleration Y [G]": true
+                },
+                "2,0": {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/IMU/Acceleration Z [G]",
+                  "_title": "Acceleration Z [G]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "G",
+                  "Visible data/SmartDashboard/IMU/Acceleration Z [G]": true
+                }
+              }
+            }
+          },
+          "0,9": {
+            "size": [
+              27,
+              9
+            ],
+            "content": {
+              "_type": "Grid Layout",
+              "_title": "IMU Velocity [m/s]",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Number of columns": 3,
+              "Layout/Number of rows": 1,
+              "Layout/Label position": "HIDDEN",
+              "_children": {
+                "0,0": {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/IMU/Velocity X [mps]",
+                  "_title": "Velocity X [mps]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "m/s",
+                  "Visible data/SmartDashboard/IMU/Velocity X [mps]": true
+                },
+                "2,0": {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/IMU/Velocity Z [mps]",
+                  "_title": "Velocity Z [mps]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "m/s",
+                  "Visible data/SmartDashboard/IMU/Velocity Z [mps]": true
+                },
+                "1,0": {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/IMU/Velocity Y [mps]",
+                  "_title": "Velocity Z [mps]",
+                  "_glyph": 148,
+                  "_showGlyph": false,
+                  "Graph/Visible time": 30.0,
+                  "Graph/X-axis auto scrolling": true,
+                  "Y-axis/Automatic bounds": true,
+                  "Y-axis/Upper bound": 1.0,
+                  "Y-axis/Lower bound": -1.0,
+                  "Y-axis/Unit": "m/s",
+                  "Visible data/SmartDashboard/IMU/Velocity Y [mps]": true
+                }
+              }
+            }
+          },
+          "28,4": {
+            "size": [
+              13,
+              9
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///SmartDashboard/IMU/Temperature [C]",
+              "_title": "IMU Temperature [C]",
+              "_glyph": 511,
+              "_showGlyph": false,
+              "Range/Min": 0.0,
+              "Range/Max": 100.0,
+              "Visuals/Show value": true
+            }
+          }
+        }
+      }
+    }
+  ],
+  "windowGeometry": {
+    "x": -2.2857143878936768,
+    "y": 2.2857143878936768,
+    "width": 1568.0,
+    "height": 798.2857055664062
+  }
+}
