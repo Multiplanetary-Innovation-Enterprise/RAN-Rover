@@ -5,154 +5,25 @@
 #include "Robot.h"
 
 #include <fmt/core.h>
-#include <frc/shuffleboard/Shuffleboard.h>
+#include <frc2/command/button/Trigger.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-void Robot::DashboardInit() {
-  frc::SmartDashboard::PutData("Auto Modes", &chooser);
-
-  frc::ShuffleboardTab& inputConfigTab = frc::Shuffleboard::GetTab("Input Configuration");
-  frc::ShuffleboardLayout& primaryDeadzones = inputConfigTab.GetLayout("Primary Controller Deadzones", frc::BuiltInLayouts::kGrid)
-    .WithSize(6, 4)
-    .WithPosition(0, 0)
-    .WithProperties({
-      {"Label position", nt::Value::MakeString("TOP")}
-    });
-  primaryDeadzones.AddPersistent("Left Trigger", pLeftTriggerDeadzone)
-          .WithWidget(frc::BuiltInWidgets::kNumberSlider)
-          .WithPosition(0, 0)
-          .WithProperties({
-            {"min", nt::Value::MakeDouble(0)},
-            {"max", nt::Value::MakeDouble(1)}
-          });
-  primaryDeadzones.AddPersistent("Right Trigger", pRightTriggerDeadzone)
-          .WithWidget(frc::BuiltInWidgets::kNumberSlider)
-          .WithPosition(1, 0)
-          .WithProperties({
-            {"min", nt::Value::MakeDouble(0)},
-            {"max", nt::Value::MakeDouble(1)}
-          });
-  primaryDeadzones.AddPersistent("Left Stick", pLeftStickDeadzone)
-          .WithWidget(frc::BuiltInWidgets::kNumberSlider)
-          .WithPosition(0, 1)
-          .WithProperties({
-            {"min", nt::Value::MakeDouble(0)},
-            {"max", nt::Value::MakeDouble(1)}
-          });
-  primaryDeadzones.AddPersistent("Right Stick", pRightStickDeadzone)
-          .WithWidget(frc::BuiltInWidgets::kNumberSlider)
-          .WithPosition(1, 1)
-          .WithProperties({
-            {"min", nt::Value::MakeDouble(0)},
-            {"max", nt::Value::MakeDouble(1)}
-          });
-  frc::ShuffleboardLayout& secondaryDeadzones = inputConfigTab.GetLayout("Secondary Controller Deadzones", frc::BuiltInLayouts::kGrid)
-    .WithSize(6, 4)
-    .WithPosition(6, 0)
-    .WithProperties({
-      {"Label position", nt::Value::MakeString("TOP")}
-    });
-  secondaryDeadzones.AddPersistent("Left Trigger", sLeftTriggerDeadzone)
-          .WithWidget(frc::BuiltInWidgets::kNumberSlider)
-          .WithPosition(0, 0)
-          .WithProperties({
-            {"min", nt::Value::MakeDouble(0)},
-            {"max", nt::Value::MakeDouble(1)}
-          });
-  secondaryDeadzones.AddPersistent("Right Trigger", sRightTriggerDeadzone)
-          .WithWidget(frc::BuiltInWidgets::kNumberSlider)
-          .WithPosition(1, 0)
-          .WithProperties({
-            {"min", nt::Value::MakeDouble(0)},
-            {"max", nt::Value::MakeDouble(1)}
-          });
-  secondaryDeadzones.AddPersistent("Left Stick", sLeftStickDeadzone)
-          .WithWidget(frc::BuiltInWidgets::kNumberSlider)
-          .WithPosition(0, 1)
-          .WithProperties({
-            {"min", nt::Value::MakeDouble(0)},
-            {"max", nt::Value::MakeDouble(1)}
-          });
-  secondaryDeadzones.AddPersistent("Right Stick", sRightStickDeadzone)
-          .WithWidget(frc::BuiltInWidgets::kNumberSlider)
-          .WithPosition(1, 1)
-          .WithProperties({
-            {"min", nt::Value::MakeDouble(0)},
-            {"max", nt::Value::MakeDouble(1)}
-          });
-
-  frc::ShuffleboardTab& roverConfigTab = frc::Shuffleboard::GetTab("Rover Configuration");
-
-  frc::ShuffleboardLayout& mobList = roverConfigTab.GetLayout("Mobility", frc::BuiltInLayouts::kList)
-      .WithSize(8, 4)
-      .WithPosition(0, 0)
-      .WithProperties({
-      {"Label position", nt::Value::MakeString("LEFT")}
-      });
-  mobList.Add("Max Drive Speed", mob.maxDriveSpeed) 
-          .WithWidget(frc::BuiltInWidgets::kNumberSlider)
-          .WithProperties({
-              {"min", nt::Value::MakeDouble(0)},
-              {"max", nt::Value::MakeDouble(1)}
-          });
-  mobList.Add("Max Crawl Speed", mob.maxCrawlSpeed)
-          .WithWidget(frc::BuiltInWidgets::kNumberSlider)
-          .WithProperties({
-              {"min", nt::Value::MakeDouble(0)},
-              {"max", nt::Value::MakeDouble(1)}
-          });
-  mobList.Add("Slip Current Threshold", mob.currentThreshold)
-          .WithWidget(frc::BuiltInWidgets::kField);
-  mobList.Add("Slip Off Cycles", mob.cyclesSlipOff)
-          .WithWidget(frc::BuiltInWidgets::kField);
-  mobList.Add("Slip Run Cycles", mob.cyclesSlipRun)
-          .WithWidget(frc::BuiltInWidgets::kField);
-
-  frc::ShuffleboardLayout& excList = roverConfigTab.GetLayout("Excavation", frc::BuiltInLayouts::kList)
-      .WithSize(8, 2)
-      .WithPosition(8, 0)
-      .WithProperties({
-      {"Label position", nt::Value::MakeString("LEFT")}
-      });
-  excList.Add("Max Spin Speed", exc.maxSpinSpeed)
-          .WithWidget(frc::BuiltInWidgets::kNumberSlider)
-          .WithProperties({
-              {"min", nt::Value::MakeDouble(0)},
-              {"max", nt::Value::MakeDouble(1)}
-          });
-
-  frc::ShuffleboardLayout& depList = roverConfigTab.GetLayout("Deposition", frc::BuiltInLayouts::kList)
-      .WithSize(8, 2)
-      .WithPosition(8, 4)
-      .WithProperties({
-      {"Label position", nt::Value::MakeString("LEFT")}
-      });;
-  depList.Add("Max Spin Speed", dep.maxSpinSpeed)
-          .WithWidget(frc::BuiltInWidgets::kNumberSlider)
-          .WithProperties({
-              {"min", nt::Value::MakeDouble(0)},
-              {"max", nt::Value::MakeDouble(1)}
-          });
-
-  frc::ShuffleboardLayout& hopList = roverConfigTab.GetLayout("Hopper", frc::BuiltInLayouts::kList)
-      .WithSize(8, 2)
-      .WithPosition(8, 2)
-      .WithProperties({
-      {"Label position", nt::Value::MakeString("LEFT")}
-      });;
-  hopList.Add("Max Spin Speed", hop.maxSpinSpeed)
-          .WithWidget(frc::BuiltInWidgets::kNumberSlider)
-          .WithProperties({
-              {"min", nt::Value::MakeDouble(0)},
-              {"max", nt::Value::MakeDouble(1)}
-          });
-}
-
 void Robot::RobotInit() {
-  chooser.SetDefaultOption(AutoConstants::Default, AutoConstants::Default);
-  chooser.AddOption(AutoConstants::DriveCycle, AutoConstants::DriveCycle);
+  
+  autoChooser.SetDefaultOption(AutoConstants::Default, AutoConstants::Default);
+  autoChooser.AddOption(AutoConstants::DriveCycle, AutoConstants::DriveCycle);
+  frc::SmartDashboard::PutData("Auto Modes", &autoChooser);
 
-  DashboardInit();
+  schemeChooser.SetDefaultOption(ControlSchemes::NewRover, ControlSchemes::NewRover);
+  schemeChooser.AddOption(ControlSchemes::Stellar, ControlSchemes::Stellar);
+  frc::SmartDashboard::PutData("Control Scheme", &schemeChooser);
+
+  frc::SmartDashboard::PutNumber("Left Stick Deadzone", leftStickDeadzone);
+  frc::SmartDashboard::SetPersistent("Left Stick Deadzone");
+  frc::SmartDashboard::PutNumber("Right Stick Deadzone", rightStickDeadzone);
+  frc::SmartDashboard::SetPersistent("Right Stick Deadzone");
+  
+  frc::SmartDashboard::PutData("IMU", &imu);
 }
 
 /**
@@ -160,7 +31,7 @@ void Robot::RobotInit() {
  * this for items like diagnostics that you want ran during disabled,
  * autonomous, teleoperated and test.
  *
- * <p> This runs after the mode specific periodic functions, but before
+ * This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
 void Robot::RobotPeriodic() {}
@@ -177,7 +48,7 @@ void Robot::AutonomousInit() {
   exc.Reset();
   dep.Reset();
   
-  autoSelected = chooser.GetSelected();
+  autoSelected = autoChooser.GetSelected();
   fmt::print("Auto selected: {}\n", autoSelected);
 
   if (autoSelected == AutoConstants::DriveCycle) {
@@ -202,73 +73,198 @@ void Robot::TeleopInit() {
   hop.Reset();
   exc.Reset();
   dep.Reset();
+
+  schemeSelected = schemeChooser.GetSelected();
+  fmt::print("Scheme selected: {}\n", schemeSelected);
 }
 
 void Robot::TeleopPeriodic() {
 
-/****************
- *   MOBILITY   *
- ****************/
+  leftStickDeadzone = frc::SmartDashboard::GetNumber("Left Stick Deadzone", leftStickDeadzone);
+  rightStickDeadzone = frc::SmartDashboard::GetNumber("Right Stick Deadzone", rightStickDeadzone);
 
-  // Left Joystick Y-Axis on Primary Controller
-  double leftStick = Utils::Deadzone(primaryController.GetLeftY(), pLeftStickDeadzone);
-  // Right Joystick Y-Axis on Primary Controller
-  double rightStick = Utils::Deadzone(primaryController.GetRightY(), pRightStickDeadzone);
+  if (schemeSelected == ControlSchemes::Stellar) { 
+#pragma region Stellar
 
-  // Either of the Joystick Buttons have been pressed on Primary Controller
-  bool sticksClicked = primaryController.GetLeftStickButton() || primaryController.GetRightStickButton();
+    /****************
+     *   MOBILITY   *
+     ****************/
+  #pragma region Stellar_Mobility
+    // Left Joystick Y-Axis on Primary Controller
+    double leftStick = controller.GetLeftY();
+    // Right Joystick Y-Axis on Primary Controller
+    double rightStick = controller.GetRightY();
 
-  // If there is a stick input, drive, otherwise, stop driving.
-  if (leftStick > 0.0 || rightStick > 0.0) {
-    // Mobility Drive takes the left side input, right side input, and a boolean to determine if it should crawl
-    mob.Drive(leftStick, rightStick, sticksClicked);
-  } else {
-    mob.Stop();
-  }
+    // Either of the Joystick Buttons have been pressed on Primary Controller
+    bool sticksClicked = controller.GetLeftStickButton() || controller.GetRightStickButton();
 
+    // If there is a stick input, drive, otherwise, stop driving.
+    if (abs(leftStick) > leftStickDeadzone || abs(rightStick) > rightStickDeadzone) {
+      // Mobility Drive takes the left side input, right side input, and a boolean to determine if it should crawl
+      mob.Drive(-leftStick, -rightStick, sticksClicked);
+    } else {
+      mob.Stop();
+    }
+  #pragma endregion Stellar_Mobility
 
-/****************
- *    HOPPER    *
- ****************/
+    /****************
+     *    HOPPER    *
+     ****************/
+  #pragma region Stellar_Hopper
+    // If either of the bumpers are pressed, spin the hopper.
+    if (controller.GetLeftBumper() || controller.GetRightBumper()) {
+      // Hopper Spin takes a boolean to determine the direction to spin.
+      hop.Spin(1.0, controller.GetRightBumper());
+    } else {
+      hop.Stop();
+    }
+  #pragma endregion Stellar_Hopper
 
-  // If either of the bumpers are pressed, spin the hopper.
-  if (primaryController.GetLeftBumper() || primaryController.GetRightBumper()) {
-    // Hopper Spin takes a boolean to determine the direction to spin.
-    hop.Spin(1.0, primaryController.GetRightBumper());
-  } else {
-    hop.Stop();
-  }
+    /****************
+     *  EXCAVATION  *
+     ****************/
+  #pragma region Stellar_Excavation
+    // Right Trigger on Primary Controller
+    double rightTrigger = controller.GetRightTriggerAxis();
 
+    // If there is an input from the right trigger, spin the excavator.
+    if (rightTrigger > 0.0) {
+      // Excavation Spin takes a boolean to determine the direction to spin.
+      exc.Spin(rightTrigger, controller.GetStartButton());
+    } else {
+      exc.Stop();
+    }
 
-/****************
- *  EXCAVATION  *
- ****************/
+    if (!controller.GetYButton() != !controller.GetAButton()) { // XOR, only actuate when one is pressed.
+      exc.StartActuate(controller.GetAButton());
+    } else {
+      exc.StopActuate(false);
+    }
+  #pragma endregion Stellar_Excavation
 
-  // Right Trigger on Primary Controller
-  double rightTrigger = Utils::Deadzone(primaryController.GetRightTriggerAxis(), pRightTriggerDeadzone);
+    /****************
+     *  DEPOSITION  *
+     ****************/
+  #pragma region Stellar_Deposition
+    // Left Trigger on Primary Controller
+    double leftTrigger = controller.GetLeftTriggerAxis();
 
-  // If there is an input from the right trigger, spin the excavator.
-  if (rightTrigger > 0.0) {
-    // Excavation Spin takes a boolean to determine the direction to spin.
-    exc.Spin(rightTrigger, primaryController.GetStartButton());
-  } else {
-    exc.Stop();
-  }
+    // If there is an input from the left trigger, spin the depositor.
+    if (leftTrigger > 0.0) {
+      // Deposition Spin takes a boolean to determine the direction to spin.
+      dep.Spin(leftTrigger, controller.GetBackButton());
+    } else {
+      dep.Stop();
+    }
 
+    if (controller.GetPOV() == 0 || controller.GetPOV() == 180) { // XOR, only actuate when one is pressed.
+      dep.StartActuate(controller.GetPOV() == 180);
+    } else {
+      dep.StopActuate(false);
+    }
+  #pragma endregion Stellar_Deposition
+    
+#pragma endregion Stellar
+  } else if (schemeSelected == ControlSchemes::NewRover) {
+#pragma region NewRover
+    /****************
+     *   MOBILITY   *
+     ****************/
+  #pragma region NewRover_Mobility
 
-/****************
- *  DEPOSITION  *
- ****************/
+    // Left Joystick X on Primary Controller
+    double leftStickX = controller.GetLeftX();
+    // Left Joystick Y on Primary Controller
+    double leftStickY = -controller.GetLeftY();
+    // Left Joystick Unnormalized Magnitude on Primary Controller
+    double leftStickMagnitude = std::min(sqrt(leftStickX * leftStickX + leftStickY * leftStickY), 1.0);
+    // Left Joystick Angle on Primary Controller
+    double leftStickAngle = int(360 + atan2(leftStickX, leftStickY) * 180.0 / M_PI) % 360; // In degrees, 0 is forward, 90 is right, 180 is backward, 270 is left
 
-  // Left Trigger on Primary Controller
-  double leftTrigger = Utils::Deadzone(primaryController.GetLeftTriggerAxis(), pLeftTriggerDeadzone);
+    // Right Joystick X and Y on Primary Controller
+    double rightStickX = controller.GetRightX();
+    double rightStickY = -controller.GetRightY();
+    // Right Joystick Angle on Primary Controller
+    double rightStickAngle = int(360 + atan2(rightStickX, rightStickY) * 180.0 / M_PI) % 360; // In degrees, 0 is forward, 90 is right, 180 is backward, 270 is left
 
-  // If there is an input from the left trigger, spin the depositor.
-  if (leftTrigger > 0.0) {
-    // Deposition Spin takes a boolean to determine the direction to spin.
-    dep.Spin(leftTrigger, primaryController.GetBackButton());
-  } else {
-    dep.Stop();
+    // D-Pad on Controller for Crawl (Slow drive)
+    if (controller.GetPOV() == 0) { // D-Pad Up
+      mob.Drive(1, 1, true);
+    } else if (controller.GetPOV() == 180) { // D-Pad Down
+      mob.Drive(-1, -1, true);
+    } else {
+      // If not crawling, allow for normal stick input.
+
+      // If there is a stick input, drive, otherwise, stop driving.
+      if (leftStickMagnitude > leftStickDeadzone) {
+
+        // Stick zone for negation of magnitude
+        if (leftStickAngle > 120 && leftStickAngle < 240)
+          leftStickMagnitude *= -1;
+
+        wpi::outs() << "Steer Angle: " << std::to_string(int(leftStickAngle)) << "\n";
+        // Mobility Drive takes the left side input, right side input, and a boolean to determine if it should crawl
+        mob.Drive(leftStickMagnitude, leftStickMagnitude, false);
+      } else {
+        mob.Stop();
+      }
+    }
+
+  #pragma endregion NewRover_Mobility
+
+    /****************
+     *    HOPPER    *
+     ****************/
+  #pragma region NewRover_Hopper
+    // Left Trigger on Controller
+    double leftTrigger = controller.GetLeftTriggerAxis();
+
+    // If there is an input from the left trigger, spin the Hopper.
+    if (leftTrigger > 0.0) {
+      // Hopper Spin takes a boolean to determine the direction to spin.
+      hop.Spin(leftTrigger, controller.GetLeftBumper());
+    } else {
+      hop.Stop();
+    }
+    
+    // Holding X Button Locks the current speed and direction of the Hopper.
+    if (controller.GetXButtonPressed()) {
+      hop.HoldLock(true);
+    } else if (controller.GetXButtonReleased()) {
+      hop.HoldLock(false);
+    }
+  #pragma endregion NewRover_Hopper
+
+    /****************
+     *  EXCAVATION  *
+     ****************/
+  #pragma region NewRover_Excavation
+    // Right Trigger on Controller
+    double rightTrigger = controller.GetRightTriggerAxis();
+
+    // If there is an input from the right trigger, spin the Excavator.
+    if (rightTrigger > 0.0) {
+      // Excavation Spin takes a boolean to determine the direction to spin.
+      exc.Spin(rightTrigger, controller.GetRightBumper());
+    } else {
+      exc.Stop();
+    }
+    
+    // Holding B Button Locks the current speed and direction of the Excavator.
+    if (controller.GetBButtonPressed()) {
+      exc.HoldLock(true);
+    } else if (controller.GetBButtonReleased()) {
+      exc.HoldLock(false);
+    }
+
+    if (!controller.GetYButton() != !controller.GetAButton()) { // XOR, only actuate when one is pressed.
+      exc.StartActuate(controller.GetAButton());
+    } else {
+      exc.StopActuate(false);
+    }
+  #pragma endregion NewRover_Excavation
+
+#pragma endregion NewRover
   }
 }
 

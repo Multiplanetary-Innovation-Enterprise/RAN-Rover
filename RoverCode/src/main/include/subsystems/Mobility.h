@@ -2,19 +2,13 @@
 
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/SubsystemBase.h>
-#include <rev/CANSparkMax.h>
 #include <wpi/raw_ostream.h>
 #include "Constants.h"
 #include <array>
+#include "sendables/MotorSendable.h"
 
 class MobilitySubsystem : public frc2::SubsystemBase {
     public:
-        double maxDriveSpeed = 0.6;
-        double maxCrawlSpeed = 0.1;
-        double currentThreshold = 8.0;
-        int cyclesSlipOff = 75; // 1.5 seconds (1500 ms @ 20ms cycles)
-        int cyclesSlipRun = 75; // 1.5 seconds (1500 ms @ 20ms cycles)
-
         MobilitySubsystem();
         void Periodic() override;
         void SimulationPeriodic() override;
@@ -27,8 +21,14 @@ class MobilitySubsystem : public frc2::SubsystemBase {
         std::array<int, 4> slipWait;
         bool isSpinning, leftCrawl, rightCrawl;   
 
-        rev::CANSparkMax backLeft{PortConstants::mobBackLeft, rev::CANSparkMax::MotorType::kBrushless};
-        rev::CANSparkMax frontLeft{PortConstants::mobFrontLeft, rev::CANSparkMax::MotorType::kBrushless};
-        rev::CANSparkMax backRight{PortConstants::mobBackRight, rev::CANSparkMax::MotorType::kBrushless};
-        rev::CANSparkMax frontRight{PortConstants::mobFrontRight, rev::CANSparkMax::MotorType::kBrushless};
+        double maxDriveSpeed = 0.6;
+        double maxCrawlSpeed = 0.1;
+        double currentThreshold = 8.0;
+        int cyclesSlipOff = 75; // 1.5 seconds (1500 ms @ 20ms cycles)
+        int cyclesSlipTry = 75; // 1.5 seconds (1500 ms @ 20ms cycles)
+
+        MotorSendable backLeft{PortConstants::mobBackLeft, rev::CANSparkMax::MotorType::kBrushless};
+        MotorSendable frontLeft{PortConstants::mobFrontLeft, rev::CANSparkMax::MotorType::kBrushless};
+        MotorSendable backRight{PortConstants::mobBackRight, rev::CANSparkMax::MotorType::kBrushless};
+        MotorSendable frontRight{PortConstants::mobFrontRight, rev::CANSparkMax::MotorType::kBrushless};
 };

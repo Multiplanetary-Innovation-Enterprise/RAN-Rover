@@ -6,11 +6,9 @@
 
 namespace PortConstants {
 
-// Input
-    inline constexpr int primaryController = 0;
-    inline constexpr int secondaryController = 1;
+    inline constexpr int controller = 0;
 
-// Output
+    inline constexpr int navX = 0;
 
     // Mobility
     inline constexpr int mobBackLeft = 10;
@@ -20,16 +18,33 @@ namespace PortConstants {
     
     // Excavation
     inline constexpr int excSpin = 14;
-    inline constexpr int excLeftActVel = 0; // DIO
-    inline constexpr int excLeftActDir = 1; // DIO
-    inline constexpr int excRightActVel = 2; // DIO
-    inline constexpr int excRightActDir = 3; // DIO
+    inline constexpr int excLeftActVel = 0; // Digital Output
+    inline constexpr int excLeftActDir = 1; // Digital Output
+    inline constexpr int excLeftPot = 0; // Analog Input
+
+    inline constexpr int excRightActVel = 2; // Digital Output
+    inline constexpr int excRightActDir = 3; // Digital Output
+    inline constexpr int excRightPot = 1; // Analog Input
 
     // Hopper
     inline constexpr int hopSpin = 15;
 
     // Deposition
     inline constexpr int depSpin = 16;
+    
+    inline constexpr int depLeftActVel = 4; // Digital Output
+    inline constexpr int depLeftActDir = 5; // Digital Output
+    inline constexpr int depLeftPot = 2; // Analog Input
+
+    inline constexpr int depRightActVel = 6; // Digital Output
+    inline constexpr int depRightActDir = 7; // Digital Output
+    inline constexpr int depRightPot = 3; // Analog Input
+}
+
+namespace ControlSchemes {
+
+    const std::string Stellar = "Stellar";
+    const std::string NewRover = "New Rover";
 }
 
 namespace AutoConstants {
