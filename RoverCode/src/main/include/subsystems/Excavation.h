@@ -24,6 +24,7 @@ class ExcavationSubsystem : public frc2::SubsystemBase {
 
         void StartActuate(bool dir);
         void StopActuate(bool limitHit);
+        double ActuateAngle();
 
     private:
         double maxSpinSpeed = 0.25; // The max speed to spin the excavator.

@@ -105,3 +105,7 @@ void ExcavationSubsystem::StopActuate(bool limitHit) {
     excLeftActVel.Set(false);
     excRightActVel.Set(false);
 }
+
+double ExcavationSubsystem::ActuateAngle() {
+    return ((excLeftPot.Get() - actuateMin) / (actuateMax - actuateMin)) * 90.0 - 45.0;
+}

@@ -34,7 +34,15 @@ void Robot::RobotInit() {
  * This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+    frc2::CommandScheduler::GetInstance().Run();
+}
+
+int autoState = 0;
+
+std::shared_ptr<nt::NetworkTable> tag0;
+nt::DoubleSubscriber tag0Angle;
+nt::DoubleSubscriber tag0Dist;
 
 /**
  * You can add additional auto modes by adding additional comparisons to the
@@ -47,6 +55,8 @@ void Robot::AutonomousInit() {
   hop.Reset();
   exc.Reset();
   dep.Reset();
+  angleAct.Cancel();
+  distDrive.Cancel();
   
   autoSelected = autoChooser.GetSelected();
   fmt::print("Auto selected: {}\n", autoSelected);
@@ -54,16 +64,75 @@ void Robot::AutonomousInit() {
   if (autoSelected == AutoConstants::DriveCycle) {
     // Custom Auto goes here
   } else {
-    // Default Auto goes here
+
+    tag0 = netTable.GetTable("Vision/Beacons/Tag 0");
+    tag0Angle = tag0->GetDoubleTopic("Angle").Subscribe(0);
+    tag0Dist = tag0->GetDoubleTopic("Distance").Subscribe(0);
+
+    switch(autoState) {
+      case 0: // Traversal
+      
+        // Find EXC Beacon
+        
+        // If angle non-zero
+        // Steer to angle
+        angleAct.Set(0, tag0Angle.Get());
+        angleAct.Schedule();
+
+        // If distance is > threshold
+        // Drive
+        distDrive.Set(tag0Dist.Get());
+        distDrive.Schedule();
+
+        // Stop Drive
+        break;
+      case 1: // EXC Orientation
+        break;
+      case 2: // EXC
+        break;
+      case 3: // DEP Orientation
+        break;
+      case 4: // DEP
+        break;
+
+    }
+
   }
 }
 
 void Robot::AutonomousPeriodic() {
   if (autoSelected == AutoConstants::DriveCycle) {
     // Custom Auto goes here
-    wpi::outs() << "Auto Drive Cycle\n";
   } else {
-    // Default Auto goes here
+
+    tag0Angle = tag0->GetDoubleTopic("Angle").Subscribe(0);
+    tag0Dist = tag0->GetDoubleTopic("Distance").Subscribe(0);
+
+    switch(autoState) {
+      case 0: // Traversal
+
+        // Find EXC Beacon
+        
+        // If angle non-zero
+        // Steer to angle
+        angleAct.Set(0, tag0Angle.Get());
+        
+        distDrive.Set(tag0Dist.Get());
+        if (!distDrive.IsFinished())
+          angleAct.Schedule();
+        // Stop Drive
+        break;
+      case 1: // EXC Orientation
+        break;
+      case 2: // EXC
+        break;
+      case 3: // DEP Orientation
+        break;
+      case 4: // DEP
+        break;
+
+    }
+
   }
 }
 
@@ -73,6 +142,8 @@ void Robot::TeleopInit() {
   hop.Reset();
   exc.Reset();
   dep.Reset();
+  angleAct.Cancel();
+  distDrive.Cancel();
 
   schemeSelected = schemeChooser.GetSelected();
   fmt::print("Scheme selected: {}\n", schemeSelected);
@@ -274,6 +345,8 @@ void Robot::DisabledInit() {
   hop.Reset();
   exc.Reset();
   dep.Reset();
+  angleAct.Cancel();
+  distDrive.Cancel();
 }
 
 void Robot::DisabledPeriodic() {}
@@ -284,6 +357,8 @@ void Robot::TestInit() {
   hop.Reset();
   exc.Reset();
   dep.Reset();
+  angleAct.Cancel();
+  distDrive.Cancel();
 }
 
 void Robot::TestPeriodic() {}
@@ -294,6 +369,8 @@ void Robot::SimulationInit() {
   hop.Reset();
   exc.Reset();
   dep.Reset();
+  angleAct.Cancel();
+  distDrive.Cancel();
 }
 
 void Robot::SimulationPeriodic() {}

@@ -78,8 +78,11 @@
     }
   },
   "NetworkTables": {
-    "Retained Values": {
+    "Persistent Values": {
       "open": false
+    },
+    "SmartDashboard": {
+      "open": true
     },
     "persistent": {
       "Shuffleboard": {
@@ -98,6 +101,9 @@
           },
           "open": true
         }
+      },
+      "SmartDashboard": {
+        "open": true
       }
     },
     "retained": {
@@ -110,10 +116,36 @@
         }
       },
       "SmartDashboard": {
+        "Auto Modes": {
+          "open": true
+        },
         "open": true
       }
     },
     "transitory": {
+      "CameraPublisher": {
+        "Front": {
+          "open": true,
+          "string[]##v_/CameraPublisher/Front/modes": {
+            "open": true
+          },
+          "string[]##v_/CameraPublisher/Front/streams": {
+            "open": true
+          }
+        },
+        "FrontColor": {
+          "open": true,
+          "string[]##v_/CameraPublisher/FrontColor/streams": {
+            "open": true
+          }
+        },
+        "Tags": {
+          "open": true
+        },
+        "USB Camera 0": {
+          "open": true
+        }
+      },
       "Shuffleboard": {
         "Information": {
           "Wheel Motor Current": {
@@ -129,8 +161,7 @@
         },
         "Rover Configuration": {
           "open": true
-        },
-        "open": true
+        }
       },
       "SmartDashboard": {
         "Front Left Current": {
@@ -148,20 +179,35 @@
           }
         },
         "open": true
+      },
+      "Vision": {
+        "Beacons": {
+          "Tag 0": {
+            "Normal": {
+              "open": true
+            },
+            "open": true
+          },
+          "open": true
+        },
+        "open": true
       }
     }
   },
   "NetworkTables Info": {
+    "Clients": {
+      "open": true
+    },
     "Connections": {
       "open": true
     },
     "Server": {
-      "Publishers": {
-        "open": true
-      },
       "open": true
     },
     "shuffleboard@1": {
+      "Subscribers": {
+        "open": true
+      },
       "open": true
     },
     "shuffleboard@2": {

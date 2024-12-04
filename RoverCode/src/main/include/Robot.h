@@ -14,13 +14,19 @@
 #include <frc/smartdashboard/SendableChooser.h>
 #include <wpi/raw_ostream.h>
 #include <frc/SPI.h>
+#include <networktables/NetworkTableInstance.h>
+#include <networktables/NetworkTable.h>
+#include <networktables/DoubleTopic.h>
 
 #include "Constants.h"
+#include "Vision.h"
 #include "subsystems/Mobility.h"
 #include "subsystems/Hopper.h"
 #include "subsystems/Excavation.h"
 #include "subsystems/Deposition.h"
 #include "sendables/IMUSendable.h"
+#include "commands/AngleActuator.h"
+#include "commands/DistanceDrive.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -48,8 +54,15 @@ class Robot : public frc::TimedRobot {
   double leftStickDeadzone = 0.1;
   double rightStickDeadzone = 0.1;
 
+  nt::NetworkTableInstance netTable{nt::NetworkTableInstance::GetDefault()};
+  Vision vision;
+
   MobilitySubsystem mob;
   HopperSubsystem hop;
   ExcavationSubsystem exc;
   DepositionSubsystem dep;
+
+  // Autonomous Commands
+  AngleActuator angleAct{&exc};
+  DistanceDrive distDrive{&mob};
 };
