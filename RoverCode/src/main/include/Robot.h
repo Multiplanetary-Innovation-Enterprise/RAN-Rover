@@ -14,9 +14,6 @@
 #include <frc/smartdashboard/SendableChooser.h>
 #include <wpi/raw_ostream.h>
 #include <frc/SPI.h>
-#include <networktables/NetworkTableInstance.h>
-#include <networktables/NetworkTable.h>
-#include <networktables/DoubleTopic.h>
 
 #include "Constants.h"
 #include "Vision.h"
@@ -54,7 +51,6 @@ class Robot : public frc::TimedRobot {
   double leftStickDeadzone = 0.1;
   double rightStickDeadzone = 0.1;
 
-  nt::NetworkTableInstance netTable{nt::NetworkTableInstance::GetDefault()};
   Vision vision;
 
   MobilitySubsystem mob;

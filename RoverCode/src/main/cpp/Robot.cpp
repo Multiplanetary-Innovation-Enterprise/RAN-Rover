@@ -40,10 +40,6 @@ void Robot::RobotPeriodic() {
 
 int autoState = 0;
 
-std::shared_ptr<nt::NetworkTable> tag0;
-nt::DoubleSubscriber tag0Angle;
-nt::DoubleSubscriber tag0Dist;
-
 /**
  * You can add additional auto modes by adding additional comparisons to the
  * if-else structure below with additional strings. If using the SendableChooser
@@ -65,10 +61,6 @@ void Robot::AutonomousInit() {
     // Custom Auto goes here
   } else {
 
-    tag0 = netTable.GetTable("Vision/Beacons/Tag 0");
-    tag0Angle = tag0->GetDoubleTopic("Angle").Subscribe(0);
-    tag0Dist = tag0->GetDoubleTopic("Distance").Subscribe(0);
-
     switch(autoState) {
       case 0: // Traversal
       
@@ -76,12 +68,12 @@ void Robot::AutonomousInit() {
         
         // If angle non-zero
         // Steer to angle
-        angleAct.Set(0, tag0Angle.Get());
+        angleAct.Set(0, vision.getTagAngle(0));
         angleAct.Schedule();
 
         // If distance is > threshold
         // Drive
-        distDrive.Set(tag0Dist.Get());
+        distDrive.Set(vision.getTagDistance(0));
         distDrive.Schedule();
 
         // Stop Drive
@@ -105,9 +97,6 @@ void Robot::AutonomousPeriodic() {
     // Custom Auto goes here
   } else {
 
-    tag0Angle = tag0->GetDoubleTopic("Angle").Subscribe(0);
-    tag0Dist = tag0->GetDoubleTopic("Distance").Subscribe(0);
-
     switch(autoState) {
       case 0: // Traversal
 
@@ -115,9 +104,9 @@ void Robot::AutonomousPeriodic() {
         
         // If angle non-zero
         // Steer to angle
-        angleAct.Set(0, tag0Angle.Get());
+        angleAct.Set(0, vision.getTagAngle(0));
         
-        distDrive.Set(tag0Dist.Get());
+        distDrive.Set(vision.getTagDistance(0));
         if (!distDrive.IsFinished())
           angleAct.Schedule();
         // Stop Drive
