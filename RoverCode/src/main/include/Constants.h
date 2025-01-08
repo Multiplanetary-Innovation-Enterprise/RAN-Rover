@@ -44,11 +44,18 @@ namespace PortConstants {
 namespace ControlSchemes {
 
     const std::string Stellar = "Stellar";
-    const std::string NewRover = "New Rover";
+    const std::string Atlas = "Atlas";
 }
 
 namespace AutoConstants {
 
-    const std::string Default = "Default";
-    const std::string DriveCycle = "DriveCycle";
+    const std::string Full = "Full";
+    const std::string EXCAndDEP = "Full EXC & DEP";
+    const std::string FullEXC = "Full EXC";
+    const std::string FullDEP = "Full DEP";
+    const std::string Traversal = "Traversal";
+    const std::string ExcOrientation = "EXC Orientation"
+    const std::string ExcAction = "EXC Action";
+    const std::string DepOrientation = "DEP Orientation"
+    const std::string DepAction = "DEP Action";
 }
