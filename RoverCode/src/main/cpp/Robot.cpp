@@ -14,7 +14,7 @@ void Robot::RobotInit() {
   autoChooser.AddOption(AutoConstants::DriveCycle, AutoConstants::DriveCycle);
   frc::SmartDashboard::PutData("Auto Modes", &autoChooser);
 
-  schemeChooser.SetDefaultOption(ControlSchemes::NewRover, ControlSchemes::NewRover);
+  schemeChooser.SetDefaultOption(ControlSchemes::Atlas, ControlSchemes::Atlas);
   schemeChooser.AddOption(ControlSchemes::Stellar, ControlSchemes::Stellar);
   frc::SmartDashboard::PutData("Control Scheme", &schemeChooser);
 
@@ -85,8 +85,15 @@ void Robot::AutonomousInit() {
       case 3: // DEP Orientation
         break;
       case 4: // DEP
-        break;
+        // Assume we are aligned to construction berm, that should have been done in DEP Orientation
 
+        // TODO: Will need to be changed to dep when we switch to Atlas
+        // Spin Deposition Hopper so the belt has done one full rotation.
+        hop.Spin(0.75, false);
+        sleep(6); // Number will need to be adjusted to represent one full rotation at the given motor speed.
+        hop.Stop();
+
+        break;
     }
 
   }
@@ -225,12 +232,12 @@ void Robot::TeleopPeriodic() {
   #pragma endregion Stellar_Deposition
     
 #pragma endregion Stellar
-  } else if (schemeSelected == ControlSchemes::NewRover) {
-#pragma region NewRover
+  } else if (schemeSelected == ControlSchemes::Atlas) {
+#pragma region Atlas
     /****************
      *   MOBILITY   *
      ****************/
-  #pragma region NewRover_Mobility
+  #pragma region Atlas_Mobility
 
     // Left Joystick X on Primary Controller
     double leftStickX = controller.GetLeftX();
@@ -270,12 +277,12 @@ void Robot::TeleopPeriodic() {
       }
     }
 
-  #pragma endregion NewRover_Mobility
+  #pragma endregion Atlas_Mobility
 
     /****************
      *    HOPPER    *
      ****************/
-  #pragma region NewRover_Hopper
+  #pragma region Atlas_Hopper
     // Left Trigger on Controller
     double leftTrigger = controller.GetLeftTriggerAxis();
 
@@ -293,12 +300,12 @@ void Robot::TeleopPeriodic() {
     } else if (controller.GetXButtonReleased()) {
       hop.HoldLock(false);
     }
-  #pragma endregion NewRover_Hopper
+  #pragma endregion Atlas_Hopper
 
     /****************
      *  EXCAVATION  *
      ****************/
-  #pragma region NewRover_Excavation
+  #pragma region Atlas_Excavation
     // Right Trigger on Controller
     double rightTrigger = controller.GetRightTriggerAxis();
 
@@ -322,9 +329,9 @@ void Robot::TeleopPeriodic() {
     } else {
       exc.StopActuate(false);
     }
-  #pragma endregion NewRover_Excavation
+  #pragma endregion Atlas_Excavation
 
-#pragma endregion NewRover
+#pragma endregion Atlas
   }
 }
 
