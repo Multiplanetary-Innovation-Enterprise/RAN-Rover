@@ -47,7 +47,7 @@ namespace ControlSchemes {
     const std::string Atlas = "Atlas";
 }
 
-namespace AutoConstants {
+namespace AutoPhases {
 
     inline constexpr int Traversal = 0;
     inline constexpr int ExcOrientation = 1;
