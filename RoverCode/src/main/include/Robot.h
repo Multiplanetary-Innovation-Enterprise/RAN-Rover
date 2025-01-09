@@ -60,4 +60,8 @@ class Robot : public frc::TimedRobot {
   // Autonomous Commands
   AngleActuator angleAct{&exc};
   DistanceDrive distDrive{&mob};
+
+  // Autonomous Variables
+  double hopperEmptyTime = 6.0; // In Seconds
+  double hopperEmptySpeed = 0.75; // Motor Percentage
 };
