@@ -9,10 +9,9 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 void Robot::RobotInit() {
-  
-  autoChooser.SetDefaultOption(AutoConstants::Default, AutoConstants::Default);
-  autoChooser.AddOption(AutoConstants::DriveCycle, AutoConstants::DriveCycle);
-  frc::SmartDashboard::PutData("Auto Modes", &autoChooser);
+
+  std::vector<int> defaultAutoPhases = {0, 1, 1, 1, 1};
+  frc::SmartDashboard::PutBooleanArray("Auto Phases", defaultAutoPhases);
 
   schemeChooser.SetDefaultOption(ControlSchemes::Atlas, ControlSchemes::Atlas);
   schemeChooser.AddOption(ControlSchemes::Stellar, ControlSchemes::Stellar);
@@ -38,8 +37,6 @@ void Robot::RobotPeriodic() {
     frc2::CommandScheduler::GetInstance().Run();
 }
 
-int autoState = 0;
-
 /**
  * You can add additional auto modes by adding additional comparisons to the
  * if-else structure below with additional strings. If using the SendableChooser
@@ -54,81 +51,84 @@ void Robot::AutonomousInit() {
   angleAct.Cancel();
   distDrive.Cancel();
   
-  autoSelected = autoChooser.GetSelected();
+  autoSelected = frc::SmartDashboard::GetBooleanArray("Auto Phases");
   fmt::print("Auto selected: {}\n", autoSelected);
 
-  if (autoSelected == AutoConstants::DriveCycle) {
-    // Custom Auto goes here
-  } else {
-
-    switch(autoState) {
-      case 0: // Traversal
-      
-        // Find EXC Beacon
+  if (autoSelected[AutoConstants::Traversal] != 0) {
+    // Find EXC Beacon
         
-        // If angle non-zero
-        // Steer to angle
-        angleAct.Set(0, vision.getTagAngle(0));
-        angleAct.Schedule();
+    // If angle non-zero
+    // Steer to angle
+    angleAct.Set(0, vision.getTagAngle(0));
+    angleAct.Schedule();
 
-        // If distance is > threshold
-        // Drive
-        distDrive.Set(vision.getTagDistance(0));
-        distDrive.Schedule();
+    // If distance is > threshold
+    // Drive
+    distDrive.Set(vision.getTagDistance(0));
+    distDrive.Schedule();
 
-        // Stop Drive
-        break;
-      case 1: // EXC Orientation
-        break;
-      case 2: // EXC
-        break;
-      case 3: // DEP Orientation
-        break;
-      case 4: // DEP
-        // Assume we are aligned to construction berm, that should have been done in DEP Orientation
+    // Stop Drive
+  }
 
-        // TODO: Will need to be changed to dep when we switch to Atlas
-        // Spin Deposition Hopper so the belt has done one full rotation.
-        hop.Spin(0.75, false);
-        sleep(6); // Number will need to be adjusted to represent one full rotation at the given motor speed.
-        hop.Stop();
+  if (autoSelected[AutoConstants::ExcOrientation] != 0) {
 
-        break;
-    }
+
+  }
+
+  if (autoSelected[AutoConstants::ExcAction] != 0) {
+
+
+  }
+
+  if (autoSelected[AutoConstants::DepOrientation] != 0) {
+
+
+  }
+
+  if (autoSelected[AutoConstants::DepAction] != 0) {
+
 
   }
 }
 
 void Robot::AutonomousPeriodic() {
-  if (autoSelected == AutoConstants::DriveCycle) {
-    // Custom Auto goes here
-  } else {
 
-    switch(autoState) {
-      case 0: // Traversal
+  if (autoSelected[AutoConstants::Traversal] != 0) {
+    // Find EXC Beacon
+    
+    // If angle non-zero
+    // Steer to angle
+    angleAct.Set(0, vision.getTagAngle(0));
+    
+    distDrive.Set(vision.getTagDistance(0));
+    if (!distDrive.IsFinished())
+      angleAct.Schedule();
+    // Stop Drive
+  }
 
-        // Find EXC Beacon
-        
-        // If angle non-zero
-        // Steer to angle
-        angleAct.Set(0, vision.getTagAngle(0));
-        
-        distDrive.Set(vision.getTagDistance(0));
-        if (!distDrive.IsFinished())
-          angleAct.Schedule();
-        // Stop Drive
-        break;
-      case 1: // EXC Orientation
-        break;
-      case 2: // EXC
-        break;
-      case 3: // DEP Orientation
-        break;
-      case 4: // DEP
-        break;
+  if (autoSelected[AutoConstants::ExcOrientation] != 0) {
 
-    }
 
+  }
+
+  if (autoSelected[AutoConstants::ExcAction] != 0) {
+
+
+  }
+
+  if (autoSelected[AutoConstants::DepOrientation] != 0) {
+
+
+  }
+
+  if (autoSelected[AutoConstants::DepAction] != 0) {
+    // Assume we are aligned to construction berm, that should have been done in DEP Orientation
+
+    // TODO: Will need to be changed to dep when we switch to Atlas
+    // Spin Deposition Hopper so the belt has done one full rotation.
+    hop.Spin(0.75, false);
+    sleep(6); // Number will need to be adjusted to represent one full rotation at the given motor speed.
+    hop.Stop(); 
   }
 }
 

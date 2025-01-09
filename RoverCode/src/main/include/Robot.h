@@ -30,7 +30,7 @@ class Robot : public frc::TimedRobot {
   IMUSendable imu{frc::SPI::Port::kMXP};
   frc::XboxController controller{PortConstants::controller};
 
-  std::string autoSelected;
+  std::vector<int> autoSelected;
   std::string schemeSelected;
 
   void RobotInit() override;
@@ -46,7 +46,6 @@ class Robot : public frc::TimedRobot {
   void SimulationInit() override;
   void SimulationPeriodic() override;
  private:
-  frc::SendableChooser<std::string> autoChooser;
   frc::SendableChooser<std::string> schemeChooser;
   double leftStickDeadzone = 0.1;
   double rightStickDeadzone = 0.1;

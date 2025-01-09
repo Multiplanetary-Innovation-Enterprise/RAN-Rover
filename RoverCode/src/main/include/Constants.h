@@ -49,13 +49,9 @@ namespace ControlSchemes {
 
 namespace AutoConstants {
 
-    const std::string Full = "Full";
-    const std::string EXCAndDEP = "Full EXC & DEP";
-    const std::string FullEXC = "Full EXC";
-    const std::string FullDEP = "Full DEP";
-    const std::string Traversal = "Traversal";
-    const std::string ExcOrientation = "EXC Orientation"
-    const std::string ExcAction = "EXC Action";
-    const std::string DepOrientation = "DEP Orientation"
-    const std::string DepAction = "DEP Action";
+    inline constexpr int Traversal = 0;
+    inline constexpr int ExcOrientation = 1;
+    inline constexpr int ExcAction = 2;
+    inline constexpr int DepOrientation = 3;
+    inline constexpr int DepAction = 4;
 }
