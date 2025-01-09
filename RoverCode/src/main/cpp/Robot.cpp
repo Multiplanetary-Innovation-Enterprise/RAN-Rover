@@ -86,28 +86,28 @@ void Robot::AutonomousInit() {
     distDrive.Set(vision.getTagDistance(0));
     distDrive.Schedule();
   } else {
-    fmt::print("Skipping Autonomous Traversal Initialization");
+    fmt::print("Skipping Autonomous Traversal Initialization\n");
   }
 
   if (autoExcOrient) {
     // Autonomous Excavation Orientation - Initialization
 
   } else {
-    fmt::print("Skipping Autonomous Excavation Orientation Initialization");
+    fmt::print("Skipping Autonomous Excavation Orientation Initialization\n");
   }
 
   if (autoExcAction) {
     // Autonomous Excavation Action - Initialization
 
   } else {
-    fmt::print("Skipping Autonomous Excavation Action Initialization");
+    fmt::print("Skipping Autonomous Excavation Action Initialization\n");
   }
 
   if (autoDepOrient) {
     // Autonomous Deposition Orientation - Initialization
 
   } else {
-    fmt::print("Skipping Autonomous Deposition Orientation Initialization");
+    fmt::print("Skipping Autonomous Deposition Orientation Initialization\n");
   }
     
   if (autoDepAction) {
@@ -118,7 +118,7 @@ void Robot::AutonomousInit() {
     hopperEmptyTime = units::time::second_t{frc::SmartDashboard::GetNumber("Hopper Empty Time", hopperEmptyTime.value())};
 
   } else {
-    fmt::print("Skipping Autonomous Deposition Action Initialization");
+    fmt::print("Skipping Autonomous Deposition Action Initialization\n");
   }
 }
 
@@ -139,36 +139,42 @@ void Robot::AutonomousPeriodic() {
         distDrive.Set(vision.getTagDistance(0));
         if (!distDrive.IsFinished())
           angleAct.Schedule();
+        else
+          currentPhase++;
         // Stop Drive
+
       } else {
-        fmt::print("Skipping Autonomous Traversal");
+        fmt::print("Skipping Autonomous Traversal\n");
         currentPhase++;
       }
       break;
 
     case 1: if (autoExcOrient) {
         // Autonomous Excavation Orientation
+        currentPhase++;
 
       } else {
-        fmt::print("Skipping Autonomous Excavation Orientation");
+        fmt::print("Skipping Autonomous Excavation Orientation\n");
         currentPhase++;
       }
       break;
 
     case 2: if (autoExcAction) {
         // Autonomous Excavation Action
+        currentPhase++;
 
       } else {
-        fmt::print("Skipping Autonomous Excavation Action");
+        fmt::print("Skipping Autonomous Excavation Action\n");
         currentPhase++;
       }
       break;
 
     case 3: if (autoDepOrient) {
         // Autonomous Deposition Orientation
+        currentPhase++;
 
       } else {
-        fmt::print("Skipping Autonomous Deposition Orientation");
+        fmt::print("Skipping Autonomous Deposition Orientation\n");
         currentPhase++;
       }
       break;
@@ -178,21 +184,21 @@ void Robot::AutonomousPeriodic() {
 
         // TODO: Will need to be changed to dep when we switch to Atlas
         // Spin Deposition Hopper so the belt has done one full rotation.
-        
         timer.Start();
         hop.Spin(hopperEmptySpeed, false);
         if (timer.HasElapsed(hopperEmptyTime)) {
           timer.Stop();
           hop.Stop();
+          currentPhase++;
         }
 
       } else {
-        fmt::print("Skipping Autonomous Deposition Action");
+        fmt::print("Skipping Autonomous Deposition Action\n");
         currentPhase++;
       }
       break;
     default:
-      fmt::print("Autonomous End");
+      fmt::print("Autonomous End\n");
       exit(0);
       break;
   }
