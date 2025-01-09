@@ -24,7 +24,7 @@ void Robot::RobotInit() {
   schemeChooser.SetDefaultOption(ControlSchemes::Atlas, ControlSchemes::Atlas);
   schemeChooser.AddOption(ControlSchemes::Stellar, ControlSchemes::Stellar);
   frc::SmartDashboard::PutData("Control Scheme", &schemeChooser);
-// Testing pushing
+
   frc::SmartDashboard::PutNumber("Left Stick Deadzone", leftStickDeadzone);
   frc::SmartDashboard::SetPersistent("Left Stick Deadzone");
   frc::SmartDashboard::PutNumber("Right Stick Deadzone", rightStickDeadzone);
