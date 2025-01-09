@@ -10,8 +10,16 @@
 
 void Robot::RobotInit() {
 
-  std::vector<int> defaultAutoPhases = {0, 1, 1, 1, 1};
-  frc::SmartDashboard::PutBooleanArray("Auto Phases", defaultAutoPhases);
+  frc::SmartDashboard::PutBoolean("Auto Traversal", autoTraversal);
+  frc::SmartDashboard::SetPersistent("Auto Traversal");
+  frc::SmartDashboard::PutBoolean("Auto EXC Orient", autoExcOrient);
+  frc::SmartDashboard::SetPersistent("Auto EXC Orient");
+  frc::SmartDashboard::PutBoolean("Auto EXC Action", autoExcAction);
+  frc::SmartDashboard::SetPersistent("Auto EXC Action");
+  frc::SmartDashboard::PutBoolean("Auto DEP Orient", autoDepOrient);
+  frc::SmartDashboard::SetPersistent("Auto DEP Orient");
+  frc::SmartDashboard::PutBoolean("Auto DEP Action", autoDepAction);
+  frc::SmartDashboard::SetPersistent("Auto DEP Action");
 
   schemeChooser.SetDefaultOption(ControlSchemes::Atlas, ControlSchemes::Atlas);
   schemeChooser.AddOption(ControlSchemes::Stellar, ControlSchemes::Stellar);
@@ -25,8 +33,10 @@ void Robot::RobotInit() {
   frc::SmartDashboard::PutData("IMU", &imu);
 
   // Adjustable Autonomous Variables
-  frc::SmartDashboard::PutNumber("Hopper Empty Time", hopperEmptyTime);
+  frc::SmartDashboard::PutNumber("Hopper Empty Time", hopperEmptyTime.value());
+  frc::SmartDashboard::SetPersistent("Hopper Empty Time");
   frc::SmartDashboard::PutNumber("Hopper Empty Speed", hopperEmptySpeed);
+  frc::SmartDashboard::SetPersistent("Hopper Empty Speed");
 }
 
 /**
@@ -54,13 +64,18 @@ void Robot::AutonomousInit() {
   dep.Reset();
   angleAct.Cancel();
   distDrive.Cancel();
-  
-  autoSelected = frc::SmartDashboard::GetBooleanArray("Auto Phases", std::vector<int>{1, 1, 1, 1, 1});
-  fmt::print("Auto selected: {}\n", autoSelected);
 
-  if (autoSelected[AutoPhases::Traversal] != 0) {
+  autoTraversal = frc::SmartDashboard::GetBoolean("Auto Traversal", autoTraversal);
+  autoExcOrient = frc::SmartDashboard::GetBoolean("Auto EXC Orient", autoExcOrient);
+  autoExcAction = frc::SmartDashboard::GetBoolean("Auto EXC Action", autoExcAction);
+  autoDepOrient = frc::SmartDashboard::GetBoolean("Auto DEP Orient", autoDepOrient);
+  autoDepAction = frc::SmartDashboard::GetBoolean("Auto DEP Action", autoDepAction);
+
+  if (autoTraversal) {
+    // Autonomous Traversal - Initialization
+
     // Find EXC Beacon
-        
+    
     // If angle non-zero
     // Steer to angle
     angleAct.Set(0, vision.getTagAngle(0));
@@ -70,69 +85,116 @@ void Robot::AutonomousInit() {
     // Drive
     distDrive.Set(vision.getTagDistance(0));
     distDrive.Schedule();
-
-    // Stop Drive
+  } else {
+    fmt::print("Skipping Autonomous Traversal Initialization");
   }
 
-  if (autoSelected[AutoPhases::ExcOrientation] != 0) {
+  if (autoExcOrient) {
+    // Autonomous Excavation Orientation - Initialization
 
-
+  } else {
+    fmt::print("Skipping Autonomous Excavation Orientation Initialization");
   }
 
-  if (autoSelected[AutoPhases::ExcAction] != 0) {
+  if (autoExcAction) {
+    // Autonomous Excavation Action - Initialization
 
-
+  } else {
+    fmt::print("Skipping Autonomous Excavation Action Initialization");
   }
 
-  if (autoSelected[AutoPhases::DepOrientation] != 0) {
+  if (autoDepOrient) {
+    // Autonomous Deposition Orientation - Initialization
 
-
+  } else {
+    fmt::print("Skipping Autonomous Deposition Orientation Initialization");
   }
+    
+  if (autoDepAction) {
+    // Autonomous Deposition Action - Initialization
 
-  if (autoSelected[AutoPhases::DepAction] != 0) {
+    // Read values from smart dashboard to see if anything has changed
+    hopperEmptySpeed = frc::SmartDashboard::GetNumber("Hopper Empty Speed", hopperEmptySpeed);
+    hopperEmptyTime = units::time::second_t{frc::SmartDashboard::GetNumber("Hopper Empty Time", hopperEmptyTime.value())};
 
-
+  } else {
+    fmt::print("Skipping Autonomous Deposition Action Initialization");
   }
 }
 
+int currentPhase = 0;
+
 void Robot::AutonomousPeriodic() {
 
-  if (autoSelected[AutoPhases::Traversal] != 0) {
-    // Find EXC Beacon
-    
-    // If angle non-zero
-    // Steer to angle
-    angleAct.Set(0, vision.getTagAngle(0));
-    
-    distDrive.Set(vision.getTagDistance(0));
-    if (!distDrive.IsFinished())
-      angleAct.Schedule();
-    // Stop Drive
-  }
+  switch (currentPhase) {
+    case 0: if (autoTraversal) {
+        // Autonomous Traversal
 
-  if (autoSelected[AutoPhases::ExcOrientation] != 0) {
+        // Find EXC Beacon
+        
+        // If angle non-zero
+        // Steer to angle
+        angleAct.Set(0, vision.getTagAngle(0));
+        
+        distDrive.Set(vision.getTagDistance(0));
+        if (!distDrive.IsFinished())
+          angleAct.Schedule();
+        // Stop Drive
+      } else {
+        fmt::print("Skipping Autonomous Traversal");
+        currentPhase++;
+      }
+      break;
 
+    case 1: if (autoExcOrient) {
+        // Autonomous Excavation Orientation
 
-  }
+      } else {
+        fmt::print("Skipping Autonomous Excavation Orientation");
+        currentPhase++;
+      }
+      break;
 
-  if (autoSelected[AutoPhases::ExcAction] != 0) {
+    case 2: if (autoExcAction) {
+        // Autonomous Excavation Action
 
+      } else {
+        fmt::print("Skipping Autonomous Excavation Action");
+        currentPhase++;
+      }
+      break;
 
-  }
+    case 3: if (autoDepOrient) {
+        // Autonomous Deposition Orientation
 
-  if (autoSelected[AutoPhases::DepOrientation] != 0) {
+      } else {
+        fmt::print("Skipping Autonomous Deposition Orientation");
+        currentPhase++;
+      }
+      break;
 
+    case 4: if (autoDepAction) {
+        // Assume we are aligned to construction berm, that should have been done in DEP Orientation
 
-  }
+        // TODO: Will need to be changed to dep when we switch to Atlas
+        // Spin Deposition Hopper so the belt has done one full rotation.
+        
+        timer.Start();
+        hop.Spin(hopperEmptySpeed, false);
+        if (timer.HasElapsed(hopperEmptyTime)) {
+          timer.Stop();
+          hop.Stop();
+        }
 
-  if (autoSelected[AutoPhases::DepAction] != 0) {
-    // Assume we are aligned to construction berm, that should have been done in DEP Orientation
-
-    // TODO: Will need to be changed to dep when we switch to Atlas
-    // Spin Deposition Hopper so the belt has done one full rotation.
-    hop.Spin(hopperEmptySpeed, false);
-    sleep(hopperEmptyTime); // Number will need to be adjusted to represent one full rotation at the given motor speed.
-    hop.Stop(); 
+      } else {
+        fmt::print("Skipping Autonomous Deposition Action");
+        currentPhase++;
+      }
+      break;
+    default:
+      fmt::print("Autonomous End");
+      exit(0);
+      break;
   }
 }
 

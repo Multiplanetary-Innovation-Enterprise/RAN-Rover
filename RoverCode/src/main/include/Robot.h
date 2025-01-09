@@ -14,6 +14,7 @@
 #include <frc/smartdashboard/SendableChooser.h>
 #include <wpi/raw_ostream.h>
 #include <frc/SPI.h>
+#include <frc/Timer.h>
 
 #include "Constants.h"
 #include "Vision.h"
@@ -30,7 +31,12 @@ class Robot : public frc::TimedRobot {
   IMUSendable imu{frc::SPI::Port::kMXP};
   frc::XboxController controller{PortConstants::controller};
 
-  std::vector<int> autoSelected;
+  bool autoTraversal = true;
+  bool autoExcOrient = true;
+  bool autoExcAction = true;
+  bool autoDepOrient = true;
+  bool autoDepAction = true;
+  
   std::string schemeSelected;
 
   void RobotInit() override;
@@ -49,6 +55,7 @@ class Robot : public frc::TimedRobot {
   frc::SendableChooser<std::string> schemeChooser;
   double leftStickDeadzone = 0.1;
   double rightStickDeadzone = 0.1;
+  frc::Timer timer;
 
   Vision vision;
 
@@ -62,6 +69,6 @@ class Robot : public frc::TimedRobot {
   DistanceDrive distDrive{&mob};
 
   // Autonomous Variables
-  double hopperEmptyTime = 6.0; // In Seconds
+  units::time::second_t hopperEmptyTime{6.0}; // In Seconds
   double hopperEmptySpeed = 0.75; // Motor Percentage
 };

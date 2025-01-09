@@ -46,12 +46,3 @@ namespace ControlSchemes {
     const std::string Stellar = "Stellar";
     const std::string Atlas = "Atlas";
 }
-
-namespace AutoPhases {
-
-    inline constexpr int Traversal = 0;
-    inline constexpr int ExcOrientation = 1;
-    inline constexpr int ExcAction = 2;
-    inline constexpr int DepOrientation = 3;
-    inline constexpr int DepAction = 4;
-}
