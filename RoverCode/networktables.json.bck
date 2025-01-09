@@ -59,7 +59,7 @@
   {
     "name": "/SmartDashboard/Excavation Actuate Speed",
     "type": "double",
-    "value": 0.6,
+    "value": 0.025,
     "properties": {
       "persistent": true,
       "retained": true
@@ -102,7 +102,7 @@
   {
     "name": "/SmartDashboard/Deposition Actuate Speed",
     "type": "double",
-    "value": 0.0,
+    "value": 0.025,
     "properties": {
       "persistent": true,
       "retained": true
