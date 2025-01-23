@@ -4,6 +4,7 @@
 #include <networktables/NetworkTableInstance.h>
 #include <networktables/NetworkTable.h>
 #include <networktables/DoubleTopic.h>
+#include <networktables/BooleanTopic.h>
 #include <map>
 #include "Constants.h"
 
@@ -14,14 +15,16 @@ class Vision {
         void IdentifyTags();
 
         bool isTagVisible(int id);
-        double getTagDistance(int id);
         double getTagAngle(int id);
-        double getTagNormalAngle(int id);
+        double getTagNormal(int id);
+        double getTagDistance(int id);
     private:
 
         nt::NetworkTableInstance netTable{nt::NetworkTableInstance::GetDefault()};
         std::shared_ptr<nt::NetworkTable> tagTable;
 
-        std::map<int, nt::DoubleSubscriber*> tagAngles;
-        std::map<int, nt::DoubleSubscriber*> tagDistances;
+        std::map<int, bool> tagVisibilities;
+        std::map<int, double> tagAngles;
+        std::map<int, double> tagNormals;
+        std::map<int, double> tagDistances;
 };

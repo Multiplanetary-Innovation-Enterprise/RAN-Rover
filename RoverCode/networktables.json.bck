@@ -153,7 +153,8 @@
     "type": "double",
     "value": 6.0,
     "properties": {
-      "persistent": true
+      "persistent": true,
+      "retained": true
     }
   },
   {
@@ -167,7 +168,7 @@
   {
     "name": "/SmartDashboard/Auto Traversal",
     "type": "boolean",
-    "value": false,
+    "value": true,
     "properties": {
       "persistent": true,
       "retained": true
@@ -185,7 +186,7 @@
   {
     "name": "/SmartDashboard/Auto EXC Action",
     "type": "boolean",
-    "value": false,
+    "value": true,
     "properties": {
       "persistent": true,
       "retained": true
@@ -205,7 +206,8 @@
     "type": "boolean",
     "value": true,
     "properties": {
-      "persistent": true
+      "persistent": true,
+      "retained": true
     }
   }
 ]
