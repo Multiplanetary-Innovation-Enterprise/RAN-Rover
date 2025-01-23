@@ -166,13 +166,16 @@ bool Autonomy::FindBeacon(int tagId) {
     }
 
     // Assume that tags are ordered clockwise in numerical order around the rover.
-
-    if (vision->isTagVisible(tagId - 1)) { // There is a visible tag to the left
-
-    }
-
-    if (vision->isTagVisible(tagId + 1)) { // There is a visible tag to the right.
-
+    std::vector<int> visibleTags = vision->getVisibleTags();
+    if (visibleTags.size() <= 1) { // One or zero tags visible, use that to inform direction of where target tag is.
+         int tagLastSeen = vision->getTagLastSeen();
+        if (tagLastSeen > tagId) { // Last tag seen is to the right of where our target should be, turn counter-clockwise.
+            // Zero-Point Turn Counter-Clockwise
+        } else { // Last tag seen is to the left of where our target should be, or we haven't seen a tag yet, turn clockwise.
+            // Zero-Point Turn Clockwise
+        }
+    } else { // Two tags visible without finding target beacon, we need to reposition because our target must be visually obstructed.
+        // Reposition
     }
 }
 

@@ -23,11 +23,31 @@ void Vision::IdentifyTags() {
         nt::DoubleSubscriber tagAngle = tagTable->GetDoubleTopic(tag + "/Angle").Subscribe(0);
         nt::DoubleSubscriber tagNormal = tagTable->GetDoubleTopic(tag + "/Normal").Subscribe(0);
         nt::DoubleSubscriber tagDistance = tagTable->GetDoubleTopic(tag + "/Distance").Subscribe(0);
-        tagVisibilities[tagId] = tagVisible.Get();
+
+        bool tagVisibility = tagVisible.Get();
+        if ((tagLastSeen == -1 || !tagVisibilities[tagId]) && tagVisibility)
+            tagLastSeen = tagId;
+
+        tagVisibilities[tagId] = tagVisibility;
         tagAngles[tagId] = tagAngle.Get();
         tagNormals[tagId] = tagNormal.Get();
         tagDistances[tagId] = tagDistance.Get();
     }
+}
+
+std::vector<int> Vision::getVisibleTags() {
+    std::vector<int> visibleTags;
+
+    for (int i = 0; i < 4; i++) {
+        if (isTagVisible(i)) 
+            visibleTags.push_back(i);
+    }
+
+    return visibleTags;
+}
+
+int Vision::getTagLastSeen() {
+    return tagLastSeen;
 }
 
 bool Vision::isTagVisible(int tagId) {

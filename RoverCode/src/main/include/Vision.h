@@ -14,6 +14,9 @@ class Vision {
 
         void IdentifyTags();
 
+        std::vector<int> getVisibleTags();
+        int getTagLastSeen();
+
         bool isTagVisible(int id);
         double getTagAngle(int id);
         double getTagNormal(int id);
@@ -23,6 +26,7 @@ class Vision {
         nt::NetworkTableInstance netTable{nt::NetworkTableInstance::GetDefault()};
         std::shared_ptr<nt::NetworkTable> tagTable;
 
+        int tagLastSeen = -1;
         std::map<int, bool> tagVisibilities;
         std::map<int, double> tagAngles;
         std::map<int, double> tagNormals;
