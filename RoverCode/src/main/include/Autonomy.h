@@ -44,11 +44,13 @@ class Autonomy {
         MobilitySubsystem* mob;
         HopperSubsystem* hop;
         ExcavationSubsystem* exc;
-        frc::Timer timer;
+        IMUSendable imu{frc::SPI::Port::kMXP};
+        frc::Timer timerA, timerB;
 
         // Autonomous Helper Functions
         bool FindBeacon(int tagId);
         bool NavigateToBeacon(int tagId);
+        bool ZeroPointTurn(double degrees);
 
         // Autonomous Commands
         SteerWheel steer{mob};
@@ -58,7 +60,19 @@ class Autonomy {
         // Autonomous Variables //
         //////////////////////////
 
+        // Mobility
+        double zeroPointDriveSpeed = 0.3;
+
+        // Exc Action
+        double excavationSpinSpeed = 0.5;
+        double excavationSpinStartAngle = 25.0;
+        double excavationStowAngle = -10.0;
+        units::time::second_t excavationCycleTime{10.0};
+        double hopperIndexSpeed = 0.5;
+        units::time::second_t hopperIndexTime{1.0};
+        units::time::second_t hopperIndexPeriod{5.0};
+
         // Dep Action
-        units::time::second_t hopperEmptyTime{6.0}; // In Seconds
         double hopperEmptySpeed = 0.75; // Motor Percentage
+        units::time::second_t hopperEmptyTime{6.0}; // In Seconds
 };

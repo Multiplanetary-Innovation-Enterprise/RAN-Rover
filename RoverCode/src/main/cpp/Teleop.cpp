@@ -49,9 +49,9 @@ void Teleop::Mobility() {
 
     // D-Pad on Controller for Crawl (Slow drive)
     if (primaryController.GetPOV() == 0) { // D-Pad Up
-      mob->Drive(1, 1, true);
+      mob->Crawl(true);
     } else if (primaryController.GetPOV() == 180) { // D-Pad Down
-      mob->Drive(-1, -1, true);
+      mob->Crawl(false);
     } else {
       // If not crawling, allow for normal stick input.
 
@@ -64,9 +64,9 @@ void Teleop::Mobility() {
 
         wpi::outs() << "Steer Angle: " << std::to_string(int(leftStickAngle)) << "\n";
         // Mobility Drive takes the left side input, right side input, and a boolean to determine if it should crawl
-        mob->Drive(leftStickMagnitude, leftStickMagnitude, false);
+        mob->Drive({leftStickMagnitude, leftStickMagnitude, leftStickMagnitude, leftStickMagnitude});
       } else {
-        mob->Stop();
+        mob->StopAll();
       }
     }
 }

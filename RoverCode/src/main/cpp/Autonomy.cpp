@@ -17,10 +17,32 @@ Autonomy::Autonomy(Robot* robot, Vision* vision, MobilitySubsystem* mob, Excavat
     frc::SmartDashboard::SetPersistent("Auto DEP Action");
 
     // Adjustable Autonomous Variables
-    frc::SmartDashboard::PutNumber("Hopper Empty Time", hopperEmptyTime.value());
-    frc::SmartDashboard::SetPersistent("Hopper Empty Time");
+
+    // Mobility
+    frc::SmartDashboard::PutNumber("Zero Point Drive Speed", zeroPointDriveSpeed);
+    frc::SmartDashboard::SetPersistent("Zero Point Drive Speed");
+
+    // Exc Action
+    frc::SmartDashboard::PutNumber("Excavation Spin Speed", excavationSpinSpeed);
+    frc::SmartDashboard::SetPersistent("Excavation Spin Speed");
+    frc::SmartDashboard::PutNumber("Excavation Spin Start Angle", excavationSpinStartAngle);
+    frc::SmartDashboard::SetPersistent("Excavation Spin Start Angle");
+    frc::SmartDashboard::PutNumber("Excavation Stow Angle", excavationStowAngle);
+    frc::SmartDashboard::SetPersistent("Excavation Stow Angle");
+    frc::SmartDashboard::PutNumber("Excavation Cycle Time", excavationCycleTime.value());
+    frc::SmartDashboard::SetPersistent("Excavation Cycle Time");
+    frc::SmartDashboard::PutNumber("Hopper Index Speed", hopperIndexSpeed);
+    frc::SmartDashboard::SetPersistent("Hopper Index Speed");
+    frc::SmartDashboard::PutNumber("Hopper Index Time", hopperIndexTime.value());
+    frc::SmartDashboard::SetPersistent("Hopper Index Time");
+    frc::SmartDashboard::PutNumber("Hopper Index Period", hopperIndexPeriod.value());
+    frc::SmartDashboard::SetPersistent("Hopper Index Period");
+
+    // Dep Action
     frc::SmartDashboard::PutNumber("Hopper Empty Speed", hopperEmptySpeed);
     frc::SmartDashboard::SetPersistent("Hopper Empty Speed");
+    frc::SmartDashboard::PutNumber("Hopper Empty Time", hopperEmptyTime.value());
+    frc::SmartDashboard::SetPersistent("Hopper Empty Time");
 }
 
 void Autonomy::Init() {
@@ -103,6 +125,15 @@ void Autonomy::ExcActionInit() {
         fmt::print("Skipping Auto EXC Action Init\n");
         return;
     }
+    
+    excavationSpinSpeed = frc::SmartDashboard::GetNumber("Excavation Spin Speed", excavationSpinSpeed);
+    excavationSpinStartAngle = frc::SmartDashboard::GetNumber("Excavation Spin Start Angle", excavationSpinStartAngle);
+    excavationStowAngle = frc::SmartDashboard::GetNumber("Excavation Stow Angle", excavationStowAngle);
+    excavationCycleTime = units::time::second_t{frc::SmartDashboard::GetNumber("Excavation Cycle Time", excavationCycleTime.value())};
+
+    hopperIndexSpeed = frc::SmartDashboard::GetNumber("Hopper Index Speed", hopperIndexSpeed);
+    hopperIndexTime = units::time::second_t{frc::SmartDashboard::GetNumber("Hopper Index Time", hopperIndexTime.value())};
+    hopperIndexPeriod = units::time::second_t{frc::SmartDashboard::GetNumber("Hopper Index Period", hopperIndexPeriod.value())};
 }
 bool Autonomy::ExcActionPeriodic() {
     if (!frc::SmartDashboard::GetBoolean("Auto EXC Action", false)) {
@@ -110,7 +141,35 @@ bool Autonomy::ExcActionPeriodic() {
         return true;
     }
 
-    return true;
+    timerA.Start();
+    if (!timerA.HasElapsed(excavationCycleTime)) {
+        if (exc->ActuateAngle() < excavationSpinStartAngle)
+            exc->StartActuate(true);
+        else {
+            exc->StopActuate(true);
+            exc->Spin(excavationSpinSpeed, false);
+
+            // Hopper Indexing
+            timerB.Start();
+            if (timerB.HasElapsed(hopperIndexPeriod)) {
+                hop->Spin(hopperIndexSpeed, false);
+                if (timerB.HasElapsed(hopperIndexPeriod + hopperIndexTime)) {
+                    hop->Stop();
+                    timerB.Stop();
+                }
+            }
+        }
+    } else {
+        timerA.Stop();
+        if (exc->ActuateAngle() > excavationStowAngle) {
+            exc->StartActuate(true);
+        } else {
+            exc->StopActuate(true);
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void Autonomy::DepOrientInit() {
@@ -144,10 +203,10 @@ bool Autonomy::DepActionPeriodic() {
     }
     // TODO: Will need to be changed to dep when we switch to Atlas
     // Spin Deposition Hopper so the belt has done one full rotation.
-    timer.Start();
+    timerA.Start();
     hop->Spin(hopperEmptySpeed, false);
-    if (timer.HasElapsed(hopperEmptyTime)) {
-        timer.Stop();
+    if (timerA.HasElapsed(hopperEmptyTime)) {
+        timerA.Stop();
         hop->Stop();
         return true;
     }
@@ -264,3 +323,41 @@ bool Autonomy::NavigateToBeacon(int tagId) {
         }
     }
 }
+
+bool Autonomy::ZeroPointTurn(double degrees) {
+
+    // Turn Wheels to be in ZeroPoint Configuration
+    steer.ZeroPoint();
+    if (!steer.IsFinished()) {
+        if (!steer.IsScheduled()) {
+            robot->Kill();
+            steer.Schedule();
+        }
+        return false;
+    }
+    // Retrieves the current yaw, will look for this to be equal to 'degrees'. 
+    float yaw = imu.GetYaw(); 
+    if (abs(degrees - yaw) > 5.0) { // Margin of +/- 5 degrees to target.
+
+        zeroPointDriveSpeed = frc::SmartDashboard::GetNumber("Zero Point Drive Speed", zeroPointDriveSpeed);
+
+        if (int(degrees - yaw) % 360 >= 180) { // Needs to turn right
+            mob->Drive({zeroPointDriveSpeed, -zeroPointDriveSpeed, zeroPointDriveSpeed, -zeroPointDriveSpeed});
+        } else if (int(degrees - yaw) % 360 < 180) { // Neds to turn left
+            mob->Drive({-zeroPointDriveSpeed, zeroPointDriveSpeed, -zeroPointDriveSpeed, zeroPointDriveSpeed});
+        }
+
+        return false;
+    }
+
+    steer.Straight();
+    if (!steer.IsFinished()) {
+        if (!steer.IsScheduled()) {
+            robot->Kill();
+            steer.Schedule();
+        }
+        return false;
+    }
+
+    return true;
+} 

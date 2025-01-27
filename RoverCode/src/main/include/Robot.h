@@ -22,9 +22,7 @@
 #include "Teleop.h"
 
 class Robot : public frc::TimedRobot {
- public:
-  IMUSendable imu{frc::SPI::Port::kMXP};
- 
+ public: 
   void RobotInit() override;
   void RobotPeriodic() override;
   void AutonomousInit() override;

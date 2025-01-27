@@ -90,13 +90,13 @@ void MobilitySubsystem::Drive(std::array<double, 4> speed) {
     }
 }
 
-void MobilitySubsystem::Crawl() {
+void MobilitySubsystem::Crawl(bool forward) {
     maxCrawlSpeed = frc::SmartDashboard::GetNumber("Crawl Max Speed", maxCrawlSpeed);
 
     isSpinning = true;
     wpi::outs() << "Crawl (" << std::to_string(int(maxCrawlSpeed * 100.0)) << "%)\n";
     for (int i = 0; i < 4; i++)
-        motor[i].Set(maxCrawlSpeed);
+        motor[i].Set(maxCrawlSpeed * (forward ? 1 : -1));
 }
 
 void MobilitySubsystem::StopAll() {

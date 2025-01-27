@@ -26,7 +26,7 @@ class MobilitySubsystem : public frc2::SubsystemBase {
         void Reset();
 
         void Drive(std::array<double, 4> speed);
-        void Crawl();
+        void Crawl(bool forward);
         void StopAll();
 
         void StartActuate(Wheel w, bool dir);
