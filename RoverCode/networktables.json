@@ -147,5 +147,65 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/SmartDashboard/Hopper Empty Time",
+    "type": "double",
+    "value": 6.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Hopper Empty Speed",
+    "type": "double",
+    "value": 0.75,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Auto Traversal",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true,
+      "retained": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Auto EXC Orient",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true,
+      "retained": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Auto EXC Action",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true,
+      "retained": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Auto DEP Orient",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true,
+      "retained": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Auto DEP Action",
+    "type": "boolean",
+    "value": true,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

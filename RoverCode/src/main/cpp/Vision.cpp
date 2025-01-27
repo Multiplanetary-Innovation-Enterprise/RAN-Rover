@@ -23,10 +23,10 @@ void Vision::IdentifyTags() {
         if (tagAngles.find(tagId) != tagAngles.end())
             continue;
 
-        nt::DoubleSubscriber *tagAngle = &tagTable->GetDoubleTopic(tag + "/Angle").Subscribe(0);
-        nt::DoubleSubscriber *tagDistance = &tagTable->GetDoubleTopic(tag + "/Distance").Subscribe(0);
-        tagAngles[tagId] = tagAngle;
-        tagDistances[tagId] = tagDistance;
+        nt::DoubleSubscriber tagAngle = tagTable->GetDoubleTopic(tag + "/Angle").Subscribe(0);
+        nt::DoubleSubscriber tagDistance = tagTable->GetDoubleTopic(tag + "/Distance").Subscribe(0);
+        tagAngles[tagId] = &tagAngle;
+        tagDistances[tagId] = &tagDistance;
     }
 }
 

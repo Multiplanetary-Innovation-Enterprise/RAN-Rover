@@ -59,7 +59,7 @@
   {
     "name": "/SmartDashboard/Excavation Actuate Speed",
     "type": "double",
-    "value": 0.6,
+    "value": 0.025,
     "properties": {
       "persistent": true,
       "retained": true
@@ -102,7 +102,7 @@
   {
     "name": "/SmartDashboard/Deposition Actuate Speed",
     "type": "double",
-    "value": 0.0,
+    "value": 0.025,
     "properties": {
       "persistent": true,
       "retained": true
@@ -144,6 +144,66 @@
     "name": "/SmartDashboard/Right Stick Deadzone",
     "type": "double",
     "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Hopper Empty Time",
+    "type": "double",
+    "value": 6.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Hopper Empty Speed",
+    "type": "double",
+    "value": 0.75,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Auto Traversal",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true,
+      "retained": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Auto EXC Orient",
+    "type": "boolean",
+    "value": true,
+    "properties": {
+      "persistent": true,
+      "retained": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Auto EXC Action",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true,
+      "retained": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Auto DEP Orient",
+    "type": "boolean",
+    "value": true,
+    "properties": {
+      "persistent": true,
+      "retained": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Auto DEP Action",
+    "type": "boolean",
+    "value": true,
     "properties": {
       "persistent": true
     }

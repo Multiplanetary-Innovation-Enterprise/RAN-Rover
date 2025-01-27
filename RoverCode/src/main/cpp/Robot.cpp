@@ -9,12 +9,19 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 void Robot::RobotInit() {
-  
-  autoChooser.SetDefaultOption(AutoConstants::Default, AutoConstants::Default);
-  autoChooser.AddOption(AutoConstants::DriveCycle, AutoConstants::DriveCycle);
-  frc::SmartDashboard::PutData("Auto Modes", &autoChooser);
 
-  schemeChooser.SetDefaultOption(ControlSchemes::NewRover, ControlSchemes::NewRover);
+  frc::SmartDashboard::PutBoolean("Auto Traversal", autoTraversal);
+  frc::SmartDashboard::SetPersistent("Auto Traversal");
+  frc::SmartDashboard::PutBoolean("Auto EXC Orient", autoExcOrient);
+  frc::SmartDashboard::SetPersistent("Auto EXC Orient");
+  frc::SmartDashboard::PutBoolean("Auto EXC Action", autoExcAction);
+  frc::SmartDashboard::SetPersistent("Auto EXC Action");
+  frc::SmartDashboard::PutBoolean("Auto DEP Orient", autoDepOrient);
+  frc::SmartDashboard::SetPersistent("Auto DEP Orient");
+  frc::SmartDashboard::PutBoolean("Auto DEP Action", autoDepAction);
+  frc::SmartDashboard::SetPersistent("Auto DEP Action");
+
+  schemeChooser.SetDefaultOption(ControlSchemes::Atlas, ControlSchemes::Atlas);
   schemeChooser.AddOption(ControlSchemes::Stellar, ControlSchemes::Stellar);
   frc::SmartDashboard::PutData("Control Scheme", &schemeChooser);
 
@@ -24,6 +31,12 @@ void Robot::RobotInit() {
   frc::SmartDashboard::SetPersistent("Right Stick Deadzone");
   
   frc::SmartDashboard::PutData("IMU", &imu);
+
+  // Adjustable Autonomous Variables
+  frc::SmartDashboard::PutNumber("Hopper Empty Time", hopperEmptyTime.value());
+  frc::SmartDashboard::SetPersistent("Hopper Empty Time");
+  frc::SmartDashboard::PutNumber("Hopper Empty Speed", hopperEmptySpeed);
+  frc::SmartDashboard::SetPersistent("Hopper Empty Speed");
 }
 
 /**
@@ -38,8 +51,6 @@ void Robot::RobotPeriodic() {
     frc2::CommandScheduler::GetInstance().Run();
 }
 
-int autoState = 0;
-
 /**
  * You can add additional auto modes by adding additional comparisons to the
  * if-else structure below with additional strings. If using the SendableChooser
@@ -53,52 +64,71 @@ void Robot::AutonomousInit() {
   dep.Reset();
   angleAct.Cancel();
   distDrive.Cancel();
-  
-  autoSelected = autoChooser.GetSelected();
-  fmt::print("Auto selected: {}\n", autoSelected);
 
-  if (autoSelected == AutoConstants::DriveCycle) {
-    // Custom Auto goes here
+  autoTraversal = frc::SmartDashboard::GetBoolean("Auto Traversal", autoTraversal);
+  autoExcOrient = frc::SmartDashboard::GetBoolean("Auto EXC Orient", autoExcOrient);
+  autoExcAction = frc::SmartDashboard::GetBoolean("Auto EXC Action", autoExcAction);
+  autoDepOrient = frc::SmartDashboard::GetBoolean("Auto DEP Orient", autoDepOrient);
+  autoDepAction = frc::SmartDashboard::GetBoolean("Auto DEP Action", autoDepAction);
+
+  if (autoTraversal) {
+    // Autonomous Traversal - Initialization
+
+    // Find EXC Beacon
+    
+    // If angle non-zero
+    // Steer to angle
+    angleAct.Set(0, vision.getTagAngle(0));
+    angleAct.Schedule();
+
+    // If distance is > threshold
+    // Drive
+    distDrive.Set(vision.getTagDistance(0));
+    distDrive.Schedule();
   } else {
+    fmt::print("Skipping Autonomous Traversal Initialization\n");
+  }
 
-    switch(autoState) {
-      case 0: // Traversal
-      
-        // Find EXC Beacon
-        
-        // If angle non-zero
-        // Steer to angle
-        angleAct.Set(0, vision.getTagAngle(0));
-        angleAct.Schedule();
+  if (autoExcOrient) {
+    // Autonomous Excavation Orientation - Initialization
 
-        // If distance is > threshold
-        // Drive
-        distDrive.Set(vision.getTagDistance(0));
-        distDrive.Schedule();
+  } else {
+    fmt::print("Skipping Autonomous Excavation Orientation Initialization\n");
+  }
 
-        // Stop Drive
-        break;
-      case 1: // EXC Orientation
-        break;
-      case 2: // EXC
-        break;
-      case 3: // DEP Orientation
-        break;
-      case 4: // DEP
-        break;
+  if (autoExcAction) {
+    // Autonomous Excavation Action - Initialization
 
-    }
+  } else {
+    fmt::print("Skipping Autonomous Excavation Action Initialization\n");
+  }
 
+  if (autoDepOrient) {
+    // Autonomous Deposition Orientation - Initialization
+
+  } else {
+    fmt::print("Skipping Autonomous Deposition Orientation Initialization\n");
+  }
+    
+  if (autoDepAction) {
+    // Autonomous Deposition Action - Initialization
+
+    // Read values from smart dashboard to see if anything has changed
+    hopperEmptySpeed = frc::SmartDashboard::GetNumber("Hopper Empty Speed", hopperEmptySpeed);
+    hopperEmptyTime = units::time::second_t{frc::SmartDashboard::GetNumber("Hopper Empty Time", hopperEmptyTime.value())};
+
+  } else {
+    fmt::print("Skipping Autonomous Deposition Action Initialization\n");
   }
 }
 
-void Robot::AutonomousPeriodic() {
-  if (autoSelected == AutoConstants::DriveCycle) {
-    // Custom Auto goes here
-  } else {
+int currentPhase = 0;
 
-    switch(autoState) {
-      case 0: // Traversal
+void Robot::AutonomousPeriodic() {
+
+  switch (currentPhase) {
+    case 0: if (autoTraversal) {
+        // Autonomous Traversal
 
         // Find EXC Beacon
         
@@ -109,19 +139,68 @@ void Robot::AutonomousPeriodic() {
         distDrive.Set(vision.getTagDistance(0));
         if (!distDrive.IsFinished())
           angleAct.Schedule();
+        else
+          currentPhase++;
         // Stop Drive
-        break;
-      case 1: // EXC Orientation
-        break;
-      case 2: // EXC
-        break;
-      case 3: // DEP Orientation
-        break;
-      case 4: // DEP
-        break;
 
-    }
+      } else {
+        fmt::print("Skipping Autonomous Traversal\n");
+        currentPhase++;
+      }
+      break;
 
+    case 1: if (autoExcOrient) {
+        // Autonomous Excavation Orientation
+        currentPhase++;
+
+      } else {
+        fmt::print("Skipping Autonomous Excavation Orientation\n");
+        currentPhase++;
+      }
+      break;
+
+    case 2: if (autoExcAction) {
+        // Autonomous Excavation Action
+        currentPhase++;
+
+      } else {
+        fmt::print("Skipping Autonomous Excavation Action\n");
+        currentPhase++;
+      }
+      break;
+
+    case 3: if (autoDepOrient) {
+        // Autonomous Deposition Orientation
+        currentPhase++;
+
+      } else {
+        fmt::print("Skipping Autonomous Deposition Orientation\n");
+        currentPhase++;
+      }
+      break;
+
+    case 4: if (autoDepAction) {
+        // Assume we are aligned to construction berm, that should have been done in DEP Orientation
+
+        // TODO: Will need to be changed to dep when we switch to Atlas
+        // Spin Deposition Hopper so the belt has done one full rotation.
+        timer.Start();
+        hop.Spin(hopperEmptySpeed, false);
+        if (timer.HasElapsed(hopperEmptyTime)) {
+          timer.Stop();
+          hop.Stop();
+          currentPhase++;
+        }
+
+      } else {
+        fmt::print("Skipping Autonomous Deposition Action\n");
+        currentPhase++;
+      }
+      break;
+    default:
+      fmt::print("Autonomous End\n");
+      exit(0);
+      break;
   }
 }
 
@@ -225,12 +304,12 @@ void Robot::TeleopPeriodic() {
   #pragma endregion Stellar_Deposition
     
 #pragma endregion Stellar
-  } else if (schemeSelected == ControlSchemes::NewRover) {
-#pragma region NewRover
+  } else if (schemeSelected == ControlSchemes::Atlas) {
+#pragma region Atlas
     /****************
      *   MOBILITY   *
      ****************/
-  #pragma region NewRover_Mobility
+  #pragma region Atlas_Mobility
 
     // Left Joystick X on Primary Controller
     double leftStickX = controller.GetLeftX();
@@ -270,12 +349,12 @@ void Robot::TeleopPeriodic() {
       }
     }
 
-  #pragma endregion NewRover_Mobility
+  #pragma endregion Atlas_Mobility
 
     /****************
      *    HOPPER    *
      ****************/
-  #pragma region NewRover_Hopper
+  #pragma region Atlas_Hopper
     // Left Trigger on Controller
     double leftTrigger = controller.GetLeftTriggerAxis();
 
@@ -293,12 +372,12 @@ void Robot::TeleopPeriodic() {
     } else if (controller.GetXButtonReleased()) {
       hop.HoldLock(false);
     }
-  #pragma endregion NewRover_Hopper
+  #pragma endregion Atlas_Hopper
 
     /****************
      *  EXCAVATION  *
      ****************/
-  #pragma region NewRover_Excavation
+  #pragma region Atlas_Excavation
     // Right Trigger on Controller
     double rightTrigger = controller.GetRightTriggerAxis();
 
@@ -322,9 +401,9 @@ void Robot::TeleopPeriodic() {
     } else {
       exc.StopActuate(false);
     }
-  #pragma endregion NewRover_Excavation
+  #pragma endregion Atlas_Excavation
 
-#pragma endregion NewRover
+#pragma endregion Atlas
   }
 }
 

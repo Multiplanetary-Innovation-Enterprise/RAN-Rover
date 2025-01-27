@@ -44,11 +44,5 @@ namespace PortConstants {
 namespace ControlSchemes {
 
     const std::string Stellar = "Stellar";
-    const std::string NewRover = "New Rover";
-}
-
-namespace AutoConstants {
-
-    const std::string Default = "Default";
-    const std::string DriveCycle = "DriveCycle";
+    const std::string Atlas = "Atlas";
 }
