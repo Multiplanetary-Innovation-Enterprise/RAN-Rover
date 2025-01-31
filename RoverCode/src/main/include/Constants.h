@@ -6,16 +6,21 @@
 
 namespace PortConstants {
 
-    inline constexpr int controller = 0;
+    inline constexpr int primaryController = 0;
+    inline constexpr int secondaryController = 1;
 
     inline constexpr int navX = 0;
 
     // Mobility
-    inline constexpr int mobBackLeft = 10;
-    inline constexpr int mobFrontLeft = 11;
-    inline constexpr int mobBackRight = 12;
-    inline constexpr int mobFrontRight = 13;
-    
+    inline constexpr int mobMotor[4] =  {11, 13,
+                                         10, 12};
+    inline constexpr int mobActVel[4] = {-1, -1,
+                                         -1, -1};
+    inline constexpr int mobActDir[4] = {-1, -1,
+                                         -1, -1};
+    inline constexpr int mobActPot[4] = {-1, -1,
+                                         -1, -1};
+
     // Excavation
     inline constexpr int excSpin = 14;
     inline constexpr int excLeftActVel = 0; // Digital Output
@@ -41,8 +46,7 @@ namespace PortConstants {
     inline constexpr int depRightPot = 3; // Analog Input
 }
 
-namespace ControlSchemes {
+namespace GearRatioConstants {
 
-    const std::string Stellar = "Stellar";
-    const std::string Atlas = "Atlas";
+    inline constexpr int hop = 80; // 80 : 1
 }

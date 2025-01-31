@@ -10,35 +10,21 @@
 
 #include <frc2/command/Commands.h>
 #include <frc/TimedRobot.h>
-#include <frc/XboxController.h>
-#include <frc/smartdashboard/SendableChooser.h>
 #include <wpi/raw_ostream.h>
-#include <frc/SPI.h>
-#include <frc/Timer.h>
 
-#include "Constants.h"
-#include "Vision.h"
 #include "subsystems/Mobility.h"
 #include "subsystems/Hopper.h"
 #include "subsystems/Excavation.h"
 #include "subsystems/Deposition.h"
 #include "sendables/IMUSendable.h"
-#include "commands/AngleActuator.h"
-#include "commands/DistanceDrive.h"
+#include "Vision.h"
+#include "Autonomy.h"
+#include "Teleop.h"
 
 class Robot : public frc::TimedRobot {
  public:
   IMUSendable imu{frc::SPI::Port::kMXP};
-  frc::XboxController controller{PortConstants::controller};
-
-  bool autoTraversal = true;
-  bool autoExcOrient = true;
-  bool autoExcAction = true;
-  bool autoDepOrient = true;
-  bool autoDepAction = true;
-  
-  std::string schemeSelected;
-
+ 
   void RobotInit() override;
   void RobotPeriodic() override;
   void AutonomousInit() override;
@@ -51,24 +37,14 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
   void SimulationInit() override;
   void SimulationPeriodic() override;
+
+  void Kill();
  private:
-  frc::SendableChooser<std::string> schemeChooser;
-  double leftStickDeadzone = 0.1;
-  double rightStickDeadzone = 0.1;
-  frc::Timer timer;
-
   Vision vision;
-
   MobilitySubsystem mob;
-  HopperSubsystem hop;
   ExcavationSubsystem exc;
-  DepositionSubsystem dep;
+  HopperSubsystem hop;
 
-  // Autonomous Commands
-  AngleActuator angleAct{&exc};
-  DistanceDrive distDrive{&mob};
-
-  // Autonomous Variables
-  units::time::second_t hopperEmptyTime{6.0}; // In Seconds
-  double hopperEmptySpeed = 0.75; // Motor Percentage
+  Teleop teleop{this, &mob, &exc, &hop};
+  Autonomy autonomy{this, &vision, &mob, &exc, &hop};
 };

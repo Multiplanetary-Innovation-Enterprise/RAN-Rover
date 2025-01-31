@@ -18,5 +18,5 @@ class DistanceDrive : public frc2::CommandHelper<frc2::Command, DistanceDrive> {
 
         double dist = 0.0;
         double distSlow = 40.0;
-        double distLimit = 25.0;
+        double distLimit = 20.0;
 };

@@ -78,9 +78,6 @@
     }
   },
   "NetworkTables": {
-    "Persistent Values": {
-      "open": false
-    },
     "SmartDashboard": {
       "open": true
     },
@@ -178,6 +175,15 @@
             "open": true
           }
         },
+        "Vision": {
+          "Beacons": {
+            "Tag 0": {
+              "open": true
+            },
+            "open": true
+          },
+          "open": true
+        },
         "open": true
       },
       "Vision": {
@@ -186,6 +192,9 @@
             "Normal": {
               "open": true
             },
+            "open": true
+          },
+          "Tag 1": {
             "open": true
           },
           "open": true
