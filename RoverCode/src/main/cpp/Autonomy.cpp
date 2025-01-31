@@ -158,23 +158,41 @@ bool Autonomy::DepActionPeriodic() {
 // Autonomous Helper Functions //
 /////////////////////////////////
 
-bool Autonomy::FindBeacon(int tagId) {
+bool Autonomy::FindBeacon(int TargetId) {
 
-    if (vision->isTagVisible(tagId)) {
-        // Found Beacon
+    if (vision->isTagVisible(TargetId)) { // Found Beacon
         return true;
     }
 
     // Assume that tags are ordered clockwise in numerical order around the rover.
     std::vector<int> visibleTags = vision->getVisibleTags();
+    /*
+    if (visibleTags.size() == 0) { // If not tags are visible it will turn to find one, it will based direction off of desired april tag
+        if(TargetId <= 1){ // Turns clockwise initially, higher chance we are looking away from all tags
+            //TODO; Code
+        }
+        else{ // Turns counter-clockwise initially, higher chance we are looking away from all tags
+            //TODO; Code
+        }
+    }
+    */
     if (visibleTags.size() <= 1) { // One or zero tags visible, use that to inform direction of where target tag is.
          int tagLastSeen = vision->getTagLastSeen();
-        if (tagLastSeen > tagId) { // Last tag seen is to the right of where our target should be, turn counter-clockwise.
-            // Zero-Point Turn Counter-Clockwise
-        } else { // Last tag seen is to the left of where our target should be, or we haven't seen a tag yet, turn clockwise.
-            // Zero-Point Turn Clockwise
+        if (tagLastSeen > TargetId) {           // Last tag seen is to the right of where our target should be, turn counter-clockwise.
+            vision->getTagAngle(tagLastSeen);   // Retrives the angle of the tag to the right.
+            steer.ZeroPoint(25,0);              // Finds april tag can see then angle it to be 25 angles to the right, (0) as efficiently as it can.
+            steer.ZeroPoint(0,-1);              // Rotates fully counter-clockwise (-1) till it finds that angle again.
+            mob->Drive({0.3,0.3,0.3,0.3});      // Drive to the last seen beacon.
+
+        } 
+        else { // Last tag seen is to the left of where our target should be, or we haven't seen a tag yet, turn clockwise.
+            vision->getTagAngle(tagLastSeen);    // Retrives the angle of the tag to the left.
+            steer.ZeroPoint(-25,0);              // Finds april tag can see then angle it to be 25 angles to the left, (0) as efficiently as it can.
+            steer.ZeroPoint(0,1);                // Rotates fully clockwise (1) till it finds that angle again.
+            mob->Drive({0.3,0.3,0.3,0.3});       // Drive to the last seen beacon.
         }
-    } else { // Two tags visible without finding target beacon, we need to reposition because our target must be visually obstructed.
+    } 
+    else { // Two tags visible without finding target beacon, we need to reposition because our target must be visually obstructed.
         // Reposition
     }
 }
