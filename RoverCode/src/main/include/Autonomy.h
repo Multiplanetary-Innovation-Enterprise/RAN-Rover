@@ -50,7 +50,7 @@ class Autonomy {
         // Autonomous Helper Functions
         bool FindBeacon(int tagId);
         bool NavigateToBeacon(int tagId);
-        bool ZeroPointTurn(double degrees);
+        bool ZeroPointTurn(double degrees, int dir);
 
         // Autonomous Commands
         SteerWheel steer{mob};

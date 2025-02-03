@@ -324,7 +324,12 @@ bool Autonomy::NavigateToBeacon(int tagId) {
     }
 }
 
-bool Autonomy::ZeroPointTurn(double degrees) {
+/**
+ * @param degrees Angle from current yaw to zero point turn to.
+ * @param dir Direction to navigate to angle. (-1: Counter-Clockwise, 0: Shortest Path, 1: Clockwise)
+ * @return bool Finished Zero Point Turn
+*/
+bool Autonomy::ZeroPointTurn(double degrees, int dir) {
 
     // Turn Wheels to be in ZeroPoint Configuration
     steer.ZeroPoint();
@@ -341,9 +346,9 @@ bool Autonomy::ZeroPointTurn(double degrees) {
 
         zeroPointDriveSpeed = frc::SmartDashboard::GetNumber("Zero Point Drive Speed", zeroPointDriveSpeed);
 
-        if (int(degrees - yaw) % 360 >= 180) { // Needs to turn right
+        if (dir != -1 && (dir == 1 || int(degrees - yaw) % 360 >= 180)) { // Needs to turn right
             mob->Drive({zeroPointDriveSpeed, -zeroPointDriveSpeed, zeroPointDriveSpeed, -zeroPointDriveSpeed});
-        } else if (int(degrees - yaw) % 360 < 180) { // Neds to turn left
+        } else if (dir == -1 || int(degrees - yaw) % 360 < 180) { // Neds to turn left
             mob->Drive({-zeroPointDriveSpeed, zeroPointDriveSpeed, -zeroPointDriveSpeed, zeroPointDriveSpeed});
         }
 
