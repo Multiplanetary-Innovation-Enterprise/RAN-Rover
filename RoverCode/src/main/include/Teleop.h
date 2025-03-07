@@ -1,4 +1,6 @@
-#include "Robot.h"
+#pragma once
+#define _USE_MATH_DEFINES
+
 #include "subsystems/Mobility.h"
 #include "subsystems/Excavation.h"
 #include "subsystems/Hopper.h"
@@ -8,12 +10,12 @@
 
 class Teleop {
     public:
-        Teleop(Robot* robot, MobilitySubsystem* mob, ExcavationSubsystem* exc, HopperSubsystem* hop);
+        Teleop();
+        void SetSystems(MobilitySubsystem* mob, ExcavationSubsystem* exc, HopperSubsystem* hop);
 
         void Init();
         void Periodic();
     private:
-        Robot* robot;
         MobilitySubsystem* mob;
         ExcavationSubsystem* exc;
         HopperSubsystem* hop;

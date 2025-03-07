@@ -1,5 +1,3 @@
-#pragma once
-
 #include "subsystems/Excavation.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 

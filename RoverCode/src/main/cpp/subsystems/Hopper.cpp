@@ -1,5 +1,3 @@
-#pragma once
-
 #include "subsystems/Hopper.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 

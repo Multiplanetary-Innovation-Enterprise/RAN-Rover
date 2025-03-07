@@ -1,5 +1,3 @@
-#pragma once
-
 #include "subsystems/Mobility.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -90,8 +88,11 @@ void MobilitySubsystem::Drive(std::array<double, 4> speed) {
     }
 }
 
-void MobilitySubsystem::Crawl() {
+void MobilitySubsystem::Crawl(bool forward) {
     maxCrawlSpeed = frc::SmartDashboard::GetNumber("Crawl Max Speed", maxCrawlSpeed);
+
+    if (!forward)
+        maxCrawlSpeed *= -1;
 
     isSpinning = true;
     wpi::outs() << "Crawl (" << std::to_string(int(maxCrawlSpeed * 100.0)) << "%)\n";

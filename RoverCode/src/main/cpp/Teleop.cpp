@@ -2,8 +2,7 @@
 #include <frc2/command/button/Trigger.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-Teleop::Teleop(Robot* robot, MobilitySubsystem* mob, ExcavationSubsystem* exc, HopperSubsystem* hop)
-    : robot(robot), mob(mob), exc(exc), hop(hop) {
+Teleop::Teleop() {
 
     frc::SmartDashboard::PutNumber("Primary Controller Left Stick Deadzone", primaryControllerLeftStickDeadzone);
     frc::SmartDashboard::SetPersistent("Primary Controller Left Stick Deadzone");
@@ -13,6 +12,12 @@ Teleop::Teleop(Robot* robot, MobilitySubsystem* mob, ExcavationSubsystem* exc, H
     frc::SmartDashboard::SetPersistent("Secondary Controller Left Stick Deadzone");
     frc::SmartDashboard::PutNumber("Secondary Controller Right Stick Deadzone", secondaryControllerRightStickDeadzone);
     frc::SmartDashboard::SetPersistent("Secondary Controller Right Stick Deadzone");
+}
+
+void Teleop::SetSystems(MobilitySubsystem* mob, ExcavationSubsystem* exc, HopperSubsystem* hop) {
+  this->mob = mob;
+  this->exc = exc;
+  this->hop = hop;
 }
 
 void Teleop::Init() {
@@ -49,9 +54,9 @@ void Teleop::Mobility() {
 
     // D-Pad on Controller for Crawl (Slow drive)
     if (primaryController.GetPOV() == 0) { // D-Pad Up
-      mob->Drive(1, 1, true);
+      mob->Crawl(true);
     } else if (primaryController.GetPOV() == 180) { // D-Pad Down
-      mob->Drive(-1, -1, true);
+      mob->Crawl(false);
     } else {
       // If not crawling, allow for normal stick input.
 
@@ -64,9 +69,9 @@ void Teleop::Mobility() {
 
         wpi::outs() << "Steer Angle: " << std::to_string(int(leftStickAngle)) << "\n";
         // Mobility Drive takes the left side input, right side input, and a boolean to determine if it should crawl
-        mob->Drive(leftStickMagnitude, leftStickMagnitude, false);
+        mob->Drive({leftStickMagnitude, leftStickMagnitude, leftStickMagnitude, leftStickMagnitude});
       } else {
-        mob->Stop();
+        mob->StopAll();
       }
     }
 }

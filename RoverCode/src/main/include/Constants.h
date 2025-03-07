@@ -48,5 +48,5 @@ namespace PortConstants {
 
 namespace GearRatioConstants {
 
-    inline constexpr int hop = 80; // 80 : 1
+    inline constexpr int hopRatio = 80; // 80 : 1
 }

@@ -1,9 +1,9 @@
+#pragma once
 
 #include <frc/SPI.h>
 #include <frc/Timer.h>
 #include <frc2/command/CommandPtr.h>
 
-#include "Robot.h"
 #include "Vision.h"
 #include "subsystems/Mobility.h"
 #include "subsystems/Hopper.h"
@@ -22,7 +22,8 @@ class Autonomy {
             DEP_ACTION
         };
 
-        Autonomy(Robot* robot, Vision* vision, MobilitySubsystem* mob, ExcavationSubsystem* exc, HopperSubsystem* hop);
+        Autonomy();
+        void SetSystems(Vision* vision, MobilitySubsystem* mob, ExcavationSubsystem* exc, HopperSubsystem* hop);
 
         void Init();
         void Periodic();
@@ -38,15 +39,15 @@ class Autonomy {
         void DepActionInit();
         bool DepActionPeriodic();
     private:
-        Phase currentPhase = TRAVERSAL;
-        Robot* robot;
         Vision* vision;
         MobilitySubsystem* mob;
         HopperSubsystem* hop;
         ExcavationSubsystem* exc;
         frc::Timer timer;
+        Phase currentPhase = TRAVERSAL;
 
         // Autonomous Helper Functions
+        void Kill();
         bool FindBeacon(int tagId);
         bool NavigateToBeacon(int tagId);
 

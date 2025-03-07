@@ -1,5 +1,3 @@
-#pragma once
-
 #include "sendables/IMUSendable.h"
 
 IMUSendable::IMUSendable(frc::SPI::Port port) : IMUSendable::AHRS(port) {

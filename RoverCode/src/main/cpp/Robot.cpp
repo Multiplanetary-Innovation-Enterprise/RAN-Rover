@@ -8,7 +8,10 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 void Robot::RobotInit() {
-  
+
+  teleop.SetSystems(&mob, &exc, &hop);  
+  autonomy.SetSystems(&vision, &mob, &exc, &hop);
+
   frc::SmartDashboard::PutData("IMU", &imu);
 }
 
@@ -71,11 +74,7 @@ void Robot::SimulationInit() {
 void Robot::SimulationPeriodic() {}
 
 void Robot::Kill() {
-  wpi::outs() << "Kill Command Issued";
-  frc2::CommandScheduler::GetInstance().CancelAll();
-  mob.Reset();
-  exc.Reset();
-  hop.Reset();
+
 }
 
 #ifndef RUNNING_FRC_TESTS

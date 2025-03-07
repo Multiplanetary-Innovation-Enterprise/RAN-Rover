@@ -1,5 +1,3 @@
-#pragma once
-
 #include "subsystems/Deposition.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 

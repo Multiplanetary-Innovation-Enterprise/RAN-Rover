@@ -1,5 +1,3 @@
-#pragma once
-
 #include "commands/SteerWheel.h"
 
 SteerWheel::SteerWheel(MobilitySubsystem* mob) : mob(mob) {

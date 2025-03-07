@@ -1,5 +1,3 @@
-#pragma once
-
 #include <Vision.h>
 #include "frc/smartdashboard/SmartDashboard.h"
 #include "frc/shuffleboard/Shuffleboard.h"

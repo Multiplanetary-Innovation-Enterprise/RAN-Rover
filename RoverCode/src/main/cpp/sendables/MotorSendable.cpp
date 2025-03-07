@@ -1,5 +1,3 @@
-#pragma once
-
 #include "sendables/MotorSendable.h"
 
 MotorSendable::MotorSendable(int deviceId, MotorType motorType) : MotorSendable::CANSparkMax(deviceId, motorType) {

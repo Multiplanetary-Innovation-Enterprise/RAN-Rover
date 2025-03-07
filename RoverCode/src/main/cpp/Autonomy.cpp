@@ -2,8 +2,7 @@
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-Autonomy::Autonomy(Robot* robot, Vision* vision, MobilitySubsystem* mob, ExcavationSubsystem* exc, HopperSubsystem* hop)
-    : robot(robot), vision(vision), mob(mob), exc(exc), hop(hop) {
+Autonomy::Autonomy() {
 
     frc::SmartDashboard::PutBoolean("Auto Traversal", true);
     frc::SmartDashboard::SetPersistent("Auto Traversal");
@@ -21,6 +20,13 @@ Autonomy::Autonomy(Robot* robot, Vision* vision, MobilitySubsystem* mob, Excavat
     frc::SmartDashboard::SetPersistent("Hopper Empty Time");
     frc::SmartDashboard::PutNumber("Hopper Empty Speed", hopperEmptySpeed);
     frc::SmartDashboard::SetPersistent("Hopper Empty Speed");
+}
+
+void Autonomy::SetSystems(Vision* vision, MobilitySubsystem* mob, ExcavationSubsystem* exc, HopperSubsystem* hop) {
+    this->vision = vision;
+    this->mob = mob;
+    this->exc = exc;
+    this->hop = hop;
 }
 
 void Autonomy::Init() {
@@ -62,7 +68,7 @@ void Autonomy::Periodic() {
             break;
         case DEP_ACTION:
             if (frc::SmartDashboard::GetBoolean("Auto DEP Action", false) && DepActionPeriodic())
-                robot->Kill();
+                Kill();
             break;
     }
 }
@@ -79,8 +85,7 @@ bool Autonomy::TraversalPeriodic() {
         return true;
     }
 
-    if (FindBeacon(1))
-        NavigateToBeacon(1);
+    return true;
 }
 
 void Autonomy::ExcOrientInit() {
@@ -158,6 +163,14 @@ bool Autonomy::DepActionPeriodic() {
 // Autonomous Helper Functions //
 /////////////////////////////////
 
+void Autonomy::Kill() {
+    wpi::outs() << "Kill Command Issued";
+    frc2::CommandScheduler::GetInstance().CancelAll();
+    mob->Reset();
+    exc->Reset();
+    hop->Reset();
+}
+
 bool Autonomy::FindBeacon(int tagId) {
 
     if (vision->isTagVisible(tagId)) {
@@ -177,6 +190,8 @@ bool Autonomy::FindBeacon(int tagId) {
     } else { // Two tags visible without finding target beacon, we need to reposition because our target must be visually obstructed.
         // Reposition
     }
+
+    return false;
 }
 
 bool Autonomy::NavigateToBeacon(int tagId) {
@@ -202,7 +217,7 @@ bool Autonomy::NavigateToBeacon(int tagId) {
                                 std::to_string(int(mob->GetAngle(MobilitySubsystem::Wheel::FRONT_LEFT))) << "°  " << std::to_string(int(mob->GetAngle(MobilitySubsystem::Wheel::FRONT_RIGHT))) << "°\n" <<
                                 std::to_string(int(mob->GetAngle(MobilitySubsystem::Wheel::BACK_LEFT))) << "°  " << std::to_string(int(mob->GetAngle(MobilitySubsystem::Wheel::BACK_RIGHT))) << "°\n";
                 if (!steer.IsScheduled()) {
-                    robot->Kill();
+                    Kill();
                     steer.Schedule();
                 }
             
@@ -215,7 +230,7 @@ bool Autonomy::NavigateToBeacon(int tagId) {
 
                     wpi::outs() << "Distance Drive currently at " << std::to_string(distance) << "\n";
                     if (!distDrive.IsScheduled()) {
-                        robot->Kill();
+                        Kill();
                         distDrive.Schedule();
                     }
 
@@ -223,7 +238,7 @@ bool Autonomy::NavigateToBeacon(int tagId) {
                 } else {
 
                     wpi::outs() << "Distance Drive Done, Should be in position\n";     
-                    robot->Kill();    
+                    Kill();    
                     return true;
                 }
             }
@@ -237,7 +252,7 @@ bool Autonomy::NavigateToBeacon(int tagId) {
                                 std::to_string(int(mob->GetAngle(MobilitySubsystem::Wheel::FRONT_LEFT))) << "°  " << std::to_string(int(mob->GetAngle(MobilitySubsystem::Wheel::FRONT_RIGHT))) << "°\n" <<
                                 std::to_string(int(mob->GetAngle(MobilitySubsystem::Wheel::BACK_LEFT))) << "°  " << std::to_string(int(mob->GetAngle(MobilitySubsystem::Wheel::BACK_RIGHT))) << "°\n";
                 if (!steer.IsScheduled()) {
-                    robot->Kill();
+                    Kill();
                     steer.Schedule();
                 }
             } else {
@@ -255,7 +270,7 @@ bool Autonomy::NavigateToBeacon(int tagId) {
         steer.Crab((angle / abs(angle)) * 45.0);
         if (!steer.IsFinished()) {
             if (!steer.IsScheduled()) {
-                robot->Kill();
+                Kill();
                 steer.Schedule();
             }
         } else {
@@ -263,4 +278,6 @@ bool Autonomy::NavigateToBeacon(int tagId) {
             mob->Drive({0.4, 0.4, 0.4, 0.4});
         }
     }
+
+    return false;
 }
