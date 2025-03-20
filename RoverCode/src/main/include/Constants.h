@@ -4,6 +4,11 @@
 
 #pragma once
 
+namespace GridConstants {
+    inline constexpr int width = 0;
+    inline constexpr int height = 0;
+}
+
 namespace PortConstants {
 
     inline constexpr int primaryController = 0;
