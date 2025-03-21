@@ -5,8 +5,10 @@
 #pragma once
 
 namespace GridConstants {
-    inline constexpr int width = 0;
-    inline constexpr int height = 0;
+    inline constexpr int cellWidth = 1;
+    inline constexpr int cellHeight = 1;
+    inline constexpr int arenaWidth = 10;
+    inline constexpr int arenaHeight = 10; 
 }
 
 namespace PortConstants {

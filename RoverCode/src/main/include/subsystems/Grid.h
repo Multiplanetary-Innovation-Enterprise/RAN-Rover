@@ -7,19 +7,13 @@ class GridSubsystem : public {
     public:
         GridSubsystem();
         void locateOrigin();
-        
-        void currentCell();
 
-        void getCell(x, y);
-        void setCell(x, y, int);
-        void getRoverCell();
+        int getCell(double x, double y);
+        void setCell(double x, double y, int val);
+        std::array<double,2> getRoverPos();
 
-        void int getRows();
-        void int getCols();
+        void updateRovPos(double dx, double dy);
     private:    
         std::array<std::array<int,w>,h> grid;
-        int currentRow, currentCol;
-        int rows, cols;
-
-        bool isValid(int row, int col);
+        std::array<double, 2> rovPos(0,0);
 }
