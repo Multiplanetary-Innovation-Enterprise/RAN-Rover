@@ -11,198 +11,10 @@
         "vgap": 4.0,
         "titleType": 1,
         "tiles": {
-          "0,0": {
+          "30,13": {
             "size": [
-              13,
-              16
-            ],
-            "content": {
-              "_type": "List Layout",
-              "_title": "Mobility",
-              "_glyph": 149,
-              "_showGlyph": false,
-              "Layout/Label position": "BOTTOM",
-              "_children": [
-                {
-                  "_type": "Number Slider",
-                  "_source0": "network_table:///SmartDashboard/Drive Max Speed",
-                  "_title": "Drive Max Speed",
-                  "_glyph": 148,
-                  "_showGlyph": false,
-                  "Slider Settings/Min": 0.0,
-                  "Slider Settings/Max": 1.0,
-                  "Slider Settings/Block increment": 0.0625,
-                  "Visuals/Display value": true
-                },
-                {
-                  "_type": "Number Slider",
-                  "_source0": "network_table:///SmartDashboard/Crawl Max Speed",
-                  "_title": "Crawl Max Speed",
-                  "_glyph": 148,
-                  "_showGlyph": false,
-                  "Slider Settings/Min": -0.0,
-                  "Slider Settings/Max": 1.0,
-                  "Slider Settings/Block increment": 0.0625,
-                  "Visuals/Display value": true
-                },
-                {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Slip Current Threshold",
-                  "_title": "Slip Current Threshold",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                },
-                {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Slip Off Cycles",
-                  "_title": "Slip Off Cycles",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                },
-                {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Slip Try Cycles",
-                  "_title": "Slip Try Cycles",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                }
-              ]
-            }
-          },
-          "13,0": {
-            "size": [
-              12,
-              12
-            ],
-            "content": {
-              "_type": "List Layout",
-              "_title": "Excavation",
-              "_glyph": 149,
-              "_showGlyph": false,
-              "Layout/Label position": "BOTTOM",
-              "_children": [
-                {
-                  "_type": "Number Slider",
-                  "_source0": "network_table:///SmartDashboard/Excavation Max Speed",
-                  "_title": "Excavation Max Speed",
-                  "_glyph": 148,
-                  "_showGlyph": false,
-                  "Slider Settings/Min": 0.0,
-                  "Slider Settings/Max": 1.0,
-                  "Slider Settings/Block increment": 0.0625,
-                  "Visuals/Display value": true
-                },
-                {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Excavation Spin Threshold",
-                  "_title": "Excavation Actuation Spin Threshold",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                },
-                {
-                  "_type": "Grid Layout",
-                  "_title": "Excavation Actuation",
-                  "_glyph": 149,
-                  "_showGlyph": false,
-                  "Layout/Number of columns": 2,
-                  "Layout/Number of rows": 1,
-                  "Layout/Label position": "BOTTOM",
-                  "_children": {
-                    "0,0": {
-                      "_type": "Text View",
-                      "_source0": "network_table:///SmartDashboard/Excavation Actuate Min",
-                      "_title": "Min",
-                      "_glyph": 148,
-                      "_showGlyph": false
-                    },
-                    "1,0": {
-                      "_type": "Text View",
-                      "_source0": "network_table:///SmartDashboard/Excavation Actuate Max",
-                      "_title": "Max",
-                      "_glyph": 148,
-                      "_showGlyph": false
-                    }
-                  }
-                },
-                {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Excavation Actuate Speed",
-                  "_title": "Excavation Actuation Speed (WIP)",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                }
-              ]
-            }
-          },
-          "25,0": {
-            "size": [
-              12,
-              12
-            ],
-            "content": {
-              "_type": "List Layout",
-              "_title": "Deposition",
-              "_glyph": 149,
-              "_showGlyph": false,
-              "Layout/Label position": "BOTTOM",
-              "_children": [
-                {
-                  "_type": "Number Slider",
-                  "_source0": "network_table:///SmartDashboard/Deposition Max Speed",
-                  "_title": "Deposition Max Speed",
-                  "_glyph": 148,
-                  "_showGlyph": false,
-                  "Slider Settings/Min": 0.0,
-                  "Slider Settings/Max": 1.0,
-                  "Slider Settings/Block increment": 0.0625,
-                  "Visuals/Display value": true
-                },
-                {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Deposition Spin Threshold",
-                  "_title": "Deposition Actuation Spin Threshold",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                },
-                {
-                  "_type": "Grid Layout",
-                  "_title": "Deposition Actuation",
-                  "_glyph": 149,
-                  "_showGlyph": false,
-                  "Layout/Number of columns": 2,
-                  "Layout/Number of rows": 1,
-                  "Layout/Label position": "BOTTOM",
-                  "_children": {
-                    "1,0": {
-                      "_type": "Text View",
-                      "_source0": "network_table:///SmartDashboard/Deposition Actuate Max",
-                      "_title": "Max",
-                      "_glyph": 148,
-                      "_showGlyph": false
-                    },
-                    "0,0": {
-                      "_type": "Text View",
-                      "_source0": "network_table:///SmartDashboard/Deposition Actuate Min",
-                      "_title": "Min",
-                      "_glyph": 148,
-                      "_showGlyph": false
-                    }
-                  }
-                },
-                {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Deposition Actuate Speed",
-                  "_title": "Deposition Actuation Speed (WIP)",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                }
-              ]
-            }
-          },
-          "13,12": {
-            "size": [
-              12,
-              4
+              11,
+              5
             ],
             "content": {
               "_type": "List Layout",
@@ -212,17 +24,419 @@
               "Layout/Label position": "BOTTOM",
               "_children": [
                 {
-                  "_type": "Number Slider",
-                  "_source0": "network_table:///SmartDashboard/Hopper Max Speed",
-                  "_title": "Hopper Max Speed",
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Hopper/Empty Speed",
+                  "_title": "Empty Speed",
                   "_glyph": 148,
-                  "_showGlyph": false,
-                  "Slider Settings/Min": 0.0,
-                  "Slider Settings/Max": 1.0,
-                  "Slider Settings/Block increment": 0.0625,
-                  "Visuals/Display value": true
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Hopper/Fill Speed",
+                  "_title": "Fill Speed",
+                  "_glyph": 148,
+                  "_showGlyph": false
                 }
               ]
+            }
+          },
+          "16,0": {
+            "size": [
+              10,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/Mode",
+              "_title": "Mobility Control Mode",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "16,5": {
+            "size": [
+              5,
+              5
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///SmartDashboard/Mobility/FrontLeft/Steer Angle",
+              "_title": "FrontLeft Steer Angle",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Range/Min": -90.0,
+              "Range/Max": 90.0,
+              "Visuals/Show value": true
+            }
+          },
+          "21,5": {
+            "size": [
+              5,
+              5
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///SmartDashboard/Mobility/FrontRight/Steer Angle",
+              "_title": "FrontRight Steer Angle",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Range/Min": -90.0,
+              "Range/Max": 90.0,
+              "Visuals/Show value": true
+            }
+          },
+          "16,10": {
+            "size": [
+              5,
+              5
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///SmartDashboard/Mobility/BackLeft/Steer Angle",
+              "_title": "BackLeft Steer Angle",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Range/Min": -90.0,
+              "Range/Max": 90.0,
+              "Visuals/Show value": true
+            }
+          },
+          "21,10": {
+            "size": [
+              5,
+              5
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///SmartDashboard/Mobility/BackRight/Steer Angle",
+              "_title": "BackRight Steer Angle",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Range/Min": -90.0,
+              "Range/Max": 90.0,
+              "Visuals/Show value": true
+            }
+          },
+          "16,15": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/BackLeft/Steer Direction",
+              "_title": "BackLeft Steer Direction",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "23,15": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/BackRight/Steer Direction",
+              "_title": "BackRight Steer Direction",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "16,3": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/FrontLeft/Steer Direction",
+              "_title": "FrontLeft Steer Direction",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "23,3": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/FrontRight/Steer Direction",
+              "_title": "FrontRight Steer Direction",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "13,5": {
+            "size": [
+              3,
+              10
+            ],
+            "content": {
+              "_type": "Number Bar",
+              "_source0": "network_table:///SmartDashboard/Excavation/Left Actuator Pot/Value",
+              "_title": "Left EXC Deploy",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Range/Min": 0.0,
+              "Range/Max": 1.0,
+              "Range/Center": 0.0,
+              "Visuals/Num tick marks": 5,
+              "Visuals/Show text": true,
+              "Visuals/Orientation": "VERTICAL"
+            }
+          },
+          "26,5": {
+            "size": [
+              3,
+              10
+            ],
+            "content": {
+              "_type": "Number Bar",
+              "_source0": "network_table:///SmartDashboard/Excavation/Right Actuator Pot/Value",
+              "_title": "Right EXC Deploy",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Range/Min": 0.0,
+              "Range/Max": 1.0,
+              "Range/Center": 0.0,
+              "Visuals/Num tick marks": 5,
+              "Visuals/Show text": true,
+              "Visuals/Orientation": "VERTICAL"
+            }
+          },
+          "1,0": {
+            "size": [
+              11,
+              9
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Mobility",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Mobility/Drive Max Speed",
+                  "_title": "Max Drive Speed",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Mobility/Crawl Max Speed",
+                  "_title": "Crawl Target RPM",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Mobility/Acceleration Rate",
+                  "_title": "Mobility Acceleration Rate",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Mobility/Steer Margin",
+                  "_title": "Steer Margin",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                }
+              ]
+            }
+          },
+          "1,9": {
+            "size": [
+              11,
+              9
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Slip Control",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Toggle Button",
+                  "_source0": "network_table:///SmartDashboard/Mobility/Use SlipControl",
+                  "_title": "Slip Control",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Mobility/Slip/Current Threshold",
+                  "_title": "Slip Threshold",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Grid Layout",
+                  "_title": "Slip Cycles",
+                  "_glyph": 149,
+                  "_showGlyph": false,
+                  "Layout/Number of columns": 2,
+                  "Layout/Number of rows": 1,
+                  "Layout/Label position": "BOTTOM",
+                  "_children": {
+                    "0,0": {
+                      "_type": "Text View",
+                      "_source0": "network_table:///SmartDashboard/Mobility/Slip/Off Cycles",
+                      "_title": "Off Cycles",
+                      "_glyph": 148,
+                      "_showGlyph": false
+                    },
+                    "1,0": {
+                      "_type": "Text View",
+                      "_source0": "network_table:///SmartDashboard/Mobility/Slip/Try Cycles",
+                      "_title": "On Cycles",
+                      "_glyph": 148,
+                      "_showGlyph": false
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "30,0": {
+            "size": [
+              11,
+              13
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Excavation",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Excavation/Max Speed",
+                  "_title": "Max EXC Speed",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Excavation/Spin Threshold",
+                  "_title": "Deploy Spin Threshold",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Excavation/Actuate Pot Diff",
+                  "_title": "Deploy Value Diff",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Excavation/Acceleration Rate",
+                  "_title": "EXC Acceleration Rate",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Excavation/Actuate Slow Speed",
+                  "_title": "Actuate Slow Speed",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Grid Layout",
+                  "_title": "Deploy Limits",
+                  "_glyph": 149,
+                  "_showGlyph": false,
+                  "Layout/Number of columns": 2,
+                  "Layout/Number of rows": 1,
+                  "Layout/Label position": "BOTTOM",
+                  "_children": {
+                    "0,0": {
+                      "_type": "Text View",
+                      "_source0": "network_table:///SmartDashboard/Excavation/Actuate Min",
+                      "_title": "Deploy Min",
+                      "_glyph": 148,
+                      "_showGlyph": false
+                    },
+                    "1,0": {
+                      "_type": "Text View",
+                      "_source0": "network_table:///SmartDashboard/Excavation/Actuate Max",
+                      "_title": "SmartDashboard/Excavation/Actuate Max",
+                      "_glyph": 148,
+                      "_showGlyph": false
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "19,15": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Mobility/BackLeft/Steer Done",
+              "_title": "SmartDashboard/Mobility/BackLeft/Steer Done",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "21,15": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Mobility/BackRight/Steer Done",
+              "_title": "SmartDashboard/Mobility/BackRight/Steer Done",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "19,3": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Mobility/FrontLeft/Steer Done",
+              "_title": "SmartDashboard/Mobility/FrontLeft/Steer Done",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "21,3": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Mobility/FrontRight/Steer Done",
+              "_title": "SmartDashboard/Mobility/FrontRight/Steer Done",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
             }
           }
         }
@@ -241,46 +455,76 @@
         "tiles": {
           "0,0": {
             "size": [
-              10,
-              3
+              11,
+              11
             ],
             "content": {
-              "_type": "Split Button Chooser",
-              "_source0": "network_table:///SmartDashboard/Control Scheme",
-              "_title": "Control Scheme",
+              "_type": "List Layout",
+              "_title": "Controller Deadzones",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Grid Layout",
+                  "_title": "Primary Controller Deadzones",
+                  "_glyph": 149,
+                  "_showGlyph": false,
+                  "Layout/Number of columns": 3,
+                  "Layout/Number of rows": 3,
+                  "Layout/Label position": "BOTTOM",
+                  "_children": {}
+                },
+                {
+                  "_type": "Grid Layout",
+                  "_title": "Secondary Controller Deadzone",
+                  "_glyph": 149,
+                  "_showGlyph": false,
+                  "Layout/Number of columns": 3,
+                  "Layout/Number of rows": 3,
+                  "Layout/Label position": "BOTTOM",
+                  "_children": {}
+                }
+              ]
+            }
+          },
+          "14,0": {
+            "size": [
+              8,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/PIDControllers/P Gain",
+              "_title": "/SmartDashboard/Mobility/PIDControllers/P Gain",
               "_glyph": 148,
               "_showGlyph": false
             }
           },
-          "0,4": {
+          "14,2": {
             "size": [
-              10,
-              3
+              8,
+              2
             ],
             "content": {
-              "_type": "Grid Layout",
-              "_title": "Joystick Deadzones",
-              "_glyph": 149,
-              "_showGlyph": false,
-              "Layout/Number of columns": 2,
-              "Layout/Number of rows": 1,
-              "Layout/Label position": "BOTTOM",
-              "_children": {
-                "0,0": {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Left Stick Deadzone",
-                  "_title": "Left Stick Deadzone",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                },
-                "1,0": {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Right Stick Deadzone",
-                  "_title": "Right Stick Deadzone",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                }
-              }
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/PIDControllers/I Gain",
+              "_title": "/SmartDashboard/Mobility/PIDControllers/I Gain",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "14,4": {
+            "size": [
+              8,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/PIDControllers/D Gain",
+              "_title": "/SmartDashboard/Mobility/PIDControllers/D Gain",
+              "_glyph": 148,
+              "_showGlyph": false
             }
           }
         }
@@ -297,7 +541,188 @@
         "vgap": 16.0,
         "titleType": 1,
         "tiles": {
+          "25,0": {
+            "size": [
+              5,
+              9
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "DEP Action",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Autonomy/DEP Action/Spin Time",
+                  "_title": "SmartDashboard/Autonomy/DEP Action/Spin Time",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                }
+              ]
+            }
+          },
+          "20,0": {
+            "size": [
+              5,
+              9
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "DEP Orient",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Autonomy/DEP Orient/CrawlTime-MaxTime Factor",
+                  "_title": "SmartDashboard/Autonomy/DEP Orient/CrawlTime-MaxTime Factor",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                }
+              ]
+            }
+          },
+          "15,0": {
+            "size": [
+              5,
+              9
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "EXC Action",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Autonomy/EXC Action/Spin Time",
+                  "_title": "EXC Time",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                }
+              ]
+            }
+          },
+          "10,0": {
+            "size": [
+              5,
+              9
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "EXC Orient",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Autonomy/EXC Orient/Trench Index",
+                  "_title": "Trench Index",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Autonomy/EXC Orient/Trench Gap",
+                  "_title": "Trench Gap",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Autonomy/EXC Orient/Trench Start Dist",
+                  "_title": "Trench Start Dist",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                }
+              ]
+            }
+          },
+          "5,0": {
+            "size": [
+              5,
+              9
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Traversal",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "BOTTOM",
+              "_children": []
+            }
+          },
+          "0,12": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Localization/Offsets/Back X",
+              "_title": "SmartDashboard/Localization/Offsets/Back X",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "3,12": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Localization/Offsets/Back Y",
+              "_title": "SmartDashboard/Localization/Offsets/Back Y",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
           "0,0": {
+            "size": [
+              5,
+              2
+            ],
+            "content": {
+              "_type": "Split Button Chooser",
+              "_source0": "network_table:///SmartDashboard/Localization/Arena",
+              "_title": "Arena",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "0,10": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Localization/Offsets/Front X",
+              "_title": "SmartDashboard/Localization/Offsets/Front X",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "3,10": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Localization/Offsets/Front Y",
+              "_title": "SmartDashboard/Localization/Offsets/Front Y",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "0,2": {
             "size": [
               5,
               6
@@ -311,69 +736,496 @@
               "_children": [
                 {
                   "_type": "Toggle Button",
-                  "_source0": "network_table:///SmartDashboard/Auto Traversal",
-                  "_title": "SmartDashboard/Auto Traversal",
+                  "_source0": "network_table:///SmartDashboard/Autonomy/Phases/Traversal",
+                  "_title": "SmartDashboard/Autonomy/Phases/Traversal",
                   "_glyph": 148,
                   "_showGlyph": false
                 },
                 {
                   "_type": "Toggle Button",
-                  "_source0": "network_table:///SmartDashboard/Auto EXC Orient",
-                  "_title": "SmartDashboard/Auto EXC Orient",
+                  "_source0": "network_table:///SmartDashboard/Autonomy/Phases/EXC Orient",
+                  "_title": "SmartDashboard/Autonomy/Phases/EXC Orient",
                   "_glyph": 148,
                   "_showGlyph": false
                 },
                 {
                   "_type": "Toggle Button",
-                  "_source0": "network_table:///SmartDashboard/Auto EXC Action",
-                  "_title": "SmartDashboard/Auto EXC Action",
+                  "_source0": "network_table:///SmartDashboard/Autonomy/Phases/EXC Action",
+                  "_title": "SmartDashboard/Autonomy/Phases/EXC Action",
                   "_glyph": 148,
                   "_showGlyph": false
                 },
                 {
                   "_type": "Toggle Button",
-                  "_source0": "network_table:///SmartDashboard/Auto DEP Orient",
-                  "_title": "SmartDashboard/Auto DEP Orient",
+                  "_source0": "network_table:///SmartDashboard/Autonomy/Phases/DEP Orient",
+                  "_title": "SmartDashboard/Autonomy/Phases/DEP Orient",
                   "_glyph": 148,
                   "_showGlyph": false
                 },
                 {
                   "_type": "Toggle Button",
-                  "_source0": "network_table:///SmartDashboard/Auto DEP Action",
-                  "_title": "SmartDashboard/Auto DEP Action",
+                  "_source0": "network_table:///SmartDashboard/Autonomy/Phases/DEP Action",
+                  "_title": "SmartDashboard/Autonomy/Phases/DEP Action",
                   "_glyph": 148,
                   "_showGlyph": false
                 }
               ]
             }
           },
-          "5,0": {
+          "10,11": {
             "size": [
-              5,
-              4
+              3,
+              2
             ],
             "content": {
-              "_type": "List Layout",
-              "_title": "DEP Action",
-              "_glyph": 149,
-              "_showGlyph": false,
-              "Layout/Label position": "BOTTOM",
-              "_children": [
-                {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Hopper Empty Speed",
-                  "_title": "Hopper Empty Speed [Motor %]",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                },
-                {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Hopper Empty Time",
-                  "_title": "Hopper Empty Time [Seconds]",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                }
-              ]
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Localization/Rover X",
+              "_title": "Rover X",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "13,11": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Localization/Rover Y",
+              "_title": "Rover Y",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "16,11": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Localization/Rover Angle",
+              "_title": "Rover Angle",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "26,9": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Localization/Offsets/Front X",
+              "_title": "SmartDashboard/Localization/Offsets/Front X",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "28,9": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Localization/Offsets/Front Y",
+              "_title": "SmartDashboard/Localization/Offsets/Front Y",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "28,11": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Localization/Offsets/Back Y",
+              "_title": "/SmartDashboard/Localization/Offsets/Back Y",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "26,11": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Localization/Offsets/Back X",
+              "_title": "SmartDashboard/Localization/Offsets/Back X",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "0,8": {
+            "size": [
+              5,
+              2
+            ],
+            "content": {
+              "_type": "Toggle Button",
+              "_source0": "network_table:///SmartDashboard/Autonomy/Phases/Loop",
+              "_title": "Auto Loop",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "11,9": {
+            "size": [
+              6,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Autonomy/EXC Orient/Failsafe Time",
+              "_title": "SmartDashboard/Autonomy/EXC Orient/Failsafe Time",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "19,9": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/DriveTimePerCell",
+              "_title": "SmartDashboard/Autonomy/Traversal/DriveTimePerCell",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "19,11": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/TurnTime 45",
+              "_title": "SmartDashboard/Autonomy/Traversal/TurnTime 45",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "21,11": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/TurnTime 90",
+              "_title": "SmartDashboard/Autonomy/Traversal/TurnTime 90",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "23,11": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/TurnTime 135",
+              "_title": "SmartDashboard/Autonomy/Traversal/TurnTime 135",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "24,12": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/TurnTime 180",
+              "_title": "SmartDashboard/Autonomy/Traversal/TurnTime 180",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Telemetry",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 32.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "titleType": 1,
+        "tiles": {
+          "0,6": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/BackLeft/Motor/Current [Amps]",
+              "_title": "/SmartDashboard/Mobility/BackLeft/Motor/Current [Amps]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "0,8": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/BackLeft/Motor/Encoder [RPM]",
+              "_title": "/SmartDashboard/Mobility/BackLeft/Motor/Encoder [RPM]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "3,6": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/BackRight/Motor/Current [Amps]",
+              "_title": "/SmartDashboard/Mobility/BackRight/Motor/Current [Amps]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "3,8": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/BackRight/Motor/Encoder [RPM]",
+              "_title": "/SmartDashboard/Mobility/BackRight/Motor/Encoder [RPM]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "0,0": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/FrontLeft/Motor/Current [Amps]",
+              "_title": "/SmartDashboard/Mobility/FrontLeft/Motor/Current [Amps]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "0,2": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/FrontLeft/Motor/Encoder [RPM]",
+              "_title": "/SmartDashboard/Mobility/FrontLeft/Motor/Encoder [RPM]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "3,0": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/FrontRight/Motor/Current [Amps]",
+              "_title": "/SmartDashboard/Mobility/FrontRight/Motor/Current [Amps]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "3,2": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/FrontRight/Motor/Encoder [RPM]",
+              "_title": "/SmartDashboard/Mobility/FrontRight/Motor/Encoder [RPM]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "7,0": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Excavation/Motor/Current [Amps]",
+              "_title": "/SmartDashboard/Excavation/Motor/Current [Amps]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "7,2": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Excavation/Motor/Encoder [RPM]",
+              "_title": "/SmartDashboard/Excavation/Motor/Encoder [RPM]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "7,6": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Hopper Motor/Current [Amps]",
+              "_title": "/SmartDashboard/Hopper Motor/Current [Amps]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "7,8": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Hopper Motor/Encoder [RPM]",
+              "_title": "/SmartDashboard/Hopper Motor/Encoder [RPM]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "10,0": {
+            "size": [
+              7,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/IMU/Acceleration X [G]",
+              "_title": "Acceleration X [G]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "17,0": {
+            "size": [
+              7,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/IMU/Acceleration Y [G]",
+              "_title": "SmartDashboard/IMU/Acceleration Y [G]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "24,0": {
+            "size": [
+              7,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/IMU/Acceleration Z [G]",
+              "_title": "SmartDashboard/IMU/Acceleration Z [G]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "10,2": {
+            "size": [
+              7,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/IMU/Velocity X [mps]",
+              "_title": "SmartDashboard/IMU/Velocity X [mps]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "24,2": {
+            "size": [
+              7,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/IMU/Velocity Z [mps]",
+              "_title": "SmartDashboard/IMU/Velocity Z [mps]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "17,2": {
+            "size": [
+              7,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/IMU/Velocity Y [mps]",
+              "_title": "SmartDashboard/IMU/Velocity Y [mps]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "19,7": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Localization/Obstacle X",
+              "_title": "/SmartDashboard/Localization/Obstacle X",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "19,9": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Localization/Obstacle Y",
+              "_title": "/SmartDashboard/Localization/Obstacle Y",
+              "_glyph": 148,
+              "_showGlyph": false
             }
           }
         }
@@ -381,9 +1233,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -4.5714287757873535,
-    "y": 1.7142857313156128,
-    "width": 1566.2857666015625,
-    "height": 790.2857055664062
+    "x": -5.714285850524902,
+    "y": 7.4285712242126465,
+    "width": 1566.857177734375,
+    "height": 786.8571166992188
   }
 }

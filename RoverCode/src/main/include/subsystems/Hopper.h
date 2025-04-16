@@ -14,10 +14,11 @@ class HopperSubsystem : public frc2::SubsystemBase {
         void Reset();
 
         void HoldLock(bool hold);
-        void Spin(double speed, bool invert);
+        void Spin(double speed, bool invert, bool filling);
         void Stop();
     private:
-        double maxSpinSpeed = 0.15;
+        double emptySpinSpeed = 0.4;
+        double fillSpinSpeed = 0.1;
         bool isSpinning;
         bool isLocked;
         MotorSendable hopSpin{PortConstants::hopSpin, rev::CANSparkMax::MotorType::kBrushless};

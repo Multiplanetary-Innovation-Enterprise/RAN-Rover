@@ -4,9 +4,11 @@
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
 #include <wpi/raw_ostream.h>
+#include <frc/DutyCycle.h>
 #include <frc/DigitalOutput.h>
 #include <frc/AnalogPotentiometer.h>
 #include "Constants.h"
+#include <frc/Timer.h>
 #include "sendables/MotorSendable.h"
 
 class ExcavationSubsystem : public frc2::SubsystemBase {
@@ -23,26 +25,38 @@ class ExcavationSubsystem : public frc2::SubsystemBase {
         void Stop();
 
         void StartActuate(bool dir);
-        void StopActuate(bool limitHit);
-        double ActuateAngle();
+        void StopActuate();
+        double GetActuateUpper();
+        double GetActuateLower();
+        double GetSpeed();
+
+        double actuateMin = 0.0; // Minimum limit of potentiometer for actuation.
+        double actuateMax = 3.94; // Maximum limit of potentiometer for actuation.
 
     private:
-        double maxSpinSpeed = 0.25; // The max speed to spin the excavator.
-        double actuateSpeed = 0.025; // The speed to actuate.
-        double actuateSpinThreshold = 0.2; // When during the actuation process is spin able to occur.
-        double actuateMin = 0.05; // Minimum limit of potentiometer for actuation.
-        double actuateMax = 0.38; // Maximum limit of potentiometer for actuation.
-        
+        void AccelerationControl(double target);
+        double steadySpinSpeed = 0.4; // The max speed to spin the excavator.
+        double plungeSpinSpeed = 0.6;
+        double actuateFastSpeed = 1.0; // The speed to actuate.
+        double actuateSlowSpeed = 0.1;
+        double actuatePW = 200.0;
+        double actuateSpinThreshold = 3.0; // When during the actuation process is spin able to occur.
+        double accelerationRate = 1.0;
+
+        double actPotDiff = 0.43;
+        double currSpeed = 0.0;
         bool isSpinning;
         int actuatingDir;
         bool isLocked;
+        frc::Timer timer;
         MotorSendable excSpin{PortConstants::excSpin, rev::CANSparkMax::MotorType::kBrushless};
 
         frc::DigitalOutput excLeftActVel{PortConstants::excLeftActVel};
         frc::DigitalOutput excLeftActDir{PortConstants::excLeftActDir};
-        frc::AnalogPotentiometer excLeftPot{PortConstants::excLeftPot, 1.0, 0.0};
+        frc::AnalogPotentiometer excLeftPot{PortConstants::excLeftPot, 10.0, 0.0};
 
         frc::DigitalOutput excRightActVel{PortConstants::excRightActVel};
         frc::DigitalOutput excRightActDir{PortConstants::excRightActDir};
-        frc::AnalogPotentiometer excRightPot{PortConstants::excRightPot, 1.0, 0.0};
+        frc::DutyCycle excRightActPWM{excRightActVel};
+        frc::AnalogPotentiometer excRightPot{PortConstants::excRightPot, 10.0, 0.0};
 };

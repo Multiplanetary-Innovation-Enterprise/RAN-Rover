@@ -5,10 +5,12 @@ HopperSubsystem::HopperSubsystem() {
     hopSpin.RestoreFactoryDefaults();
     Reset();
 
-    frc::SmartDashboard::PutNumber("Hopper Max Speed", maxSpinSpeed);
-    frc::SmartDashboard::SetPersistent("Hopper Max Speed");
+    frc::SmartDashboard::PutNumber("Hopper/Empty Speed", emptySpinSpeed);
+    frc::SmartDashboard::SetPersistent("Hopper/Empty Speed");
+    frc::SmartDashboard::PutNumber("Hopper/Fill Speed", fillSpinSpeed);
+    frc::SmartDashboard::SetPersistent("Hopper/Fill Speed");
     
-    frc::SmartDashboard::PutData("Hopper Motor", &hopSpin);
+    frc::SmartDashboard::PutData("Hopper/Motor", &hopSpin);
 }
 
 void HopperSubsystem::Periodic() {}
@@ -25,13 +27,21 @@ void HopperSubsystem::HoldLock(bool lock) {
     isLocked = lock;
 }
 
-void HopperSubsystem::Spin(double speed, bool invert) {
-    maxSpinSpeed = frc::SmartDashboard::GetNumber("Hopper Max Speed", maxSpinSpeed);
+void HopperSubsystem::Spin(double speed, bool invert, bool filling) {
+    
     wpi::outs() << "Spin Hopper " << (invert ? "Forwards" : "Backwards") << " @ " << std::to_string(speed * 100.0) << "%\n";
     isSpinning = true;
+    double pwr = speed;
 
-    double pwr = speed * maxSpinSpeed;
-    if (!isLocked || abs(hopSpin.Get()) < pwr)
+    if (filling) {
+        fillSpinSpeed = frc::SmartDashboard::GetNumber("Hopper/Fill Speed", fillSpinSpeed);
+        pwr *= fillSpinSpeed;
+    } else {
+        emptySpinSpeed = frc::SmartDashboard::GetNumber("Hopper/Empty Speed", emptySpinSpeed);
+        pwr *= emptySpinSpeed;
+    }
+
+    if (!isLocked || fabs(hopSpin.Get()) < pwr)
         hopSpin.Set(pwr * (invert ? -1.0 : 1.0));
 }
 

@@ -66,7 +66,8 @@
       "/SmartDashboard/Front Right Current": "Motor Controller",
       "/SmartDashboard/Front Right Wheel": "Gyro",
       "/SmartDashboard/Hopper": "Subsystem",
-      "/SmartDashboard/IMU": "Subsystem",
+      "/SmartDashboard/IMU": "Gyro",
+      "/SmartDashboard/Localization/Arena": "String Chooser",
       "/SmartDashboard/Mobility": "Subsystem"
     },
     "windows": {
@@ -161,6 +162,9 @@
         }
       },
       "SmartDashboard": {
+        "Autonomy": {
+          "open": true
+        },
         "Front Left Current": {
           "open": true
         },
@@ -174,6 +178,9 @@
           "float[]##v_/SmartDashboard/IMU/Velocity": {
             "open": true
           }
+        },
+        "Localization": {
+          "open": true
         },
         "Vision": {
           "Beacons": {

@@ -9,10 +9,14 @@
 
 void Robot::RobotInit() {
 
-  teleop.SetSystems(&mob, &exc, &hop);  
-  autonomy.SetSystems(&vision, &mob, &exc, &hop);
-
   frc::SmartDashboard::PutData("IMU", &imu);
+
+  wpi::outs() << "Robot Init\n";
+  localization = new Localization(&vision, &imu);
+  teleop.SetSystems(&mob, &exc, &hop);  
+  autonomy.SetSystems(&vision, localization, &mob, &exc, &hop);
+
+  localization->Init();
 }
 
 /**
@@ -34,21 +38,28 @@ void Robot::RobotPeriodic() {
  */
 void Robot::AutonomousInit() {
   // Stops all subsystem motors, and resets all of their variables to their initial states.
+  wpi::outs() << "Auto Init\n";
   Kill();
   autonomy.Init();
 }
 
 void Robot::AutonomousPeriodic() { 
-  autonomy.Periodic();
+  vision.IdentifyTags();
+  localization->Periodic();
+  if (autonomy.Periodic()) // Returns true when finished
+    this->EndCompetition();
 }
 
 void Robot::TeleopInit() {
   // Stops all subsystem motors, and resets all of their variables to their initial states.
+  wpi::outs() << "Teleop Init\n";
   Kill();
   teleop.Init();
 }
 
 void Robot::TeleopPeriodic() {
+  vision.IdentifyTags();
+  localization->Periodic();
   teleop.Periodic();
 }
 
@@ -61,10 +72,29 @@ void Robot::DisabledPeriodic() {}
 
 void Robot::TestInit() {
   // Stops all subsystem motors, and resets all of their variables to their initial states.
+    wpi::outs() << "Test Init\n";
   Kill();
-}
+  pathingTimer.Stop();
+  pathingTimer.Reset();
+  localization->addObstacle(Coord{2.5, 1.3}, 0.1);
+  // localization->addObstacle(Coord{3.6, 1.4}, 0.2);
+  localization->displayGrid(Coord{5.38, 1.5});}
 
-void Robot::TestPeriodic() {}
+void Robot::TestPeriodic() {
+  pathingTimer.Start();
+  if (pathingTimer.AdvanceIfElapsed(units::time::second_t{10.0})) {
+    Coord targetPos{5.38, 1.35};
+    targetPos.x = frc::SmartDashboard::GetNumber("Autonomy/Traversal/Target X", targetPos.x);
+    targetPos.y = frc::SmartDashboard::GetNumber("Autonomy/Traversal/Target Y", targetPos.y);
+    std::vector<Coord> path = localization->findPath(targetPos);
+    wpi::outs() << "\n\nA* Path to " << targetPos.toStr() << " with no obstacles:\n";
+    std::string msg = "";
+    for (Coord point : path)
+      msg = msg + " " + point.toStr() + " ";
+    wpi::outs() << "Path has " << std::to_string(path.size()) << " nodes.\n\n";
+    wpi::outs() << localization->displayGrid(targetPos, path) << "\n";
+  }
+}
 
 void Robot::SimulationInit() {
   // Stops all subsystem motors, and resets all of their variables to their initial states.
@@ -74,7 +104,12 @@ void Robot::SimulationInit() {
 void Robot::SimulationPeriodic() {}
 
 void Robot::Kill() {
-
+  wpi::outs() << "Kill Command Issued\n";
+  frc2::CommandScheduler::GetInstance().CancelAll();
+  Blinkin::Off();
+  mob.Reset();
+  exc.Reset();
+  hop.Reset();
 }
 
 #ifndef RUNNING_FRC_TESTS
