@@ -12,19 +12,19 @@
 #include <frc/TimedRobot.h>
 #include <wpi/raw_ostream.h>
 
+#include "Autonomy.h"
+#include "Teleop.h"
+#include "Vision.h"
 #include "subsystems/Mobility.h"
 #include "subsystems/Hopper.h"
 #include "subsystems/Excavation.h"
-#include "subsystems/Deposition.h"
+#include "subsystems/Blinkin.h"
 #include "sendables/IMUSendable.h"
-#include "Vision.h"
-#include "Autonomy.h"
-#include "Teleop.h"
 
 class Robot : public frc::TimedRobot {
  public:
-  IMUSendable imu{frc::SPI::Port::kMXP};
- 
+  IMUSendable imu{frc::SerialPort::Port::kUSB2};
+
   void RobotInit() override;
   void RobotPeriodic() override;
   void AutonomousInit() override;
@@ -41,10 +41,13 @@ class Robot : public frc::TimedRobot {
   void Kill();
  private:
   Vision vision;
+  Localization* localization;
   MobilitySubsystem mob;
   ExcavationSubsystem exc;
   HopperSubsystem hop;
 
-  Teleop teleop{this, &mob, &exc, &hop};
-  Autonomy autonomy{this, &vision, &mob, &exc, &hop};
+  frc::Timer pathingTimer;
+
+  Teleop teleop;
+  Autonomy autonomy;
 };

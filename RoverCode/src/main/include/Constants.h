@@ -4,49 +4,82 @@
 
 #pragma once
 
+#include "sendables/Coord.h"
+
 namespace PortConstants {
 
-    inline constexpr int primaryController = 0;
-    inline constexpr int secondaryController = 1;
-
-    inline constexpr int navX = 0;
+    // Controllers
+    const int primaryController = 0;
+    const int secondaryController = 1;
 
     // Mobility
-    inline constexpr int mobMotor[4] =  {11, 13,
-                                         10, 12};
-    inline constexpr int mobActVel[4] = {-1, -1,
-                                         -1, -1};
-    inline constexpr int mobActDir[4] = {-1, -1,
-                                         -1, -1};
-    inline constexpr int mobActPot[4] = {-1, -1,
-                                         -1, -1};
+    const int mobMotor[4] =  {1, 2,
+                              3, 4};
+    const int mobActVel[4] = {0, 4,
+                              2, 6}; // Digital Output (On RoboRio)
+    const int mobActDir[4] = {1, 5,
+                              3, 7}; // Digital Output (On RoboRio)
+    const int mobActPot[4] = {0, 2,
+                              1, 3}; // Analog Input (On RoboRio)
 
     // Excavation
-    inline constexpr int excSpin = 14;
-    inline constexpr int excLeftActVel = 0; // Digital Output
-    inline constexpr int excLeftActDir = 1; // Digital Output
-    inline constexpr int excLeftPot = 0; // Analog Input
-
-    inline constexpr int excRightActVel = 2; // Digital Output
-    inline constexpr int excRightActDir = 3; // Digital Output
-    inline constexpr int excRightPot = 1; // Analog Input
+    const int excSpin = 5;
+    const int excLeftActVel = 10; // Digital Output (0 On NavX MXP Board)
+    const int excLeftActDir = 11; // Digital Output (1 On NavX MXP Board)
+    const int excLeftPot = 4; // Analog Input (2 On NavX MXP Board)
+    
+    const int excRightActVel = 12; // Digital Output (2 On NavX MXP Board)
+    const int excRightActDir = 13; // Digital Output (3 On NavX MXP Board)
+    const int excRightPot = 5; // Analog Input (3 On NavX MXP Board)
 
     // Hopper
-    inline constexpr int hopSpin = 15;
+    const int hopSpin = 6;
 
-    // Deposition
-    inline constexpr int depSpin = 16;
-    
-    inline constexpr int depLeftActVel = 4; // Digital Output
-    inline constexpr int depLeftActDir = 5; // Digital Output
-    inline constexpr int depLeftPot = 2; // Analog Input
-
-    inline constexpr int depRightActVel = 6; // Digital Output
-    inline constexpr int depRightActDir = 7; // Digital Output
-    inline constexpr int depRightPot = 3; // Analog Input
+    // REV Blinkin LED Lights
+    const int blinkin = 0;
 }
 
-namespace GearRatioConstants {
+namespace KSC_ArenaConstants {
+    
+    // Following the NASA Guidebook
+    // All units are in meters
+    // For pairs of values it is always listed x, y.
+    // 0, 0 is assumed to be the corner of the starting zone.
 
-    inline constexpr int hop = 80; // 80 : 1
+    const Coord size{6.88, 5.0};
+
+    const Coord traversalZonePos{0.0, 0.0};
+    const Coord traversalZoneSize{3.88, 5.0};
+
+    const Coord excavationZonePos{3.88, 2.0};
+    const Coord excavationZoneSize{3.0, 3.0};
+
+    const Coord constructionZonePos{3.88, 0.0};
+    const Coord constructionZoneSize{3.0, 2.0};
+
+    const Coord bermCenter{5.38, 0.6};
+    const Coord bermSize{2.0, 0.7};
+}
+
+namespace UCF_ArenaConstants {
+
+    // Following the University of Central Forida's Guidebook
+    // All units are in meters
+    // For pairs of values it is always listed x, y.
+    // 0, 0 is assumed to be the corner of the starting zone.
+
+    const Coord size{4.57, 8.14};
+
+    const Coord traversalZonePos{0.0, 0.0};
+    const Coord traversalZoneSize{4.57, 4.07};
+
+    const Coord excavationZonePos{0.0, 4.07};
+    const Coord excavationZoneSize{4.57, 4.07};
+
+    const Coord constructionZonePos{2.57, 5.54};
+    const Coord constructionZoneSize{2.0, 2.6};
+
+    // Berm position is estimated to be the center of construction zone as the UCF Guidebook does not specify.
+    const Coord bermCenter{3.57, 6.84};
+    const Coord bermSize{0.7, 2.0};
 }

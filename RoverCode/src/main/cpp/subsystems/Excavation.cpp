@@ -1,5 +1,3 @@
-#pragma once
-
 #include "subsystems/Excavation.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -7,29 +5,67 @@ ExcavationSubsystem::ExcavationSubsystem() {
     excSpin.RestoreFactoryDefaults();
     Reset();
 
-    frc::SmartDashboard::PutNumber("Excavation Max Speed", maxSpinSpeed);
-    frc::SmartDashboard::SetPersistent("Excavation Max Speed");
+    frc::SmartDashboard::PutNumber("Excavation/Steady Speed", steadySpinSpeed);
+    frc::SmartDashboard::SetPersistent("Excavation/Steady Speed");
+    frc::SmartDashboard::PutNumber("Excavation/Plunge Speed", plungeSpinSpeed);
+    frc::SmartDashboard::SetPersistent("Excavation/Plunge Speed");
 
-    frc::SmartDashboard::PutNumber("Excavation Actuate Speed", actuateSpeed);
-    frc::SmartDashboard::SetPersistent("Excavation Actuate Speed");
-    frc::SmartDashboard::PutNumber("Excavation Spin Threshold", actuateSpinThreshold);
-    frc::SmartDashboard::SetPersistent("Excavation Spin Threshold");
-    frc::SmartDashboard::PutNumber("Excavation Actuate Min", actuateMin);
-    frc::SmartDashboard::SetPersistent("Excavation Actuate Min");
-    frc::SmartDashboard::PutNumber("Excavation Actuate Max", actuateMax);
-    frc::SmartDashboard::SetPersistent("Excavation Actuate Max");
+    frc::SmartDashboard::PutNumber("Excavation/Spin Threshold", actuateSpinThreshold);
+    frc::SmartDashboard::SetPersistent("Excavation/Spin Threshold");
+    frc::SmartDashboard::PutNumber("Excavation/Actuate Min", actuateMin);
+    frc::SmartDashboard::SetPersistent("Excavation/Actuate Min");
+    frc::SmartDashboard::PutNumber("Excavation/Actuate Max", actuateMax);
+    frc::SmartDashboard::SetPersistent("Excavation/Actuate Max");
 
-    frc::SmartDashboard::PutData("Excavation Motor", &excSpin);
-    frc::SmartDashboard::PutData("Excavation Left Actuator Pot", &excLeftPot);
-    frc::SmartDashboard::PutData("Excavation Right Actuator Pot", &excRightPot);
+    frc::SmartDashboard::PutNumber("Excavation/Pulse Width Frequency", actuatePW);
+    frc::SmartDashboard::SetPersistent("Excavation/Pulse Width Frequency");
+    frc::SmartDashboard::PutNumber("Excavation/Actuate Fast Speed", actuateFastSpeed);
+    frc::SmartDashboard::SetPersistent("Excavation/Actuate Fast Speed");
+    frc::SmartDashboard::PutNumber("Excavation/Actuate Slow Speed", actuateSlowSpeed);
+    frc::SmartDashboard::SetPersistent("Excavation/Actuate Slow Speed");
+
+    frc::SmartDashboard::PutNumber("Excavation/Actuate Pot Diff", actPotDiff);
+    frc::SmartDashboard::SetPersistent("Excavation/Actuate Pot Diff");
+
+    frc::SmartDashboard::PutNumber("Excavation/Acceleration Rate", accelerationRate);
+    frc::SmartDashboard::SetPersistent("Excavation/Acceleration Rate");
+
+    frc::SmartDashboard::PutData("Excavation/Motor", &excSpin);
+    frc::SmartDashboard::PutData("Excavation/Left Actuator Pot", &excLeftPot);
+    frc::SmartDashboard::PutData("Excavation/Right Actuator Pot", &excRightPot);
 }
 
-void ExcavationSubsystem::Periodic() {}
+void ExcavationSubsystem::Periodic() {
+
+    if (actuatingDir == 1) {
+        if (GetActuateLower() <= actuateMin - 0.01) {
+            StopActuate();
+        } else {
+            excLeftActVel.UpdateDutyCycle(actuateFastSpeed);
+            excRightActVel.UpdateDutyCycle(actuateFastSpeed);
+        }
+    } else if (actuatingDir == -1) {
+        if (GetActuateUpper() >= actuateMax + 0.01) {
+            StopActuate();
+        } else {        
+            if (canSpin()) {
+                excLeftActVel.UpdateDutyCycle(actuateSlowSpeed);
+                excRightActVel.UpdateDutyCycle(actuateSlowSpeed);
+            } else {
+                excLeftActVel.UpdateDutyCycle(actuateFastSpeed);
+                excRightActVel.UpdateDutyCycle(actuateFastSpeed);
+            }
+        }
+    }
+}
 void ExcavationSubsystem::SimulationPeriodic() {}
 
 void ExcavationSubsystem::Reset() {
 
     excSpin.StopMotor();
+    currSpeed = 0.0;
+
+    StopActuate();
 
     isSpinning = false;
     actuatingDir = 0;
@@ -37,8 +73,8 @@ void ExcavationSubsystem::Reset() {
 }
 
 bool ExcavationSubsystem::canSpin() {
-    actuateSpinThreshold = frc::SmartDashboard::GetNumber("Excavation Spin Threshold", actuateSpinThreshold);
-    return excLeftPot.Get() >= actuateSpinThreshold && excRightPot.Get() >= actuateSpinThreshold;
+    actuateSpinThreshold = frc::SmartDashboard::GetNumber("Excavation/Spin Threshold", actuateSpinThreshold);
+    return GetActuateLower() >= actuateSpinThreshold;
 }
 
 void ExcavationSubsystem::HoldLock(bool lock) {
@@ -47,16 +83,14 @@ void ExcavationSubsystem::HoldLock(bool lock) {
 
 void ExcavationSubsystem::Spin(double speed, bool invert) {
 
-    maxSpinSpeed = frc::SmartDashboard::GetNumber("Excavation Max Speed", maxSpinSpeed);
-    if (!canSpin()) {
-        Stop();
-        return;
-    }
-    double pwr = speed * maxSpinSpeed;
-    if (!isLocked || abs(excSpin.Get()) < pwr) {
+    steadySpinSpeed = frc::SmartDashboard::GetNumber("Excavation/Steady Speed", steadySpinSpeed);
+    plungeSpinSpeed = frc::SmartDashboard::GetNumber("Excavation/Plunge Speed", plungeSpinSpeed);
+    AccelerationControl(speed * (invert ? -1.0 : 1.0));
+    double pwr = currSpeed * (GetActuateUpper() >= actuateMax ? steadySpinSpeed : plungeSpinSpeed);
+    if (!isLocked || fabs(excSpin.Get()) < pwr) {
         isSpinning = true;
         wpi::outs() << "Spin Excavation " << (invert ? "Forwards" : "Backwards") << " @ " << std::to_string(speed * 100.0) << "%\n";
-        excSpin.Set(pwr * (invert ? -1.0 : 1.0));
+        excSpin.Set(pwr);
     }
 }
 
@@ -64,48 +98,88 @@ void ExcavationSubsystem::Stop() {
     if (!isSpinning || isLocked) return;
     wpi::outs() << "Stop Excavation\n";
     isSpinning = false;
+    currSpeed = 0.0;
     excSpin.StopMotor();
 }
 
 void ExcavationSubsystem::StartActuate(bool dir) {
+    actuateSpinThreshold = frc::SmartDashboard::GetNumber("Excavation/Spin Threshold", actuateSpinThreshold);
     if (dir) {
-        actuateMax = frc::SmartDashboard::GetNumber("Excavation Actuate Max", actuateMax);
-        if (actuatingDir == 1) {
-            if (excLeftPot.Get() >= actuateMax || excRightPot.Get() >= actuateMax) StopActuate(true);
+        actuateMin = frc::SmartDashboard::GetNumber("Excavation/Actuate Min", actuateMin);
+        if (GetActuateLower() <= actuateMin) {
+            StopActuate();
+            return;
+        } else if (actuatingDir != 1) {
+            wpi::outs() << "Retracting Excavator...\n";
+            actuatingDir = 1;
+        } else {
             return;
         }
-        wpi::outs() << "Deploying Excavator...\n";
-        actuatingDir = 1;
     } else {
-        actuateMin = frc::SmartDashboard::GetNumber("Excavation Actuate Min", actuateMin);
-        if (actuatingDir == -1) {
-            if (excLeftPot.Get() <= actuateMin || excRightPot.Get() <= actuateMin) StopActuate(true);
+        actuateMax = frc::SmartDashboard::GetNumber("Excavation/Actuate Max", actuateMax);
+        if (GetActuateUpper() >= actuateMax) {
+            StopActuate();
+            return;
+        } else if (actuatingDir != -1) {
+            wpi::outs() << "Deploying Excavator...\n";
+            actuatingDir = -1;
+        } else {
             return;
         }
-        wpi::outs() << "Retracting Excavator...\n";
-        actuatingDir = -1;
     }
-    
+
     excLeftActDir.Set(dir);
     excRightActDir.Set(dir);
 
-    // Variable linear actuator speed not currently functional, WIP!
-    actuateSpeed = frc::SmartDashboard::GetNumber("Excavation Actuate Speed", actuateSpeed);
-    excLeftActVel.SetPWMRate(actuateSpeed);
-    excRightActVel.SetPWMRate(actuateSpeed);
-    excLeftActVel.Set(true);
-    excRightActVel.Set(true);
+    actuatePW = frc::SmartDashboard::GetNumber("Excavation/Pulse Width Frequency", actuatePW);
+    excLeftActVel.SetPWMRate(actuatePW);
+    excRightActVel.SetPWMRate(actuatePW);
+
+    if (actuatingDir == -1 && GetActuateLower() >= actuateSpinThreshold) {
+        actuateSlowSpeed = frc::SmartDashboard::GetNumber("Excavation/Actuate Slow Speed", actuateSlowSpeed);
+        excLeftActVel.EnablePWM(actuateSlowSpeed);
+        excRightActVel.EnablePWM(actuateSlowSpeed);
+    } else {
+        actuateFastSpeed = frc::SmartDashboard::GetNumber("Excavation/Actuate Fast Speed", actuateFastSpeed);
+        excLeftActVel.EnablePWM(actuateFastSpeed);
+        excRightActVel.EnablePWM(actuateFastSpeed);
+    }
 }
 
-void ExcavationSubsystem::StopActuate(bool limitHit) {
+void ExcavationSubsystem::StopActuate() {
     if (actuatingDir == 0) return;
     wpi::outs() << "Stopping Actuating Excavator\n";
-    if(!limitHit)
-        actuatingDir = 0;
-    excLeftActVel.Set(false);
-    excRightActVel.Set(false);
+    actuatingDir = 0;
+    excLeftActVel.DisablePWM();
+    excRightActVel.DisablePWM();
+    excLeftActDir.Set(false);
+    excRightActDir.Set(false);
 }
 
-double ExcavationSubsystem::ActuateAngle() {
-    return ((excLeftPot.Get() - actuateMin) / (actuateMax - actuateMin)) * 90.0 - 45.0;
+double ExcavationSubsystem::GetActuateUpper() {
+    actPotDiff = frc::SmartDashboard::GetNumber("Excavation/Actuate Pot Diff", actPotDiff);
+    return std::max(excLeftPot.Get(), excRightPot.Get() - actPotDiff);
+}
+
+double ExcavationSubsystem::GetActuateLower() {
+    actPotDiff = frc::SmartDashboard::GetNumber("Excavation/Actuate Pot Diff", actPotDiff);
+    return std::min(excLeftPot.Get(), excRightPot.Get() - actPotDiff);
+}
+
+double ExcavationSubsystem::GetSpeed() {
+    return currSpeed;
+}
+
+void ExcavationSubsystem::AccelerationControl(double target) {
+    accelerationRate = frc::SmartDashboard::GetNumber("Excavation/Acceleration Rate", accelerationRate * 100.0) / 100.0; 
+    timer.Start();
+    if (timer.AdvanceIfElapsed(units::time::millisecond_t(20))) {
+        if (fabs(target - currSpeed) < accelerationRate / 2.0) { // Near Target
+            currSpeed = target;
+        } else if (target > currSpeed) { // Accelerate Positive
+            currSpeed += accelerationRate;
+        } else if (target < currSpeed) { // Accelerate Negative
+            currSpeed -= accelerationRate;
+        }
+    }
 }

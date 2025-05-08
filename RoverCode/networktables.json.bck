@@ -1,23 +1,31 @@
 [
   {
-    "name": "/SmartDashboard/Drive Max Speed",
+    "name": "/SmartDashboard/Mobility/Drive Max Speed",
     "type": "double",
     "value": 0.6,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Mobility/Crawl Max Speed",
+    "type": "double",
+    "value": 100.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Mobility/Acceleration Rate",
+    "type": "double",
+    "value": 1.0,
     "properties": {
       "persistent": true,
       "retained": true
     }
   },
   {
-    "name": "/SmartDashboard/Crawl Max Speed",
-    "type": "double",
-    "value": 0.1,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/SmartDashboard/Slip Current Threshold",
+    "name": "/SmartDashboard/Mobility/Slip/Current Threshold",
     "type": "double",
     "value": 8.0,
     "properties": {
@@ -25,7 +33,7 @@
     }
   },
   {
-    "name": "/SmartDashboard/Slip Off Cycles",
+    "name": "/SmartDashboard/Mobility/Slip/Off Cycles",
     "type": "double",
     "value": 75.0,
     "properties": {
@@ -33,7 +41,7 @@
     }
   },
   {
-    "name": "/SmartDashboard/Slip Try Cycles",
+    "name": "/SmartDashboard/Mobility/Slip/Try Cycles",
     "type": "double",
     "value": 75.0,
     "properties": {
@@ -41,124 +49,79 @@
     }
   },
   {
-    "name": "/SmartDashboard/Hopper Max Speed",
-    "type": "double",
-    "value": 0.15,
+    "name": "/SmartDashboard/Mobility/Use SlipControl",
+    "type": "boolean",
+    "value": false,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/SmartDashboard/Excavation Max Speed",
+    "name": "/SmartDashboard/Excavation/Spin Threshold",
     "type": "double",
-    "value": 0.25,
+    "value": 3.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/SmartDashboard/Excavation Actuate Speed",
+    "name": "/SmartDashboard/Excavation/Actuate Min",
     "type": "double",
-    "value": 0.025,
-    "properties": {
-      "persistent": true,
-      "retained": true
-    }
-  },
-  {
-    "name": "/SmartDashboard/Excavation Spin Threshold",
-    "type": "double",
-    "value": 0.2,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/SmartDashboard/Excavation Actuate Min",
+    "name": "/SmartDashboard/Excavation/Actuate Max",
     "type": "double",
-    "value": 0.05,
-    "properties": {
-      "persistent": true,
-      "retained": true
-    }
-  },
-  {
-    "name": "/SmartDashboard/Excavation Actuate Max",
-    "type": "double",
-    "value": 0.38,
-    "properties": {
-      "persistent": true,
-      "retained": true
-    }
-  },
-  {
-    "name": "/SmartDashboard/Deposition Max Speed",
-    "type": "double",
-    "value": 0.25,
+    "value": 3.94,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/SmartDashboard/Deposition Actuate Speed",
+    "name": "/SmartDashboard/Excavation/Actuate Pot Diff",
     "type": "double",
-    "value": 0.025,
-    "properties": {
-      "persistent": true,
-      "retained": true
-    }
-  },
-  {
-    "name": "/SmartDashboard/Deposition Spin Threshold",
-    "type": "double",
-    "value": 0.15,
+    "value": 0.43,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/SmartDashboard/Deposition Actuate Min",
+    "name": "/SmartDashboard/Excavation/Acceleration Rate",
     "type": "double",
-    "value": 0.1,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/SmartDashboard/Deposition Actuate Max",
-    "type": "double",
-    "value": 0.35,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/SmartDashboard/Left Stick Deadzone",
-    "type": "double",
-    "value": 0.1,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/SmartDashboard/Right Stick Deadzone",
-    "type": "double",
-    "value": 0.1,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/SmartDashboard/Hopper Empty Time",
+    "name": "/SmartDashboard/Autonomy/Excavation/Spin Time",
     "type": "double",
     "value": 6.0,
     "properties": {
-      "persistent": true,
-      "retained": true
+      "persistent": true
     }
   },
   {
-    "name": "/SmartDashboard/Hopper Empty Speed",
+    "name": "/SmartDashboard/Autonomy/Hopper/Fill Speed",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Autonomy/Hopper/Spin Time",
+    "type": "double",
+    "value": 6.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Autonomy/Hopper/Spin Speed",
     "type": "double",
     "value": 0.75,
     "properties": {
@@ -166,7 +129,210 @@
     }
   },
   {
-    "name": "/SmartDashboard/Auto Traversal",
+    "name": "/SmartDashboard/Mobility/Steer Margin",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Mobility/FrontLeft/Steer Min",
+    "type": "double",
+    "value": -28.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Mobility/FrontLeft/Steer Max",
+    "type": "double",
+    "value": 28.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Mobility/FrontRight/Steer Min",
+    "type": "double",
+    "value": -28.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Mobility/FrontRight/Steer Max",
+    "type": "double",
+    "value": 28.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Mobility/BackLeft/Steer Min",
+    "type": "double",
+    "value": -28.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Mobility/BackLeft/Steer Max",
+    "type": "double",
+    "value": 58.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Mobility/BackRight/Steer Min",
+    "type": "double",
+    "value": -28.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Mobility/BackRight/Steer Max",
+    "type": "double",
+    "value": 58.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Mobility/PIDControllers/P Gain",
+    "type": "double",
+    "value": 1e-05,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Mobility/PIDControllers/I Gain",
+    "type": "double",
+    "value": 2.5e-05,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Mobility/PIDControllers/D Gain",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Excavation/Pulse Width Frequency",
+    "type": "double",
+    "value": 200.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Excavation/Actuate Fast Speed",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Excavation/Actuate Slow Speed",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Hopper/Empty Speed",
+    "type": "double",
+    "value": 0.4,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Hopper/Fill Speed",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Primary Controller Left Stick Deadzone",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Primary Controller Right Stick Deadzone",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Secondary Controller Left Stick Deadzone",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Secondary Controller Right Stick Deadzone",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Autonomy/Phases/Traversal",
+    "type": "boolean",
+    "value": true,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Autonomy/Phases/EXC Orient",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true,
+      "retained": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Autonomy/Phases/EXC Action",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true,
+      "retained": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Autonomy/Phases/DEP Orient",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true,
+      "retained": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Autonomy/Phases/DEP Action",
     "type": "boolean",
     "value": true,
     "properties": {
@@ -175,7 +341,7 @@
     }
   },
   {
-    "name": "/SmartDashboard/Auto EXC Orient",
+    "name": "/SmartDashboard/Autonomy/Phases/Loop",
     "type": "boolean",
     "value": true,
     "properties": {
@@ -184,30 +350,164 @@
     }
   },
   {
-    "name": "/SmartDashboard/Auto EXC Action",
-    "type": "boolean",
-    "value": true,
+    "name": "/SmartDashboard/Autonomy/EXC Orient/Trench Gap",
+    "type": "double",
+    "value": 0.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Autonomy/EXC Orient/Trench Start Dist",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Autonomy/EXC Orient/Failsafe Time",
+    "type": "double",
+    "value": 8.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Autonomy/EXC Action/Spin Time",
+    "type": "double",
+    "value": 10.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Autonomy/DEP Orient/CrawlTime-MaxTime Factor",
+    "type": "double",
+    "value": 2.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Autonomy/DEP Action/Spin Time",
+    "type": "double",
+    "value": 14.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Localization/Offsets/Front X",
+    "type": "double",
+    "value": 0.2032,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Localization/Offsets/Front Y",
+    "type": "double",
+    "value": 0.6096,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Localization/Offsets/Back X",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Localization/Offsets/Back Y",
+    "type": "double",
+    "value": -0.75,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Localization/Rover/Length",
+    "type": "double",
+    "value": 1.5,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Localization/Arena/Cell Size",
+    "type": "double",
+    "value": 0.1,
     "properties": {
       "persistent": true,
       "retained": true
     }
   },
   {
-    "name": "/SmartDashboard/Auto DEP Orient",
-    "type": "boolean",
-    "value": true,
+    "name": "/SmartDashboard/Localization/Rover/Width",
+    "type": "double",
+    "value": 0.75,
     "properties": {
-      "persistent": true,
-      "retained": true
+      "persistent": true
     }
   },
   {
-    "name": "/SmartDashboard/Auto DEP Action",
-    "type": "boolean",
-    "value": true,
+    "name": "/SmartDashboard/Excavation/Steady Speed",
+    "type": "double",
+    "value": 0.4,
     "properties": {
-      "persistent": true,
-      "retained": true
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Excavation/Plunge Speed",
+    "type": "double",
+    "value": 0.6,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Autonomy/Traversal/DriveTime Factor",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Autonomy/Traversal/TurnTime 45",
+    "type": "double",
+    "value": 1.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Autonomy/Traversal/TurnTime 90",
+    "type": "double",
+    "value": 2.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Autonomy/Traversal/TurnTime 135",
+    "type": "double",
+    "value": 3.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Autonomy/Traversal/TurnTime 180",
+    "type": "double",
+    "value": 4.0,
+    "properties": {
+      "persistent": true
     }
   }
 ]

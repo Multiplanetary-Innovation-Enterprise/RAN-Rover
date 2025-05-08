@@ -1,14 +1,16 @@
 #pragma once
+#define _USE_MATH_DEFINES
 
+#include <frc/Timer.h>
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/SubsystemBase.h>
 #include <wpi/raw_ostream.h>
 #include <array>
+#include <rev/SparkPIDController.h>
 #include <frc/DigitalOutput.h>
 #include <frc/AnalogPotentiometer.h>
 #include "Constants.h"
 #include "sendables/MotorSendable.h"
-
 
 class MobilitySubsystem : public frc2::SubsystemBase {
     public:
@@ -26,31 +28,42 @@ class MobilitySubsystem : public frc2::SubsystemBase {
         void Reset();
 
         void Drive(std::array<double, 4> speed);
-        void Crawl();
+        void Crawl(bool forward);
         void StopAll();
 
         void StartActuate(Wheel w, bool dir);
-        void StopActuate(Wheel w, bool limitHit);
+        void StopActuate(Wheel w);
+
+        bool SteerTo(std::array<double, 4> target);
 
         // Provides angle in degrees of wheel steering
         double GetAngle(Wheel w);
+
+        // Actuate Limits {Min, Max}
+        double actuateLimits[4][2] = {{-28.0, 28.0},
+                                      {-28.0, 28.0},
+                                      {-28.0, 58.0},
+                                      {-28.0, 58.0}};    
     private:
         std::array<double, 4> SlipControl(std::array<double, 4> in);
+        void AccelerationControl(std::array<double, 4> target);
+        void PseudoPID(std::array<double, 4> target);
         std::array<int, 4> slipWait;
         bool isSpinning, leftCrawl, rightCrawl;   
-
+        bool useSlipControl;
         double maxDriveSpeed = 0.6;
-        double maxCrawlSpeed = 0.1;
+        double maxCrawlSpeed = 100; // RPM
         double currentThreshold = 8.0;
+        double accelerationRate = 1;
         int cyclesSlipOff = 75; // 1.5 seconds (1500 ms @ 20ms cycles)
         int cyclesSlipTry = 75; // 1.5 seconds (1500 ms @ 20ms cycles)
         int actuateDirs[4] = {0, 0, 0, 0};
+        double steerMargin = 1.0;
+        std::array<double, 4> currSpeed;
+        frc::Timer timer;
 
-        // Actuate Limits {Min, Max}
-        double actuateLimits[4][2] = {{0.0, 1.0},
-                                      {0.0, 1.0},
-                                      {0.0, 1.0},
-                                      {0.0, 1.0}};
+        // PID coefficients
+        double kP = 0.00001, kI = 0.000025, kD = 0.0;
 
         MotorSendable motor[4] = {MotorSendable(PortConstants::mobMotor[0], rev::CANSparkMax::MotorType::kBrushless),
                                   MotorSendable(PortConstants::mobMotor[1], rev::CANSparkMax::MotorType::kBrushless),

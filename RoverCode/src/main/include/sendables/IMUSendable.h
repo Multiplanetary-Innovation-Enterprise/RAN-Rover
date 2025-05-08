@@ -7,6 +7,6 @@
 
 class IMUSendable : public AHRS {
     public:
-    IMUSendable(frc::SPI::Port port);
+    IMUSendable(frc::SerialPort::Port port);
     void InitSendable(wpi::SendableBuilder& builder) override;
 };
