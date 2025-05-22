@@ -18,7 +18,7 @@ class ExcavationSubsystem : public frc2::SubsystemBase {
         void SimulationPeriodic() override;
         void Reset();
 
-        bool canSpin();
+        bool shouldActuateSlow();
 
         void HoldLock(bool hold);
         void Spin(double speed, bool invert);
@@ -34,14 +34,18 @@ class ExcavationSubsystem : public frc2::SubsystemBase {
         double actuateMax = 3.94; // Maximum limit of potentiometer for actuation.
 
     private:
+        void PseudoPID(double targetVelocity);
         void AccelerationControl(double target);
-        double steadySpinSpeed = 0.4; // The max speed to spin the excavator.
-        double plungeSpinSpeed = 0.6;
+        double steadySpinSpeed = 0.625; // The max speed to spin the excavator.
+        double plungeSpinSpeed = 0.625;
         double actuateFastSpeed = 1.0; // The speed to actuate.
         double actuateSlowSpeed = 0.1;
         double actuatePW = 200.0;
-        double actuateSpinThreshold = 3.0; // When during the actuation process is spin able to occur.
+        double actuateSpinThreshold = 3.4; // When during the actuation process is spin able to occur.
         double accelerationRate = 1.0;
+
+        // PID coefficients
+        double kP = 0.00001, kI = 0.000025, kD = 0.0;
 
         double actPotDiff = 0.43;
         double currSpeed = 0.0;

@@ -138,9 +138,9 @@ void MobilitySubsystem::AccelerationControl(std::array<double, 4> target) {
     }
 }
 
-std::array<double, 4> err_total = {0.0, 0.0, 0.0, 0.0};
-std::array<double, 4> err_prev = {0.0, 0.0, 0.0, 0.0};
-std::array<double, 4> prev_time = {0.0, 0.0, 0.0, 0.0};
+std::array<double, 4> mob_err_total = {0.0, 0.0, 0.0, 0.0};
+std::array<double, 4> mob_err_prev = {0.0, 0.0, 0.0, 0.0};
+std::array<double, 4> mob_prev_time = {0.0, 0.0, 0.0, 0.0};
 
 void MobilitySubsystem::PseudoPID(std::array<double, 4> targetVelocity) {
     // read PID coefficients from SmartDashboard
@@ -152,13 +152,13 @@ void MobilitySubsystem::PseudoPID(std::array<double, 4> targetVelocity) {
     for (int i = 0; i < 4; i++) {
         double curr_time = timer.Get().value();
         double err = targetVelocity[i] - motor[i].encoder.GetVelocity();
-        err_total[i]= err_total[i] + err;
-        double err_slope = (err - err_prev[i]) / (curr_time  - prev_time[i]);
+        mob_err_total[i]= mob_err_total[i] + err;
+        double err_slope = (err - mob_err_prev[i]) / (curr_time  - mob_prev_time[i]);
 
-        prev_time[i] = curr_time;
-        err_prev[i] = err;
+        mob_prev_time[i] = curr_time;
+        mob_err_prev[i] = err;
 
-        currSpeed[i] = err * kP + err_total[i] * kI + err_slope * kD;
+        currSpeed[i] = err * kP + mob_err_total[i] * kI + err_slope * kD;
     }
 }
 
@@ -166,13 +166,13 @@ void MobilitySubsystem::Drive(std::array<double, 4> speed) {
     maxDriveSpeed = frc::SmartDashboard::GetNumber("Mobility/Drive Max Speed", maxDriveSpeed);
 
     isSpinning = true;
-    wpi::outs() << "Drive Max Speed: " << std::to_string(int(maxDriveSpeed * 100.0)) << "% | Curr, Target\n";
+    // wpi::outs() << "Drive Max Speed: " << std::to_string(int(maxDriveSpeed * 100.0)) << "% | Curr, Target\n";
     
     std::array<double, 4> controlledSpeed = SlipControl(speed);
     AccelerationControl(controlledSpeed);
 
     for (int i = 0; i < 4; i++) {
-        wpi::outs() << std::array<std::string, 4>{"\tFrontLeft: ", "\tFrontRight: ", "\tBackLeft: ", "\tBackRight: "}[i] << std::to_string(int(currSpeed[i] * 100.0)) << "%, " << std::to_string(int(controlledSpeed[i] * 100.0)) << "%\n";
+        // wpi::outs() << std::array<std::string, 4>{"\tFrontLeft: ", "\tFrontRight: ", "\tBackLeft: ", "\tBackRight: "}[i] << std::to_string(int(currSpeed[i] * 100.0)) << "%, " << std::to_string(int(controlledSpeed[i] * 100.0)) << "%\n";
         motor[i].Set(currSpeed[i] * maxDriveSpeed);
     }
 }
@@ -187,9 +187,9 @@ void MobilitySubsystem::Crawl(bool forward) {
     isSpinning = true;
     PseudoPID(targetSpeed);
 
-    wpi::outs() << "Crawl <Output, Target, Actual>: < ";
+    // wpi::outs() << "Crawl <Output, Target, Actual>: < ";
     for (int i = 0; i < 4; i++) {
-        wpi::outs() << "(" << std::to_string(int(currSpeed[i] * 100.0)) << "%, " << std::to_string(int(targetSpeed[i])) << " RPM, " << std::to_string(int(motor[i].encoder.GetVelocity())) << " RPM)" << (i < 4 ? ", " : " >\n");
+        // wpi::outs() << "(" << std::to_string(int(currSpeed[i] * 100.0)) << "%, " << std::to_string(int(targetSpeed[i])) << " RPM, " << std::to_string(int(motor[i].encoder.GetVelocity())) << " RPM)" << (i < 4 ? ", " : " >\n");
         motor[i].Set(currSpeed[i]);
         // Gearboxes 125:1
         // Max 5600 RPM
@@ -199,7 +199,7 @@ void MobilitySubsystem::Crawl(bool forward) {
 
 void MobilitySubsystem::StopAll() {
     if (!isSpinning) return;
-    wpi::outs() << "Stop Motors\n";
+    // wpi::outs() << "Stop Motors\n";
     isSpinning = false;
     currSpeed[FRONT_LEFT] = 0.0;
     currSpeed[FRONT_RIGHT] = 0.0;
@@ -237,7 +237,7 @@ void MobilitySubsystem::StartActuate(Wheel w, bool dir) {
         }
     }
 
-    wpi::outs() << "StartActuate " << (std::array<std::string, 4>{"FrontLeft", "FrontRight", "BackLeft", "BackRight"}[w]) << (dir ? " Inward" : " Outward") << "\n";
+    // wpi::outs() << "StartActuate " << (std::array<std::string, 4>{"FrontLeft", "FrontRight", "BackLeft", "BackRight"}[w]) << (dir ? " Inward" : " Outward") << "\n";
     frc::SmartDashboard::PutNumber("Mobility/" + std::array<std::string, 4>{"FrontLeft", "FrontRight", "BackLeft", "BackRight"}[w] + "/Steer Direction", dir ? 1 : -1);
     actDir[w].Set(dir);
     actVel[w].Set(true);
@@ -247,7 +247,7 @@ void MobilitySubsystem::StopActuate(Wheel w) {
     if (actuateDirs[w] == 0)
         return;
     actuateDirs[w] = 0;
-    wpi::outs() << "StopActuate " << (std::array<std::string, 4>{"FrontLeft", "FrontRight", "BackLeft", "BackRight"}[w]) << "\n";
+    // wpi::outs() << "StopActuate " << (std::array<std::string, 4>{"FrontLeft", "FrontRight", "BackLeft", "BackRight"}[w]) << "\n";
     frc::SmartDashboard::PutNumber("Mobility/" + std::array<std::string, 4>{"FrontLeft", "FrontRight", "BackLeft", "BackRight"}[w] + "/Steer Direction", 0);
     actVel[w].Set(false);
     actDir[w].Set(false);

@@ -5,7 +5,7 @@ Coord::Coord() { x = 0.0, y = 0.0; }
 Coord::Coord(double x, double y): x(x), y(y) {}
 
 double Coord::dist(Coord other) {
-    return fabs(x - other.x) + fabs(y - other.y);
+    return std::hypot(x - other.x, y - other.y);
 }
 
 std::string Coord::toStr() {

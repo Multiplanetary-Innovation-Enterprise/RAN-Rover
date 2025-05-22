@@ -101,6 +101,12 @@
         }
       },
       "SmartDashboard": {
+        "Autonomy": {
+          "EXC Orient": {
+            "open": true
+          },
+          "open": true
+        },
         "open": true
       }
     },

@@ -83,3 +83,11 @@ namespace UCF_ArenaConstants {
     const Coord bermCenter{3.57, 6.84};
     const Coord bermSize{0.7, 2.0};
 }
+
+namespace PathingConstants {
+
+    const Coord roverSize{0.75, 1.5};
+    const double stepSize = 10.0;
+    const double gridResolution = 10.0;
+    const double targetTolerance = 15.0;
+}

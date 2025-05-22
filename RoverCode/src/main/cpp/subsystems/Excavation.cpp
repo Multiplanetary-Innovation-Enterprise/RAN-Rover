@@ -33,6 +33,13 @@ ExcavationSubsystem::ExcavationSubsystem() {
     frc::SmartDashboard::PutData("Excavation/Motor", &excSpin);
     frc::SmartDashboard::PutData("Excavation/Left Actuator Pot", &excLeftPot);
     frc::SmartDashboard::PutData("Excavation/Right Actuator Pot", &excRightPot);
+
+    frc::SmartDashboard::PutNumber("Excavation/PIDControllers/P Gain", kP);
+    frc::SmartDashboard::SetPersistent("Excavation/PIDControllers/P Gain");
+    frc::SmartDashboard::PutNumber("Excavation/PIDControllers/I Gain", kI);
+    frc::SmartDashboard::SetPersistent("Excavation/PIDControllers/I Gain");
+    frc::SmartDashboard::PutNumber("Excavation/PIDControllers/D Gain", kD);
+    frc::SmartDashboard::SetPersistent("Excavation/PIDControllers/D Gain");
 }
 
 void ExcavationSubsystem::Periodic() {
@@ -48,7 +55,7 @@ void ExcavationSubsystem::Periodic() {
         if (GetActuateUpper() >= actuateMax + 0.01) {
             StopActuate();
         } else {        
-            if (canSpin()) {
+            if (shouldActuateSlow()) {
                 excLeftActVel.UpdateDutyCycle(actuateSlowSpeed);
                 excRightActVel.UpdateDutyCycle(actuateSlowSpeed);
             } else {
@@ -72,7 +79,7 @@ void ExcavationSubsystem::Reset() {
     isLocked = false;
 }
 
-bool ExcavationSubsystem::canSpin() {
+bool ExcavationSubsystem::shouldActuateSlow() {
     actuateSpinThreshold = frc::SmartDashboard::GetNumber("Excavation/Spin Threshold", actuateSpinThreshold);
     return GetActuateLower() >= actuateSpinThreshold;
 }
@@ -89,14 +96,14 @@ void ExcavationSubsystem::Spin(double speed, bool invert) {
     double pwr = currSpeed * (GetActuateUpper() >= actuateMax ? steadySpinSpeed : plungeSpinSpeed);
     if (!isLocked || fabs(excSpin.Get()) < pwr) {
         isSpinning = true;
-        wpi::outs() << "Spin Excavation " << (invert ? "Forwards" : "Backwards") << " @ " << std::to_string(speed * 100.0) << "%\n";
+        // wpi::outs() << "Spin Excavation " << (invert ? "Forwards" : "Backwards") << " @ " << std::to_string(speed * 100.0) << "%\n";
         excSpin.Set(pwr);
     }
 }
 
 void ExcavationSubsystem::Stop() {
     if (!isSpinning || isLocked) return;
-    wpi::outs() << "Stop Excavation\n";
+    // wpi::outs() << "Stop Excavation\n";
     isSpinning = false;
     currSpeed = 0.0;
     excSpin.StopMotor();
@@ -110,7 +117,7 @@ void ExcavationSubsystem::StartActuate(bool dir) {
             StopActuate();
             return;
         } else if (actuatingDir != 1) {
-            wpi::outs() << "Retracting Excavator...\n";
+            // wpi::outs() << "Retracting Excavator...\n";
             actuatingDir = 1;
         } else {
             return;
@@ -121,7 +128,7 @@ void ExcavationSubsystem::StartActuate(bool dir) {
             StopActuate();
             return;
         } else if (actuatingDir != -1) {
-            wpi::outs() << "Deploying Excavator...\n";
+            // wpi::outs() << "Deploying Excavator...\n";
             actuatingDir = -1;
         } else {
             return;
@@ -148,7 +155,7 @@ void ExcavationSubsystem::StartActuate(bool dir) {
 
 void ExcavationSubsystem::StopActuate() {
     if (actuatingDir == 0) return;
-    wpi::outs() << "Stopping Actuating Excavator\n";
+    // wpi::outs() << "Stopping Actuating Excavator\n";
     actuatingDir = 0;
     excLeftActVel.DisablePWM();
     excRightActVel.DisablePWM();
@@ -168,6 +175,28 @@ double ExcavationSubsystem::GetActuateLower() {
 
 double ExcavationSubsystem::GetSpeed() {
     return currSpeed;
+}
+
+double exc_err_total = 0.0;
+double exc_err_prev = 0.0;
+double exc_prev_time = 0.0;
+
+void ExcavationSubsystem::PseudoPID(double targetVelocity) {
+    // read PID coefficients from SmartDashboard
+    double kP = frc::SmartDashboard::GetNumber("Excavation/PIDControllers/P Gain", 0);
+    double kI = frc::SmartDashboard::GetNumber("Excavation/PIDControllers/I Gain", 0);
+    double kD = frc::SmartDashboard::GetNumber("Excavation/PIDControllers/D Gain", 0);
+    
+    timer.Start();
+    double curr_time = timer.Get().value();
+    double err = targetVelocity - excSpin.encoder.GetVelocity();
+    exc_err_total = exc_err_total + err;
+    double err_slope = (err - exc_err_prev) / (curr_time  - exc_prev_time);
+
+    exc_prev_time = curr_time;
+    exc_err_prev = err;
+
+    currSpeed = err * kP + exc_err_total * kI + err_slope * kD;
 }
 
 void ExcavationSubsystem::AccelerationControl(double target) {

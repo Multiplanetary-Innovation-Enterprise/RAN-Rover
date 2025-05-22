@@ -22,32 +22,32 @@
 #include "sendables/IMUSendable.h"
 
 class Robot : public frc::TimedRobot {
- public:
-  IMUSendable imu{frc::SerialPort::Port::kUSB2};
+  public:
+    IMUSendable imu{frc::SerialPort::Port::kUSB};
 
-  void RobotInit() override;
-  void RobotPeriodic() override;
-  void AutonomousInit() override;
-  void AutonomousPeriodic() override;
-  void TeleopInit() override;
-  void TeleopPeriodic() override;
-  void DisabledInit() override;
-  void DisabledPeriodic() override;
-  void TestInit() override;
-  void TestPeriodic() override;
-  void SimulationInit() override;
-  void SimulationPeriodic() override;
+    void RobotInit() override;
+    void RobotPeriodic() override;
+    void AutonomousInit() override;
+    void AutonomousPeriodic() override;
+    void TeleopInit() override;
+    void TeleopPeriodic() override;
+    void DisabledInit() override;
+    void DisabledPeriodic() override;
+    void TestInit() override;
+    void TestPeriodic() override;
+    void SimulationInit() override;
+    void SimulationPeriodic() override;
 
-  void Kill();
- private:
-  Vision vision;
-  Localization* localization;
-  MobilitySubsystem mob;
-  ExcavationSubsystem exc;
-  HopperSubsystem hop;
+    void Kill();
+  private:
+    Vision vision;
+    Localization* localization;
+    MobilitySubsystem mob;
+    ExcavationSubsystem exc;
+    HopperSubsystem hop;
 
-  frc::Timer pathingTimer;
+    frc::Timer pathingTimer;
 
-  Teleop teleop;
-  Autonomy autonomy;
+    Teleop teleop;
+    Autonomy autonomy;
 };

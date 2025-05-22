@@ -76,24 +76,25 @@ void Robot::TestInit() {
   Kill();
   pathingTimer.Stop();
   pathingTimer.Reset();
-  localization->addObstacle(Coord{2.5, 1.3}, 0.1);
-  // localization->addObstacle(Coord{3.6, 1.4}, 0.2);
-  localization->displayGrid(Coord{5.38, 1.5});}
+  // Add random obstacles to pathing system to test with
+}
 
 void Robot::TestPeriodic() {
-  pathingTimer.Start();
-  if (pathingTimer.AdvanceIfElapsed(units::time::second_t{10.0})) {
-    Coord targetPos{5.38, 1.35};
-    targetPos.x = frc::SmartDashboard::GetNumber("Autonomy/Traversal/Target X", targetPos.x);
-    targetPos.y = frc::SmartDashboard::GetNumber("Autonomy/Traversal/Target Y", targetPos.y);
-    std::vector<Coord> path = localization->findPath(targetPos);
-    wpi::outs() << "\n\nA* Path to " << targetPos.toStr() << " with no obstacles:\n";
-    std::string msg = "";
-    for (Coord point : path)
-      msg = msg + " " + point.toStr() + " ";
-    wpi::outs() << "Path has " << std::to_string(path.size()) << " nodes.\n\n";
-    wpi::outs() << localization->displayGrid(targetPos, path) << "\n";
-  }
+  // Use the new hybrid a star pathfinding, write a way of displaying the path and test it's functionality and average run times.
+
+  // pathingTimer.Start();
+  // if (pathingTimer.AdvanceIfElapsed(units::time::second_t{10.0})) {
+  //   Coord targetPos{5.38, 1.35};
+  //   targetPos.x = frc::SmartDashboard::GetNumber("Autonomy/Traversal/Target X", targetPos.x);
+  //   targetPos.y = frc::SmartDashboard::GetNumber("Autonomy/Traversal/Target Y", targetPos.y);
+  //   std::vector<Coord> path = localization->aStar_findPath(targetPos);
+  //   wpi::outs() << "\n\nA* Path to " << targetPos.toStr() << " with no obstacles:\n";
+  //   std::string msg = "";
+  //   for (Coord point : path)
+  //     msg = msg + " " + point.toStr() + " ";
+  //   wpi::outs() << "Path has " << std::to_string(path.size()) << " nodes.\n\n";
+  //   wpi::outs() << localization->displayGrid(targetPos, path) << "\n";
+  // }
 }
 
 void Robot::SimulationInit() {

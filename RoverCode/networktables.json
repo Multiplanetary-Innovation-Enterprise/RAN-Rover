@@ -299,15 +299,16 @@
   {
     "name": "/SmartDashboard/Autonomy/Phases/Traversal",
     "type": "boolean",
-    "value": true,
+    "value": false,
     "properties": {
-      "persistent": true
+      "persistent": true,
+      "retained": true
     }
   },
   {
     "name": "/SmartDashboard/Autonomy/Phases/EXC Orient",
     "type": "boolean",
-    "value": false,
+    "value": true,
     "properties": {
       "persistent": true,
       "retained": true
@@ -316,7 +317,7 @@
   {
     "name": "/SmartDashboard/Autonomy/Phases/EXC Action",
     "type": "boolean",
-    "value": false,
+    "value": true,
     "properties": {
       "persistent": true,
       "retained": true
@@ -325,7 +326,7 @@
   {
     "name": "/SmartDashboard/Autonomy/Phases/DEP Orient",
     "type": "boolean",
-    "value": false,
+    "value": true,
     "properties": {
       "persistent": true,
       "retained": true
@@ -334,7 +335,7 @@
   {
     "name": "/SmartDashboard/Autonomy/Phases/DEP Action",
     "type": "boolean",
-    "value": false,
+    "value": true,
     "properties": {
       "persistent": true,
       "retained": true
@@ -343,7 +344,7 @@
   {
     "name": "/SmartDashboard/Autonomy/Phases/Loop",
     "type": "boolean",
-    "value": false,
+    "value": true,
     "properties": {
       "persistent": true,
       "retained": true
@@ -376,9 +377,10 @@
   {
     "name": "/SmartDashboard/Autonomy/EXC Action/Spin Time",
     "type": "double",
-    "value": 10.0,
+    "value": 90.0,
     "properties": {
-      "persistent": true
+      "persistent": true,
+      "retained": true
     }
   },
   {
@@ -506,6 +508,46 @@
     "name": "/SmartDashboard/Autonomy/Traversal/TurnTime 180",
     "type": "double",
     "value": 4.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Excavation/PIDControllers/P Gain",
+    "type": "double",
+    "value": 1e-05,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Excavation/PIDControllers/I Gain",
+    "type": "double",
+    "value": 2.5e-05,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Excavation/PIDControllers/D Gain",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Pathfinding/Recalc Period",
+    "type": "double",
+    "value": 5.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Pathfinding/Read Objects Period",
+    "type": "double",
+    "value": 2.0,
     "properties": {
       "persistent": true
     }

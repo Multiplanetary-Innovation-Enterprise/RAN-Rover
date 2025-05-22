@@ -3,17 +3,11 @@
 #include <math.h>
 #include <cmath>
 
-std::vector<std::vector<Cell>> _grid;
-
 Localization::Localization(Vision* v, IMUSendable* imu) : vision(v), imu(imu) {
     const std::string arenaKSC = "KSC";
     const std::string arenaUCF = "UCF";
     arenaChooser.SetDefaultOption(arenaKSC, Arena::KSC);
     arenaChooser.AddOption(arenaUCF, Arena::UCF);
-
-    frc::SmartDashboard::PutNumber("Localization/Obstacle X", -1);
-    frc::SmartDashboard::PutNumber("Localization/Obstacle Y", -1);
-    frc::SmartDashboard::PutNumber("Localization/Obstacle R", 0);
 
     frc::SmartDashboard::PutBoolean("Localization/Use IMU Positioning", false);
     frc::SmartDashboard::PutData("Localization/Arena", &arenaChooser);
@@ -27,32 +21,10 @@ Localization::Localization(Vision* v, IMUSendable* imu) : vision(v), imu(imu) {
     frc::SmartDashboard::SetPersistent("Localization/Offsets/Back X");
     frc::SmartDashboard::PutNumber("Localization/Offsets/Back Y", backOffset.y);
     frc::SmartDashboard::SetPersistent("Localization/Offsets/Back Y");
-
-    frc::SmartDashboard::PutNumber("Localization/Rover/Width", roverSize.x);
-    frc::SmartDashboard::SetPersistent("Localization/Rover/Width");
-    frc::SmartDashboard::PutNumber("Localization/Rover/Length", roverSize.y);
-    frc::SmartDashboard::SetPersistent("Localization/Rover/Length");
-
-    frc::SmartDashboard::PutNumber("Localization/Arena/Cell Size", cellSize);
-    frc::SmartDashboard::SetPersistent("Localization/Arena/Cell Size");
 }
 
 void Localization::Init() {
     arena = arenaChooser.GetSelected();
-    
-    roverSize.x = frc::SmartDashboard::GetNumber("Localization/Rover/Width", roverSize.x);
-    roverSize.y = frc::SmartDashboard::GetNumber("Localization/Rover/Width", roverSize.y);
-    cellSize = frc::SmartDashboard::GetNumber("Localization/Arena/Cell Size", cellSize);
-
-    for (int x = 0; x <= int(getArenaSize().x / getCellSize()) + 1; x++) {
-        std::vector<Cell> col;
-        for (int y = 0; y <= int(getArenaSize().y / getCellSize()) + 1; y++) {
-            col.push_back(Cell(x, y, INT_MAX, INT_MAX));
-        }
-        grid.push_back(col);
-    }
-
-    _grid = grid;
 }
 
 void Localization::Periodic() {
@@ -159,115 +131,6 @@ void Localization::Periodic() {
     }
 }
 
-struct CoordComparison {
-    public:
-        bool operator()(Coord a, Coord b) const { return _grid[a.x][a.y].costOfPath() > _grid[b.x][b.y].costOfPath(); }
-};
-
-std::vector<Coord> Localization::findPath(Coord target) {
-    
-    std::priority_queue<Coord, std::vector<Coord>, CoordComparison> frontierSet;
-    std::unordered_map<int, std::unordered_map<int, bool>> visitedSet;
-
-    Coord roverCenter = getRoverCenter();
-    Coord roverCell = {floor(roverCenter.x / getCellSize()), floor(roverCenter.y / getCellSize())};
-    Coord targetCell = {floor(target.x / getCellSize()), floor(target.y / getCellSize())};
-    
-    grid[roverCell.x][roverCell.y].costFromStart = 0;
-    grid[roverCell.x][roverCell.y].estimateCostToTarget = floor(roverCell.dist(targetCell));
-    _grid = grid;
-    frontierSet.push(roverCell);
-    
-    // First 4 are cardinal directions, last 4 are diagonals.
-    const Coord delta[8] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {1, -1}, {-1, 1}, {1, 1}};
-
-    while (!frontierSet.empty()) {
-        Coord current = frontierSet.top();
-        Cell currCell = grid[current.x][current.y];
-        frontierSet.pop();        
-        if (current.x == targetCell.x && current.y == targetCell.y) {
-            std::vector<Coord> path;
-            for (Cell* cell = &currCell; cell != nullptr; cell = cell->parent) {
-                if (cell->parent == cell) {
-                    break;
-                }
-                path.push_back(Coord{*cell});
-            }
-            reverse(path.begin(), path.end());
-            return path;
-        }
-        
-        visitedSet[current.x][current.y] = true;
-        
-        for (int i = 0; i < 8; ++i) {  // Change to 4 for cardinal directions only
-            Coord next = current + delta[i];
-            if (isValid(next) && !grid[next.x][next.y].occupied && !visitedSet[next.x][next.y]) {
-                int cost = 1;
-                int g = grid[current.x][current.y].costFromStart + cost;
-                int h = floor(next.dist(targetCell));
-                grid[next.x][next.y].costFromStart = g;
-                grid[next.x][next.y].estimateCostToTarget = h;
-                grid[next.x][next.y].parent = &grid[current.x][current.y];
-                _grid = grid;
-                frontierSet.push(next);
-            } 
-        }
-    }
-    
-    return {};  // Empty path if none found
-}
-
-void Localization::clearGrid() {
-
-    for (int x = 0; x <= int(getArenaSize().x / getCellSize()) + 1; x++) {
-        for (int y = 0; y <= int(getArenaSize().y / getCellSize()) + 1; y++) {
-            grid[x][y].occupied = false;
-            grid[x][y].costFromStart = INT_MAX;
-            grid[x][y].estimateCostToTarget = INT_MAX;
-        }
-    }
-
-    _grid = grid;
-}
-
-void Localization::addObstacle(Coord pos, double radius) {
-
-    double r = radius + getRoverDiagSize() / 2.0;
-    int minY = floor((pos.y - r) / getCellSize());
-    int maxY = ceil((pos.y + r) / getCellSize());
-    int minX = floor((pos.x - r) / getCellSize());
-    int maxX = ceil((pos.x + r) / getCellSize());
-
-    for (int y = minY; y <= maxY; y++) {
-        for (int x = minX; x <= maxX; x++) {
-            if (std::sqrt(pow(x - minX - ((maxX - minX) / 2), 2) + pow(y - minY - ((maxY - minY) / 2), 2)) <= (r / getCellSize()))
-                grid[x][y].occupied = true;
-        }
-    }
-
-    _grid = grid;
-}
-
-std::string Localization::displayGrid(Coord target, std::vector<Coord> path) {
-    std::string msg = "Localization Grid\n";
-    for (int y = int(getArenaSize().y / getCellSize()); y >= 0; y--) {
-        for (int x = 0; x < int(getArenaSize().x / getCellSize()); x++) {
-            if (Coord{x + 0.0, y + 0.0} == Coord{10.0, 10.0})
-                msg += "A";
-            else if (Coord{x + 0.0, y + 0.0} == Coord{floor(target.x / getCellSize()), floor(target.y / getCellSize())})
-                msg += "B";
-            else if (std::find(path.begin(), path.end(), Coord{x + 0.0, y + 0.0}) != path.end())
-                msg += "O";
-            else if (grid[x][y].occupied)
-                msg += "#";
-            else
-                msg += ".";
-        }
-        msg += "\n";
-    }
-    return msg;
-}
-
 void Localization::setRoverCenter(Coord center) {
     roverCenter = center;
     wpi::outs() << "New Rover Position Set: " << center.toStr() << "\n";
@@ -275,7 +138,7 @@ void Localization::setRoverCenter(Coord center) {
 
 void Localization::updateRoverCenter(Coord delta) {
     Coord newRoverCenter = roverCenter + delta;
-    if (newRoverCenter > (getRoverSize() * Coord{0.5, 0.5}) && newRoverCenter < (getArenaSize() + (getRoverSize() * Coord{-0.5, -0.5})))
+    if (newRoverCenter > (PathingConstants::roverSize * Coord{0.5, 0.5}) && newRoverCenter < (getArenaSize() + (PathingConstants::roverSize * Coord{-0.5, -0.5})))
         roverCenter = newRoverCenter;
     //wpi::outs() << "Rover Position Trying to Leave Arena Bounds: " << newRoverCenter.toStr() << "\n";
 }
@@ -286,26 +149,6 @@ Coord Localization::getRoverCenter() {
 
 double Localization::getRoverAngle() {
     return imu->GetYaw() + yawZeroOffset;
-}
-
-bool Localization::isValid(Coord c) {
-    double realX = c.x * getCellSize();
-    double realY = c.y * getCellSize();
-    double s = getRoverDiagSize() / 2.0;
-    bool inArena = (realX - s > 0.0 && realX + s < getArenaSize().x && realY - s > 0.0 && realY + s < getArenaSize().y);
-    return inArena;
-}
-
-Coord Localization::getRoverSize() {
-    return roverSize;
-}
-
-double Localization::getRoverDiagSize() {
-    return sqrt(pow(roverSize.x, 2) + pow(roverSize.y, 2));
-}
-
-double Localization::getCellSize() {
-    return cellSize;
 }
 
 ///////////////////////////////
@@ -345,4 +188,13 @@ Coord Localization::bermCenter() { // Berm Bounds
         return KSC_ArenaConstants::bermCenter;
     else
         return UCF_ArenaConstants::bermCenter;
+}
+
+std::tuple<Coord, double> Localization::getDepositionTarget() { // Where is the position we need to be in to deposit for each arena.
+    const double offset = PathingConstants::roverSize.y + 0.1;
+    if (arena == Arena::KSC)
+        return std::make_tuple(KSC_ArenaConstants::bermCenter + Coord{0, offset}, 0.0);
+    else {
+        return std::make_tuple(UCF_ArenaConstants::bermCenter - Coord{offset, 0}, -90.0);
+    }
 }

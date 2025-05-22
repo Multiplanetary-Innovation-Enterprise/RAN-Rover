@@ -4,10 +4,23 @@
 #include <networktables/NetworkTableInstance.h>
 #include <networktables/NetworkTable.h>
 #include <networktables/DoubleTopic.h>
+#include <networktables/DoubleArrayTopic.h>
 #include <networktables/BooleanTopic.h>
 #include <map>
+#include <queue>
+#include <vector>
 #include "sendables/Coord.h"
 #include "Constants.h"
+
+struct Object {
+    double dist, minAngle, maxAngle;
+
+    Object(double dist, double minAngle, double maxAngle) : dist(dist), minAngle(minAngle), maxAngle(maxAngle) {}
+
+    std::string toStr() const {
+        return std::to_string(dist) + "," + std::to_string(minAngle) + "~" + std::to_string(maxAngle) + ">";
+    }
+};
 
 class Vision {
     public:      
@@ -20,6 +33,7 @@ class Vision {
 
         Vision();
 
+        std::vector<Object> IdentifyObjects();
         void IdentifyTags();
 
         std::vector<int> getVisibleTags();
@@ -34,7 +48,7 @@ class Vision {
     private:
 
         nt::NetworkTableInstance netTable{nt::NetworkTableInstance::GetDefault()};
-        std::shared_ptr<nt::NetworkTable> tagTable;
+        std::shared_ptr<nt::NetworkTable> table;
 
         int tagLastSeen = -1;
         std::map<int, bool> tagVisibilities;

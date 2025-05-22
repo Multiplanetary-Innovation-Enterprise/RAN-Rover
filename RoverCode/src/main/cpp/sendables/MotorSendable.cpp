@@ -10,4 +10,5 @@ void MotorSendable::InitSendable(wpi::SendableBuilder& builder) {
     builder.AddDoubleProperty("Gearbox Reduction", [this] { return gearRatio; }, [this] (double d) { if (d != 0) gearRatio = d; });
     builder.AddDoubleProperty("Encoder [RPM]", [this] { return encoder.GetVelocity() / gearRatio; }, [this] (double d) {} );
     builder.AddDoubleProperty("Current [Amps]", [this] { return this->GetOutputCurrent(); }, [this] (double d) {} );
+    builder.AddDoubleProperty("Temperature [C]", [this] { return this->GetMotorTemperature(); }, [this] (double d) {} );
 }

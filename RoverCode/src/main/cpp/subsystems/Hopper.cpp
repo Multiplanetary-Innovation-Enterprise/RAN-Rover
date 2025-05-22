@@ -29,7 +29,7 @@ void HopperSubsystem::HoldLock(bool lock) {
 
 void HopperSubsystem::Spin(double speed, bool invert, bool filling) {
     
-    wpi::outs() << "Spin Hopper " << (invert ? "Forwards" : "Backwards") << " @ " << std::to_string(speed * 100.0) << "%\n";
+    // wpi::outs() << "Spin Hopper " << (invert ? "Forwards" : "Backwards") << " @ " << std::to_string(speed * 100.0) << "%\n";
     isSpinning = true;
     double pwr = speed;
 
@@ -47,7 +47,7 @@ void HopperSubsystem::Spin(double speed, bool invert, bool filling) {
 
 void HopperSubsystem::Stop() {
     if (!isSpinning || isLocked) return;
-    wpi::outs() << "Stop Hopper\n";
+    // wpi::outs() << "Stop Hopper\n";
     isSpinning = false;
     hopSpin.StopMotor();
 }

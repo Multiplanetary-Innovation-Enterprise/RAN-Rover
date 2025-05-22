@@ -5,10 +5,29 @@
 
 Vision::Vision() {
 
-    tagTable = netTable.GetTable("Vision/Beacons");
+    table = netTable.GetTable("Vision");
 }
 
+std::vector<Object> Vision::IdentifyObjects() {
+
+    nt::DoubleArraySubscriber objectTopic = table->GetDoubleArrayTopic("Objects").Subscribe({});
+    std::vector<double> objectValues = objectTopic.Get();
+    std::vector<Object> objects = {};
+    
+    for (int i = 0; i < int(objectValues.size()); i += 3) {
+        double dist = objectValues[i];
+        double minAngle = objectValues[i + 1];
+        double maxAngle = objectValues[i + 2];
+        
+        objects.push_back(Object(dist, minAngle, maxAngle));
+    }
+
+    return objects;
+} 
+
 void Vision::IdentifyTags() {
+
+    std::shared_ptr<nt::NetworkTable> tagTable = table->GetSubTable("Beacons");
 
     for (std::string tag : tagTable->GetSubTables()) {
 

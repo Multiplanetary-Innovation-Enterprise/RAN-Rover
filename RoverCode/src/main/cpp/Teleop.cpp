@@ -87,41 +87,41 @@ void Teleop::Mobility() {
     */
 
    // Change Modes
-  if (mobMode != CRAWL && (dPad == 0 || dPad == 180)) {
-    frc::SmartDashboard::PutString("Mobility/Mode", "[D-Pad] Crawl / Skid Mode");
-    mobMode = CRAWL;
-    wpi::outs() << "Entering Crawl / Skid Mode\nCrawl / Skid Steer: Straight Configuration\n";
+  if (((dPad == 0 || dPad == 180) && mobMode != MobilitySubsystem::MobilityMode::CRAWL) || exc->shouldActuateSlow()) {
+    frc::SmartDashboard::PutString("Mobility/Mode", "[D-Pad] Crawl");
+    mobMode = MobilitySubsystem::MobilityMode::CRAWL;
+    wpi::outs() << "Entering Crawl Mode\nCrawl: Straight Configuration";
     mob->StopAll();
-  } else if (aButton) {
+  } else if (aButton && mobMode != MobilitySubsystem::MobilityMode::ACKERMANN && !exc->shouldActuateSlow()) {
     frc::SmartDashboard::PutString("Mobility/Mode", "[A] Ackermann Mode");
-    mobMode = ACKERMANN;
+    mobMode = MobilitySubsystem::MobilityMode::ACKERMANN;
     wpi::outs() << "Entering Ackermann Mode\n";
     mob->StopAll();
-  } else if (bButton) {
+  } else if (bButton && mobMode != MobilitySubsystem::MobilityMode::FREE && !exc->shouldActuateSlow()) {
     frc::SmartDashboard::PutString("Mobility/Mode", "[B] Free Mode");
-    mobMode = FREE;
+    mobMode = MobilitySubsystem::MobilityMode::FREE;
     wpi::outs() << "Entering Free Mode\n";
     mob->StopAll();
-  } else if (xButton) {
+  } else if (xButton && mobMode != MobilitySubsystem::MobilityMode::CRAB && !exc->shouldActuateSlow()) {
     frc::SmartDashboard::PutString("Mobility/Mode", "[X] Crab Mode");
-    mobMode = CRAB;
+    mobMode = MobilitySubsystem::MobilityMode::CRAB;
     wpi::outs() << "Entering Crab Mode\n";
     mob->StopAll();
-  } else if (yButton) {
+  } else if (yButton && mobMode != MobilitySubsystem::MobilityMode::ZERO_POINT && !exc->shouldActuateSlow()) {
     frc::SmartDashboard::PutString("Mobility/Mode", "[Y] ZeroPoint Mode");
-    mobMode = ZERO_POINT;
+    mobMode = MobilitySubsystem::MobilityMode::ZERO_POINT;
     wpi::outs() << "Entering ZeroPoint Mode\nZeroPoint Steer: Max Angle Configuration\n";
     mob->StopAll();
   }
 
   // Mode Steering
-  if (mobMode == CRAWL) {
+  if (mobMode == MobilitySubsystem::MobilityMode::CRAWL) {
     steerTargets[0] = 0.0;
     steerTargets[1] = 0.0;
     steerTargets[2] = 0.0;
     steerTargets[3] = 0.0;
-  } else if (mobMode == ACKERMANN && leftStickMagnitude > 0.5) {
-    wpi::outs() << "Ackermann Steer: " << std::to_string(leftStickAngle) << " degrees\n";
+  } else if (mobMode == MobilitySubsystem::MobilityMode::ACKERMANN && leftStickMagnitude > 0.5) {
+    // wpi::outs() << "Ackermann Steer: " << std::to_string(leftStickAngle) << " degrees\n";
 
     double leftAngle = fabs(leftStickAngle) / 180.0 * M_PI;
     double centerOffset = (40.0 + (181.0 / 6.0) * tan(leftAngle)) / tan(leftAngle);
@@ -152,7 +152,7 @@ void Teleop::Mobility() {
       steerTargets[3] = 0.0;
     }
 
-  } else if (mobMode == FREE) {
+  } else if (mobMode == MobilitySubsystem::MobilityMode::FREE) {
 
     if (leftStickMagnitude > 0.5)
       leftStickAngle = std::max(-28.0, std::min(leftStickAngle, 28.0));
@@ -199,15 +199,15 @@ void Teleop::Mobility() {
         steerTargets[3] = rightStickAngle;
       }
     }
-    wpi::outs() << "Free Steer: " << std::to_string(steerTargets[0]) << " degrees, " << std::to_string(steerTargets[2]) << " degrees\n";
-  } else if (mobMode == CRAB && leftStickMagnitude > 0.5) {
-    wpi::outs() << "Crab Steer: " << std::to_string(leftStickAngle) << " degrees\n";
+    // wpi::outs() << "Free Steer: " << std::to_string(steerTargets[0]) << " degrees, " << std::to_string(steerTargets[2]) << " degrees\n";
+  } else if (mobMode == MobilitySubsystem::MobilityMode::CRAB && leftStickMagnitude > 0.5) {
+    // wpi::outs() << "Crab Steer: " << std::to_string(leftStickAngle) << " degrees\n";
     leftStickAngle = std::max(-28.0, std::min(leftStickAngle, 28.0));
     steerTargets[0] = leftStickAngle;
     steerTargets[1] = -leftStickAngle;
     steerTargets[2] = -leftStickAngle;
     steerTargets[3] = leftStickAngle;
-  } else if (mobMode == ZERO_POINT) {
+  } else if (mobMode == MobilitySubsystem::MobilityMode::ZERO_POINT) {
     steerTargets[0] = 28.0;
     steerTargets[1] = 28.0;
     steerTargets[2] = 58.0;
@@ -217,7 +217,7 @@ void Teleop::Mobility() {
   bool finishedSteering = mob->SteerTo(steerTargets);
 
   // Mode Driving
-  if (mobMode == CRAWL) {
+  if (mobMode == MobilitySubsystem::MobilityMode::CRAWL) {
 
     // D-Pad Up is forward
     // D-Pad Down is backwards
@@ -227,15 +227,12 @@ void Teleop::Mobility() {
     } else if (dPad == 180 && finishedSteering) {
       mob->Crawl(false);
       Blinkin::Set(BlinkinPattern::HEARTBEAT_GRAY);
-    } else if ((fabs(leftStickY) > primaryControllerLeftStickDeadzone || fabs(rightStickY) > primaryControllerRightStickDeadzone) && finishedSteering) {
-      mob->Drive({leftStickY, rightStickY, leftStickY, rightStickY});
-      Blinkin::Set(BlinkinPattern::LARSON_SCANNER_GRAY);
     } else {
       mob->StopAll();
       Blinkin::Set(BlinkinPattern::GRAY);
     }
 
-  } else if (mobMode == ACKERMANN) {
+  } else if (mobMode == MobilitySubsystem::MobilityMode::ACKERMANN) {
 
     // Right Trigger is forward
     // Left Trigger is backward
@@ -248,7 +245,7 @@ void Teleop::Mobility() {
       mob->Drive({0.0, 0.0, 0.0, 0.0});
     }
 
-  } else if (mobMode == FREE) {
+  } else if (mobMode == MobilitySubsystem::MobilityMode::FREE) {
 
     // Right Trigger is forward
     // Left Trigger is backward
@@ -261,7 +258,7 @@ void Teleop::Mobility() {
       mob->Drive({0.0, 0.0, 0.0, 0.0});
     }
 
-  } else if (mobMode == CRAB) {
+  } else if (mobMode == MobilitySubsystem::MobilityMode::CRAB) {
 
     // Right Trigger is forward
     // Left Trigger is backward
@@ -274,7 +271,7 @@ void Teleop::Mobility() {
       mob->Drive({0.0, 0.0, 0.0, 0.0});
     }
 
-  } else if (mobMode == ZERO_POINT) {
+  } else if (mobMode == MobilitySubsystem::MobilityMode::ZERO_POINT) {
 
     if (!finishedSteering)
       return;
@@ -322,14 +319,13 @@ void Teleop::Hopper() {
 
     // Left Trigger on Secondary Controller
     double secondaryControllerLeftTrigger = secondaryController.GetLeftTriggerAxis();
-    double dPad = secondaryController.GetPOV();
 
-    // If there is an input from the left trigger, spin the Hopper.
-    if (secondaryControllerLeftTrigger > 0.0) {
+    // Primary controller indexes hopper during excavation.
+    if (primaryController.GetBackButton() || primaryController.GetStartButton()) {
+      hop->Spin(1.0, primaryController.GetBackButton(), true);
+    } else if (secondaryControllerLeftTrigger > 0.0) { // If there is an input from the left trigger, spin the Hopper.
       // Hopper Spin takes a boolean to determine the direction to spin.
       hop->Spin(secondaryControllerLeftTrigger, secondaryController.GetLeftBumper(), false);
-    } else if (dPad == 0 || dPad == 180) {
-      hop->Spin(1.0, dPad == 180, true);
     } else {
       hop->Stop();
     }

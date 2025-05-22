@@ -11,7 +11,7 @@
         "vgap": 4.0,
         "titleType": 1,
         "tiles": {
-          "30,13": {
+          "30,12": {
             "size": [
               11,
               5
@@ -209,7 +209,7 @@
           },
           "1,0": {
             "size": [
-              11,
+              6,
               9
             ],
             "content": {
@@ -250,64 +250,10 @@
               ]
             }
           },
-          "1,9": {
-            "size": [
-              11,
-              9
-            ],
-            "content": {
-              "_type": "List Layout",
-              "_title": "Slip Control",
-              "_glyph": 149,
-              "_showGlyph": false,
-              "Layout/Label position": "BOTTOM",
-              "_children": [
-                {
-                  "_type": "Toggle Button",
-                  "_source0": "network_table:///SmartDashboard/Mobility/Use SlipControl",
-                  "_title": "Slip Control",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                },
-                {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Mobility/Slip/Current Threshold",
-                  "_title": "Slip Threshold",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                },
-                {
-                  "_type": "Grid Layout",
-                  "_title": "Slip Cycles",
-                  "_glyph": 149,
-                  "_showGlyph": false,
-                  "Layout/Number of columns": 2,
-                  "Layout/Number of rows": 1,
-                  "Layout/Label position": "BOTTOM",
-                  "_children": {
-                    "0,0": {
-                      "_type": "Text View",
-                      "_source0": "network_table:///SmartDashboard/Mobility/Slip/Off Cycles",
-                      "_title": "Off Cycles",
-                      "_glyph": 148,
-                      "_showGlyph": false
-                    },
-                    "1,0": {
-                      "_type": "Text View",
-                      "_source0": "network_table:///SmartDashboard/Mobility/Slip/Try Cycles",
-                      "_title": "On Cycles",
-                      "_glyph": 148,
-                      "_showGlyph": false
-                    }
-                  }
-                }
-              ]
-            }
-          },
           "30,0": {
             "size": [
               11,
-              13
+              12
             ],
             "content": {
               "_type": "List Layout",
@@ -317,25 +263,29 @@
               "Layout/Label position": "BOTTOM",
               "_children": [
                 {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Excavation/Max Speed",
-                  "_title": "Max EXC Speed",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                },
-                {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Excavation/Spin Threshold",
-                  "_title": "Deploy Spin Threshold",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                },
-                {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Excavation/Actuate Pot Diff",
-                  "_title": "Deploy Value Diff",
-                  "_glyph": 148,
-                  "_showGlyph": false
+                  "_type": "Grid Layout",
+                  "_title": "Spin Speed",
+                  "_glyph": 149,
+                  "_showGlyph": false,
+                  "Layout/Number of columns": 2,
+                  "Layout/Number of rows": 0,
+                  "Layout/Label position": "BOTTOM",
+                  "_children": {
+                    "2,0": {
+                      "_type": "Text View",
+                      "_source0": "network_table:///SmartDashboard/Excavation/Steady Speed",
+                      "_title": "Steady Speed",
+                      "_glyph": 148,
+                      "_showGlyph": false
+                    },
+                    "0,0": {
+                      "_type": "Text View",
+                      "_source0": "network_table:///SmartDashboard/Excavation/Plunge Speed",
+                      "_title": "Plunge Speed",
+                      "_glyph": 148,
+                      "_showGlyph": false
+                    }
+                  }
                 },
                 {
                   "_type": "Text View",
@@ -345,32 +295,57 @@
                   "_showGlyph": false
                 },
                 {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Excavation/Actuate Slow Speed",
-                  "_title": "Actuate Slow Speed",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                },
-                {
                   "_type": "Grid Layout",
                   "_title": "Deploy Limits",
                   "_glyph": 149,
                   "_showGlyph": false,
-                  "Layout/Number of columns": 2,
-                  "Layout/Number of rows": 1,
+                  "Layout/Number of columns": 3,
+                  "Layout/Number of rows": 0,
                   "Layout/Label position": "BOTTOM",
                   "_children": {
                     "0,0": {
                       "_type": "Text View",
                       "_source0": "network_table:///SmartDashboard/Excavation/Actuate Min",
-                      "_title": "Deploy Min",
+                      "_title": "Minimum",
                       "_glyph": 148,
                       "_showGlyph": false
                     },
                     "1,0": {
                       "_type": "Text View",
+                      "_source0": "network_table:///SmartDashboard/Excavation/Spin Threshold",
+                      "_title": "Slow Point",
+                      "_glyph": 148,
+                      "_showGlyph": false
+                    },
+                    "2,0": {
+                      "_type": "Text View",
                       "_source0": "network_table:///SmartDashboard/Excavation/Actuate Max",
-                      "_title": "SmartDashboard/Excavation/Actuate Max",
+                      "_title": "Maximum",
+                      "_glyph": 148,
+                      "_showGlyph": false
+                    }
+                  }
+                },
+                {
+                  "_type": "Grid Layout",
+                  "_title": "Actuate Speeds",
+                  "_glyph": 149,
+                  "_showGlyph": false,
+                  "Layout/Number of columns": 2,
+                  "Layout/Number of rows": 0,
+                  "Layout/Label position": "BOTTOM",
+                  "_children": {
+                    "0,1": {
+                      "_type": "Text View",
+                      "_source0": "network_table:///SmartDashboard/Excavation/Actuate Slow Speed",
+                      "_title": "Slow Speed",
+                      "_glyph": 148,
+                      "_showGlyph": false
+                    },
+                    "1,1": {
+                      "_type": "Text View",
+                      "_source0": "network_table:///SmartDashboard/Excavation/Actuate Fast Speed",
+                      "_title": "Fast Speed",
                       "_glyph": 148,
                       "_showGlyph": false
                     }
@@ -438,6 +413,120 @@
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
+          },
+          "7,0": {
+            "size": [
+              5,
+              4
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Mobility PID",
+              "_glyph": 149,
+              "_showGlyph": false,
+              "Layout/Label position": "RIGHT",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Mobility/PIDControllers/P Gain",
+                  "_title": "P Gain",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Mobility/PIDControllers/I Gain",
+                  "_title": "I Gain",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Mobility/PIDControllers/D Gain",
+                  "_title": "D Gain",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                }
+              ]
+            }
+          },
+          "12,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Excavation/Motor/Temperature [C]",
+              "_title": "/SmartDashboard/Excavation/Motor/Temperature [C]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "26,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Hopper/Motor/Temperature [C]",
+              "_title": "/SmartDashboard/Hopper/Motor/Temperature [C]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "13,15": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/BackLeft/Motor/Temperature [C]",
+              "_title": "/SmartDashboard/Mobility/BackLeft/Motor/Temperature [C]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "26,15": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/BackRight/Motor/Temperature [C]",
+              "_title": "/SmartDashboard/Mobility/BackRight/Motor/Temperature [C]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "13,3": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/FrontLeft/Motor/Temperature [C]",
+              "_title": "/SmartDashboard/Mobility/FrontLeft/Motor/Temperature [C]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "26,3": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Mobility/FrontRight/Motor/Temperature [C]",
+              "_title": "/SmartDashboard/Mobility/FrontRight/Motor/Temperature [C]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
           }
         }
       }
@@ -487,45 +576,6 @@
                 }
               ]
             }
-          },
-          "14,0": {
-            "size": [
-              8,
-              2
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Mobility/PIDControllers/P Gain",
-              "_title": "/SmartDashboard/Mobility/PIDControllers/P Gain",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "14,2": {
-            "size": [
-              8,
-              2
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Mobility/PIDControllers/I Gain",
-              "_title": "/SmartDashboard/Mobility/PIDControllers/I Gain",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "14,4": {
-            "size": [
-              8,
-              2
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Mobility/PIDControllers/D Gain",
-              "_title": "/SmartDashboard/Mobility/PIDControllers/D Gain",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
           }
         }
       }
@@ -556,7 +606,7 @@
                 {
                   "_type": "Text View",
                   "_source0": "network_table:///SmartDashboard/Autonomy/DEP Action/Spin Time",
-                  "_title": "SmartDashboard/Autonomy/DEP Action/Spin Time",
+                  "_title": "DEP Time",
                   "_glyph": 148,
                   "_showGlyph": false
                 }
@@ -578,7 +628,7 @@
                 {
                   "_type": "Text View",
                   "_source0": "network_table:///SmartDashboard/Autonomy/DEP Orient/CrawlTime-MaxTime Factor",
-                  "_title": "SmartDashboard/Autonomy/DEP Orient/CrawlTime-MaxTime Factor",
+                  "_title": "CrawlTime-MaxTime Factor",
                   "_glyph": 148,
                   "_showGlyph": false
                 }
@@ -601,6 +651,13 @@
                   "_type": "Text View",
                   "_source0": "network_table:///SmartDashboard/Autonomy/EXC Action/Spin Time",
                   "_title": "EXC Time",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Autonomy/EXC Action/Start Excavation Spin",
+                  "_title": "Start Spin",
                   "_glyph": 148,
                   "_showGlyph": false
                 }
@@ -654,33 +711,43 @@
               "_glyph": 149,
               "_showGlyph": false,
               "Layout/Label position": "BOTTOM",
-              "_children": []
-            }
-          },
-          "0,12": {
-            "size": [
-              2,
-              2
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Localization/Offsets/Back X",
-              "_title": "SmartDashboard/Localization/Offsets/Back X",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "3,12": {
-            "size": [
-              2,
-              2
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Localization/Offsets/Back Y",
-              "_title": "SmartDashboard/Localization/Offsets/Back Y",
-              "_glyph": 148,
-              "_showGlyph": false
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/DriveTimePerCell",
+                  "_title": "Time / Cell",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/TurnTime 45",
+                  "_title": "Time / 45",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/TurnTime 90",
+                  "_title": "Time / 90",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/TurnTime 135",
+                  "_title": "Time / 135",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/TurnTime 180",
+                  "_title": "Time / 180",
+                  "_glyph": 148,
+                  "_showGlyph": false
+                }
+              ]
             }
           },
           "0,0": {
@@ -692,32 +759,6 @@
               "_type": "Split Button Chooser",
               "_source0": "network_table:///SmartDashboard/Localization/Arena",
               "_title": "Arena",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "0,10": {
-            "size": [
-              2,
-              2
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Localization/Offsets/Front X",
-              "_title": "SmartDashboard/Localization/Offsets/Front X",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "3,10": {
-            "size": [
-              2,
-              2
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Localization/Offsets/Front Y",
-              "_title": "SmartDashboard/Localization/Offsets/Front Y",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -772,9 +813,9 @@
               ]
             }
           },
-          "10,11": {
+          "5,11": {
             "size": [
-              3,
+              4,
               2
             ],
             "content": {
@@ -785,9 +826,9 @@
               "_showGlyph": false
             }
           },
-          "13,11": {
+          "9,11": {
             "size": [
-              3,
+              4,
               2
             ],
             "content": {
@@ -798,7 +839,7 @@
               "_showGlyph": false
             }
           },
-          "16,11": {
+          "10,9": {
             "size": [
               3,
               2
@@ -811,54 +852,54 @@
               "_showGlyph": false
             }
           },
-          "26,9": {
+          "13,9": {
             "size": [
-              2,
-              1
+              3,
+              2
             ],
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Localization/Offsets/Front X",
-              "_title": "SmartDashboard/Localization/Offsets/Front X",
+              "_title": "Front Camera X",
               "_glyph": 148,
               "_showGlyph": false
             }
           },
-          "28,9": {
+          "16,9": {
             "size": [
-              2,
-              1
+              3,
+              2
             ],
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Localization/Offsets/Front Y",
-              "_title": "SmartDashboard/Localization/Offsets/Front Y",
+              "_title": "Front Camera Y",
               "_glyph": 148,
               "_showGlyph": false
             }
           },
-          "28,11": {
+          "16,11": {
             "size": [
-              2,
-              1
+              3,
+              2
             ],
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Localization/Offsets/Back Y",
-              "_title": "/SmartDashboard/Localization/Offsets/Back Y",
+              "_title": "Back Camera Y",
               "_glyph": 148,
               "_showGlyph": false
             }
           },
-          "26,11": {
+          "13,11": {
             "size": [
-              2,
-              1
+              3,
+              2
             ],
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Localization/Offsets/Back X",
-              "_title": "SmartDashboard/Localization/Offsets/Back X",
+              "_title": "Back Camera X",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -876,80 +917,93 @@
               "_showGlyph": false
             }
           },
-          "11,9": {
+          "0,10": {
             "size": [
-              6,
+              5,
               2
             ],
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Autonomy/EXC Orient/Failsafe Time",
-              "_title": "SmartDashboard/Autonomy/EXC Orient/Failsafe Time",
+              "_title": "Auto Failsafe Time [seconds]",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "5,9": {
+            "size": [
+              5,
+              2
+            ],
+            "content": {
+              "_type": "Toggle Button",
+              "_source0": "network_table:///SmartDashboard/Localization/Use IMU Positioning",
+              "_title": "Use IMU Positioning",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "22,9": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/Path Start Distance",
+              "_title": "SmartDashboard/Autonomy/Traversal/Path Start Distance",
               "_glyph": 148,
               "_showGlyph": false
             }
           },
           "19,9": {
             "size": [
-              2,
-              1
+              3,
+              2
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/DriveTimePerCell",
-              "_title": "SmartDashboard/Autonomy/Traversal/DriveTimePerCell",
+              "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/Path Distance",
+              "_title": "SmartDashboard/Autonomy/Traversal/Path Distance",
               "_glyph": 148,
               "_showGlyph": false
             }
           },
           "19,11": {
             "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/TurnTime 45",
-              "_title": "SmartDashboard/Autonomy/Traversal/TurnTime 45",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "21,11": {
-            "size": [
-              2,
+              3,
               2
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/TurnTime 90",
-              "_title": "SmartDashboard/Autonomy/Traversal/TurnTime 90",
+              "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/Starting Facing Direction",
+              "_title": "SmartDashboard/Autonomy/Traversal/Starting Facing Direction",
               "_glyph": 148,
               "_showGlyph": false
             }
           },
-          "23,11": {
+          "22,11": {
             "size": [
-              2,
-              1
+              3,
+              2
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/TurnTime 135",
-              "_title": "SmartDashboard/Autonomy/Traversal/TurnTime 135",
+              "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/To Berm Distance",
+              "_title": "SmartDashboard/Autonomy/Traversal/To Berm Distance",
               "_glyph": 148,
               "_showGlyph": false
             }
           },
-          "24,12": {
+          "25,9": {
             "size": [
-              2,
-              1
+              3,
+              2
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/TurnTime 180",
-              "_title": "SmartDashboard/Autonomy/Traversal/TurnTime 180",
+              "_source0": "network_table:///SmartDashboard/Autonomy/Traversal/From Wall Distance",
+              "_title": "/SmartDashboard/Autonomy/Traversal/From Wall Distance",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -1201,32 +1255,6 @@
               "_glyph": 148,
               "_showGlyph": false
             }
-          },
-          "19,7": {
-            "size": [
-              3,
-              2
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Localization/Obstacle X",
-              "_title": "/SmartDashboard/Localization/Obstacle X",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "19,9": {
-            "size": [
-              3,
-              2
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Localization/Obstacle Y",
-              "_title": "/SmartDashboard/Localization/Obstacle Y",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
           }
         }
       }
@@ -1234,8 +1262,8 @@
   ],
   "windowGeometry": {
     "x": -5.714285850524902,
-    "y": 7.4285712242126465,
-    "width": 1566.857177734375,
-    "height": 786.8571166992188
+    "y": 17.714284896850586,
+    "width": 1574.857177734375,
+    "height": 758.8571166992188
   }
 }

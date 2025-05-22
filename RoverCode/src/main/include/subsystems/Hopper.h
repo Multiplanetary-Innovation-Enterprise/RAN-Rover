@@ -18,7 +18,7 @@ class HopperSubsystem : public frc2::SubsystemBase {
         void Stop();
     private:
         double emptySpinSpeed = 0.4;
-        double fillSpinSpeed = 0.1;
+        double fillSpinSpeed = 0.065;
         bool isSpinning;
         bool isLocked;
         MotorSendable hopSpin{PortConstants::hopSpin, rev::CANSparkMax::MotorType::kBrushless};

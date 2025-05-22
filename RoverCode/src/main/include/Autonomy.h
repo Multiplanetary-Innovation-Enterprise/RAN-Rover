@@ -13,6 +13,7 @@
 #include "subsystems/Blinkin.h"
 #include "sendables/Coord.h"
 #include "Localization.h"
+#include "Pathfinding.h"
 
 class Autonomy {
     public:
@@ -43,6 +44,7 @@ class Autonomy {
     private:
         Vision* vision;
         Localization* localization;
+        Pathfinding* pathing;
         MobilitySubsystem* mob;
         HopperSubsystem* hop;
         ExcavationSubsystem* exc;
@@ -61,21 +63,27 @@ class Autonomy {
         //////////////////////////
 
         // Traversal
-        Coord targetPos{5.38, 1.35};
-        double driveTimePerCell = 1.0;
-        std::array<units::time::second_t, 4> turnTimes{units::time::second_t{1.0}, units::time::second_t{2.0}, units::time::second_t{3.0}, units::time::second_t{4.0}};
+        double driveTimePerCell = 0.04;
+        std::array<units::time::second_t, 4> turnTimes{units::time::second_t{1.0}, units::time::second_t{3.1}, units::time::second_t{3.0}, units::time::second_t{4.0}};
+        double fromWallDistance = 0.25;
+        double pathStartDistance = 2.0;
+        double pathDistance = 3.0;
+        double toBermDistance = -1;
+        int startingFacingDirection = 3; // 0 is North, 1 is East, 2 is South, 3 is West
 
         // Exc Orient
-        int trenchIndex = -1;
-        double trenchGap = 0.5;
-        double trenchStartDist = 1.0;
-        units::time::second_t failsafeTime{8.0};
+        int trenchIndex = 2;
+        double trenchGap = 0.1;
+        double trenchStartDist = 0.5;
+        units::time::second_t failsafeTime{1.5};
+        Node* excValidationNode = new Node(0.0, 0.0, 0.0, 0.0, 0.0, MobilitySubsystem::MobilityMode::FREE, 0.0, false);
         
         // Exc Action
-        units::time::second_t excavationSpinTime{10.0};
+        double startExcavationSpin = 3.1;
+        units::time::second_t excavationSpinTime{30.0};
 
         // Dep Orient
-        double crawlTimeToMaxTimeFactor = 2.0;
+        double crawlTimeToMaxTimeFactor = 0.03;
         // Uses most of Exc Orient values, as it's just reversed.
 
         // Dep Action

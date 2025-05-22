@@ -14,6 +14,14 @@
 
 class MobilitySubsystem : public frc2::SubsystemBase {
     public:
+    
+        enum MobilityMode {
+            CRAWL = 0,
+            ACKERMANN = 1,
+            FREE = 2,
+            ZERO_POINT = 3,
+            CRAB = 4
+        };
 
         enum Wheel {
             FRONT_LEFT = 0,
@@ -38,7 +46,7 @@ class MobilitySubsystem : public frc2::SubsystemBase {
 
         // Provides angle in degrees of wheel steering
         double GetAngle(Wheel w);
-
+        
         // Actuate Limits {Min, Max}
         double actuateLimits[4][2] = {{-28.0, 28.0},
                                       {-28.0, 28.0},
@@ -51,7 +59,7 @@ class MobilitySubsystem : public frc2::SubsystemBase {
         std::array<int, 4> slipWait;
         bool isSpinning, leftCrawl, rightCrawl;   
         bool useSlipControl;
-        double maxDriveSpeed = 0.6;
+        double maxDriveSpeed = 0.4;
         double maxCrawlSpeed = 100; // RPM
         double currentThreshold = 8.0;
         double accelerationRate = 1;

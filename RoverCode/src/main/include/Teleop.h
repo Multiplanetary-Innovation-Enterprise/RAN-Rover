@@ -12,14 +12,6 @@
 class Teleop {
     public:
 
-        enum MobilityMode {
-            CRAWL = 0,
-            ACKERMANN = 1,
-            FREE = 2,
-            ZERO_POINT = 3,
-            CRAB = 4
-        };
-
         Teleop();
         void SetSystems(MobilitySubsystem* mob, ExcavationSubsystem* exc, HopperSubsystem* hop);
 
@@ -37,7 +29,7 @@ class Teleop {
         void Excavation();
         void Hopper();
 
-        MobilityMode mobMode = FREE;
+        MobilitySubsystem::MobilityMode mobMode = MobilitySubsystem::MobilityMode::FREE;
 
         double primaryControllerLeftStickDeadzone = 0.1;
         double primaryControllerRightStickDeadzone = 0.1;
